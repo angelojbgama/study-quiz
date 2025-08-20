@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Pressable, Switch, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';

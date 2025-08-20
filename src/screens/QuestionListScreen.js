@@ -23,7 +23,7 @@ export default function QuestionListScreen({ route, navigation }) {
   }, [navigation]);
 
   return (
-    <SafeAreaView style={styles.sa} edges={['bottom']}>
+    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
       <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.actions}>
           <Button title="Adicionar" onPress={() => navigation.navigate('QuestionEditor', { quizId })} />
