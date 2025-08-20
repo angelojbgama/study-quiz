@@ -4,12 +4,12 @@
   "private": true,
   "main": "expo/AppEntry",
   "scripts": {
-    "start": "EXPO_OFFLINE=1 expo start",
-    "android": "EXPO_OFFLINE=1 expo start --android",
-    "ios": "EXPO_OFFLINE=1 expo start --ios",
-    "web": "EXPO_OFFLINE=1 expo start --web",
+    "start": "node scripts/expo-offline.js start",
+    "android": "node scripts/expo-offline.js start --android",
+    "ios": "node scripts/expo-offline.js start --ios",
+    "web": "node scripts/expo-offline.js start --web",
+    "build": "node scripts/expo-offline.js export"
 
-    "build": "EXPO_OFFLINE=1 expo export"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.20",
