@@ -9,6 +9,7 @@
     "ios": "node scripts/expo-offline.js start --ios",
     "web": "node scripts/expo-offline.js start --web",
     "build": "node scripts/expo-offline.js export"
+
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.20",
