@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { getQuizzes, countQuestions } from '../db';
 
 export default function HomeScreen({ navigation }) {
@@ -25,45 +24,42 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-      <View style={styles.container}>
-        <View style={styles.panel}>
-          <Text style={styles.title}>Bem-vindo 👋</Text>
-          <Text style={styles.subtitle}>Monte seus baralhos e comece a estudar</Text>
-          <View style={styles.row}>
-            <View style={styles.btn}><Button title="Estudar Hoje" onPress={() => goTab('Estudar')} /></View>
-            <View style={styles.btn}><Button title="Estatísticas" onPress={() => goTab('Estatísticas')} /></View>
-            <View style={styles.btn}><Button title="Backup" onPress={() => goTab('Backup')} /></View>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.panel}>
+        <Text style={styles.title}>Bem-vindo 👋</Text>
+        <Text style={styles.subtitle}>Monte seus baralhos e comece a estudar</Text>
+        <View style={styles.row}>
+          <View style={styles.btn}><Button title="Estudar Hoje" onPress={() => goTab('Estudar')} /></View>
+          <View style={styles.btn}><Button title="Estatísticas" onPress={() => goTab('Estatísticas')} /></View>
+          <View style={styles.btn}><Button title="Backup" onPress={() => goTab('Backup')} /></View>
         </View>
-
-        <View style={styles.panel}>
-          <View style={styles.headerRow}>
-            <Text style={styles.titleSmall}>Seus Quizzes</Text>
-            <Button title="Importar" onPress={() => navigation.navigate('Import')} />
-          </View>
-          {quizzes.length === 0 ? (
-            <Text style={{ color: '#666' }}>Crie um quiz ou importe perguntas.</Text>
-          ) : quizzes.map(item => (
-            <Pressable key={item.id} style={styles.item} onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}>
-              <Text style={styles.itemTitle}>{item.title}</Text>
-              <Text style={styles.itemDesc}>{item.total} cartões</Text>
-            </Pressable>
-          ))}
-        </View>
-
-        <View style={styles.fab}><Button title="Novo Quiz" onPress={() => navigation.navigate('QuizEditor')} /></View>
       </View>
-    </SafeAreaView>
+
+      <View style={styles.panel}>
+        <View style={styles.headerRow}>
+          <Text style={styles.titleSmall}>Seus Quizzes</Text>
+          <Button title="Importar" onPress={() => navigation.navigate('Import')} />
+        </View>
+        {quizzes.length === 0 ? (
+          <Text style={{ color: '#666' }}>Crie um quiz ou importe perguntas.</Text>
+        ) : quizzes.map(item => (
+          <Pressable key={item.id} style={styles.item} onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}>
+            <Text style={styles.itemTitle}>{item.title}</Text>
+            <Text style={styles.itemDesc}>{item.total} cartões</Text>
+          </Pressable>
+        ))}
+      </View>
+
+      <View style={styles.fab}><Button title="Novo Quiz" onPress={() => navigation.navigate('QuizEditor')} /></View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, backgroundColor: '#f7f7f7' },
   panel: { backgroundColor: '#fff', borderRadius: 12, padding: 12, marginBottom: 12, borderWidth: 1, borderColor: '#eee' },
-  row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
-  btn: { minWidth: 140 },
+  row: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 8 },
+  btn: { minWidth: 140, marginRight: 8, marginTop: 8 },
   title: { fontSize: 20, fontWeight: '700' },
   titleSmall: { fontSize: 18, fontWeight: '700' },
   subtitle: { color: '#555', marginTop: 4 },

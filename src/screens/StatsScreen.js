@@ -45,7 +45,7 @@ export default function StatsScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
       <FlatList
         data={rows}
         keyExtractor={(item) => item.tag}
@@ -68,13 +68,7 @@ const styles = StyleSheet.create({
   sa: { flex: 1, backgroundColor: '#f7f7f7' },
   header: { marginBottom: 8 },
   title: { fontSize: 18, fontWeight: '700' },
-  row: {
-    padding: 12,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#eee'
-  },
+  row: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
   tag: { fontWeight: '700', marginBottom: 6, flexWrap: 'wrap' },
   empty: { color: '#666', textAlign: 'center', marginTop: 16 },
   progressOuter: { height: 6, backgroundColor: '#eee', borderRadius: 6, overflow: 'hidden', marginTop: 6 },

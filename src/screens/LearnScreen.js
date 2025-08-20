@@ -1,7 +1,6 @@
-// src/screens/LearnScreen.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Switch, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, getQuizzes, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -14,21 +13,18 @@ export default function LearnScreen({ route, navigation }) {
   const [selected, setSelected] = useState(new Set(selectedTags.map(x => x.toLowerCase())));
   const [onlyDueState, setOnlyDue] = useState(onlyDue);
   const [state, setState] = useState({ index: 0, total: 0, score: 0, current: null, options: [], answered: null });
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     (async () => {
       if (quizId) {
         const qs = await getQuestionsByQuiz(quizId);
-        setAll(qs);
-        setTags(distinctTagsFromQuestions(qs));
-        setCounts(tagCounts(qs));
+        setAll(qs); setTags(distinctTagsFromQuestions(qs)); setCounts(tagCounts(qs));
       } else {
         const qz = await getQuizzes();
         let allQ = [];
         for (const deck of qz) allQ = allQ.concat(await getQuestionsByQuiz(deck.id));
-        setAll(allQ);
-        setTags(distinctTagsFromQuestions(allQ));
-        setCounts(tagCounts(allQ));
+        setAll(allQ); setTags(distinctTagsFromQuestions(allQ)); setCounts(tagCounts(allQ));
       }
     })();
   }, [quizId]);
@@ -46,10 +42,8 @@ export default function LearnScreen({ route, navigation }) {
       }
       return true;
     });
-
     let shuffled = shuffle(filtered);
     if (sessionLimit && sessionLimit > 0) shuffled = shuffled.slice(0, sessionLimit);
-
     if (shuffled.length === 0) {
       setState({ index: 0, total: 0, score: 0, current: null, options: [], answered: null });
       return;
@@ -81,8 +75,8 @@ export default function LearnScreen({ route, navigation }) {
 
   if (!state.current) {
     return (
-      <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-        <View style={styles.container}>
+      <SafeAreaView style={styles.sa} edges={['bottom']}>
+        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
           <View style={styles.panel}>
             <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
             <View style={styles.switchRow}>
@@ -98,8 +92,8 @@ export default function LearnScreen({ route, navigation }) {
 
   if (state.finished) {
     return (
-      <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-        <View style={styles.container}>
+      <SafeAreaView style={styles.sa} edges={['bottom']}>
+        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
           <View style={styles.panel}>
             <Text style={styles.title}>Sessão concluída</Text>
             <Text>Pontuação: {state.score}/{state.total}</Text>
@@ -114,8 +108,8 @@ export default function LearnScreen({ route, navigation }) {
   const progress = state.total ? (state.index + 1) / state.total : 0;
 
   return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.panel}>
           <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
           <View style={styles.switchRow}>
@@ -125,9 +119,7 @@ export default function LearnScreen({ route, navigation }) {
         </View>
 
         <View style={styles.panel}>
-          <View style={styles.progressOuter}>
-            <View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} />
-          </View>
+          <View style={styles.progressOuter}><View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} /></View>
           <Text style={styles.title}>{state.current.text}</Text>
 
           {!state.answered ? (
@@ -169,8 +161,6 @@ function toggleTag(setSelected) {
 
 function buildOptions(question, seq, selectedSet) {
   const correct = question.answer;
-
-  // Escolhe o pool de candidatos: por tags selecionadas ou por tags da questão atual
   let poolCandidates;
   if (selectedSet && selectedSet.size > 0) {
     poolCandidates = seq.filter(q => {
@@ -186,15 +176,9 @@ function buildOptions(question, seq, selectedSet) {
       return false;
     });
   }
-
-  // Coleta respostas diferentes da correta e sem vazios
-  const pool = Array.from(new Set(poolCandidates
-    .map(q => q.answer)
-    .filter(a => a && a !== correct)
-  ));
-
+  const pool = Array.from(new Set(poolCandidates.map(q => q.answer).filter(a => a && a !== correct)));
   const distractors = sample(pool, 3);
-  const unique = Array.from(new Set([correct, ...distractors])); // garante sem duplicatas
+  const unique = Array.from(new Set([correct, ...distractors]));
   return shuffle(unique);
 }
 
@@ -203,9 +187,8 @@ function sample(arr, n) {
   const res = [];
   while (res.length < n && copy.length > 0) {
     const i = Math.floor(Math.random() * copy.length);
-    res.push(copy.splice(i, 1)[0]);
+    res.push(copy.splice(i,1)[0]);
   }
-  // Se faltar, completa com placeholders
   while (res.length < n) res.push('Nenhuma das anteriores ' + (res.length + 1));
   return res;
 }

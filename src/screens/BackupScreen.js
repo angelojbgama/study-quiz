@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
@@ -87,25 +86,22 @@ export default function BackupScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-      <View style={styles.container}>
-        <View style={styles.panel}>
-          <Text style={styles.title}>Backup & Sincronização</Text>
-          <View style={{ marginBottom: 8 }}><Button title="Exportar (JSON) & Compartilhar" onPress={onExport} /></View>
-          <View style={{ marginBottom: 8 }}><Button title="Importar de arquivo (JSON)" onPress={onImport} /></View>
-          <View style={{ marginBottom: 8 }}><Button title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} /></View>
-          {loading ? <ActivityIndicator /> : <Text style={{ color: '#555', marginTop: 8 }}>{status}</Text>}
-          <Text style={{ color: '#777', marginTop: 12 }}>
-            Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
-          </Text>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.panel}>
+        <Text style={styles.title}>Backup & Sincronização</Text>
+        <View style={{ marginBottom: 8 }}><Button title="Exportar (JSON) & Compartilhar" onPress={onExport} /></View>
+        <View style={{ marginBottom: 8 }}><Button title="Importar de arquivo (JSON)" onPress={onImport} /></View>
+        <View style={{ marginBottom: 8 }}><Button title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} /></View>
+        {loading ? <ActivityIndicator /> : <Text style={{ color: '#555', marginTop: 8 }}>{status}</Text>}
+        <Text style={{ color: '#777', marginTop: 12 }}>
+          Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
+        </Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
   container: { flex: 1, padding: 16 },
   panel: { backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', padding: 12 },
   title: { fontSize: 18, fontWeight: '700', marginBottom: 8 }

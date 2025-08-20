@@ -1,4 +1,3 @@
-// src/util/importer.js — sem dependências externas
 import { createQuiz, createQuestion } from '../db';
 
 /** Importa texto como JSON (lista de objetos) ou CSV.
@@ -33,7 +32,7 @@ async function importJson(list) {
 }
 
 async function importCsv(text) {
-  const rows = parseCsv(text); // [[quiz,pergunta,resposta,explicacao,tags],...]
+  const rows = parseCsv(text);
   const bundles = rows.map(cols => ({
     quiz: (cols[0] || 'Geral').trim(),
     question: (cols[1] || '').trim(),
@@ -52,10 +51,7 @@ function groupBy(arr, keyFn) {
   }, {});
 }
 
-/** Parser CSV simples com suporte a aspas e "" (escape).
- * Delimitador: vírgula, quebra de linha: \n (ignora \r).
- * Ex.: a,"b,c","d""e",f
- */
+// CSV com aspas e "" escape
 function parseCsv(text) {
   const rows = [];
   let row = [];
@@ -64,33 +60,20 @@ function parseCsv(text) {
 
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
-
     if (inQuotes) {
       if (c === '"') {
         const next = text[i + 1];
-        if (next === '"') { field += '"'; i++; } // escape ""
+        if (next === '"') { field += '"'; i++; }
         else { inQuotes = false; }
-      } else {
-        field += c;
-      }
+      } else { field += c; }
     } else {
-      if (c === '"') {
-        inQuotes = true;
-      } else if (c === ',') {
-        row.push(field); field = '';
-      } else if (c === '\n') {
-        row.push(field); rows.push(row);
-        row = []; field = '';
-      } else if (c === '\r') {
-        // ignore
-      } else {
-        field += c;
-      }
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else if (c === '\r') { /* ignore */ }
+      else field += c;
     }
   }
-  // último campo/linha
-  row.push(field);
-  rows.push(row);
-  // remove linhas vazias
+  row.push(field); rows.push(row);
   return rows.filter(r => r.some(v => String(v || '').trim() !== ''));
 }

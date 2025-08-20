@@ -1,4 +1,3 @@
-// src/db.js — API nova do expo-sqlite (SDK 53+), sem warnings e sem /legacy
 import * as SQLite from 'expo-sqlite';
 
 let _db;
@@ -48,12 +47,12 @@ export async function initDb() {
   );
 }
 
-// ----- CRUD base -----
+// ---- CRUD ----
 export async function getQuizzes() {
   const db = await getDb();
   return await db.getAllAsync('SELECT * FROM quiz ORDER BY id DESC');
 }
-export async function createQuiz(title, description='') {
+export async function createQuiz(title, description = '') {
   const db = await getDb();
   const res = await db.runAsync('INSERT INTO quiz(title, description) VALUES (?,?)', [title, description]);
   return res.lastInsertRowId;
@@ -67,7 +66,7 @@ export async function getQuestionsByQuiz(quizId) {
   const db = await getDb();
   return await db.getAllAsync('SELECT * FROM question WHERE quizId = ? ORDER BY id DESC', [quizId]);
 }
-export async function createQuestion(quizId, text, answer, explanation='', tags='') {
+export async function createQuestion(quizId, text, answer, explanation = '', tags = '') {
   const db = await getDb();
   const res = await db.runAsync(
     'INSERT INTO question(quizId, text, answer, explanation, tags) VALUES (?,?,?,?,?)',
@@ -76,14 +75,14 @@ export async function createQuestion(quizId, text, answer, explanation='', tags=
   return res.lastInsertRowId;
 }
 
-// ----- SRS / Estatísticas -----
+// ---- SRS ----
 export async function applySrsResult(questionId, isCorrect) {
   const db = await getDb();
   const row = await db.getFirstAsync('SELECT box FROM question WHERE id = ?', [questionId]);
   const curBox = row?.box || 1;
   const nextBox = isCorrect ? Math.min(5, curBox + 1) : 1;
   const now = Date.now();
-  const intervals = {1:1,2:2,3:4,4:7,5:15}; // dias
+  const intervals = { 1:1, 2:2, 3:4, 4:7, 5:15 }; // dias
   const dueAt = now + (intervals[nextBox] || 1) * 24 * 60 * 60 * 1000;
 
   await db.runAsync(
@@ -104,7 +103,7 @@ export async function getQuestionMeta(questionId) {
   );
 }
 
-// ----- Backup (export/import) -----
+// ---- Backup ----
 export async function exportAllData() {
   const db = await getDb();
   const quizzes = await db.getAllAsync('SELECT * FROM quiz');
@@ -130,8 +129,8 @@ export async function importFullBackup(data) {
       await db.runAsync(
         `INSERT INTO question(quizId, text, answer, explanation, tags, difficulty, box, due_at, correct_count, wrong_count)
          VALUES (?,?,?,?,?,?,?,?,?,?)`,
-        [newQuizId, q.text || '', q.answer || '', q.explanation || '', q.tags || '', q.difficulty || 1,
-         q.box || 1, q.due_at || 0, q.correct_count || 0, q.wrong_count || 0]
+        [newQuizId, q.text || '', q.answer || '', q.explanation || '', q.tags || '',
+         q.difficulty || 1, q.box || 1, q.due_at || 0, q.correct_count || 0, q.wrong_count || 0]
       );
     }
   }

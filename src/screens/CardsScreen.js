@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Pressable, Switch } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -16,6 +16,7 @@ export default function CardsScreen({ route, navigation }) {
   const [idx, setIdx] = useState(0);
   const [show, setShow] = useState(false);
   const [score, setScore] = useState({ right: 0, wrong: 0 });
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     (async () => {
@@ -42,8 +43,8 @@ export default function CardsScreen({ route, navigation }) {
   }, [all, selected, onlyDue]);
 
   if (cards.length === 0) return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
         <Text>Sem cartões para este filtro.</Text>
       </View>
@@ -60,8 +61,8 @@ export default function CardsScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
 
         <Pressable onPress={() => setShow(!show)} style={styles.card}>

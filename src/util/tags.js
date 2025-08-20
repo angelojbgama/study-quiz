@@ -1,32 +1,23 @@
-export function parseTags(raw) {
-  if (!raw) return [];
-  return Array.from(new Set(String(raw)
-    .split(/[,;#|/]/g)
+export function parseTags(tagsStr) {
+  if (!tagsStr) return [];
+  return String(tagsStr)
+    .split(',')
     .map(s => s.trim())
-    .filter(Boolean)));
+    .filter(Boolean);
 }
 
-export function hasAnyTag(raw, selectedSet) {
-  if (!selectedSet || selectedSet.size === 0) return true;
-  const tags = parseTags(raw).map(t => t.toLowerCase());
-  for (const t of tags) if (selectedSet.has(t.toLowerCase())) return true;
-  return false;
-}
-
-export function distinctTagsFromQuestions(questions) {
+export function distinctTagsFromQuestions(qs) {
   const set = new Set();
-  for (const q of questions || []) {
-    for (const t of parseTags(q.tags)) set.add(t);
-  }
-  return Array.from(set).sort((a,b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  (qs || []).forEach(q => parseTags(q.tags).forEach(t => set.add(t)));
+  return Array.from(set).sort((a,b) => a.localeCompare(b));
 }
 
-export function tagCounts(questions) {
-  const counts = {};
-  for (const q of questions || []) {
-    for (const t of parseTags(q.tags)) {
-      counts[t] = (counts[t] || 0) + 1;
-    }
-  }
-  return counts;
+export function tagCounts(qs) {
+  const map = {};
+  (qs || []).forEach(q => {
+    parseTags(q.tags).forEach(t => {
+      map[t] = (map[t] || 0) + 1;
+    });
+  });
+  return map;
 }

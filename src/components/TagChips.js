@@ -1,14 +1,10 @@
 import React from 'react';
-import { ScrollView, Pressable, Text, StyleSheet, View } from 'react-native';
+import { ScrollView, Pressable, Text, StyleSheet } from 'react-native';
 
 export default function TagChips({ tags = [], counts = {}, selected = new Set(), onToggle }) {
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
-      <Chip
-        label="Todos"
-        selected={selected.size === 0}
-        onPress={() => onToggle && onToggle(null)}
-      />
+      <Chip label="Todos" selected={selected.size === 0} onPress={() => onToggle && onToggle(null)} />
       {tags.map(t => (
         <Chip
           key={t}
@@ -23,14 +19,7 @@ export default function TagChips({ tags = [], counts = {}, selected = new Set(),
 
 function Chip({ label, selected, onPress }) {
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.chip,
-        selected && styles.active,
-        pressed && { opacity: 0.8 }
-      ]}
-    >
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.chip, selected && styles.active, pressed && { opacity: 0.8 }]}>
       <Text style={[styles.text, selected && styles.textActive]}>{label}</Text>
     </Pressable>
   );
@@ -38,11 +27,7 @@ function Chip({ label, selected, onPress }) {
 
 const styles = StyleSheet.create({
   row: { paddingVertical: 4, alignItems: 'center' },
-  chip: {
-    paddingVertical: 6, paddingHorizontal: 12,
-    borderRadius: 16, backgroundColor: '#eee',
-    marginRight: 8, borderWidth: 1, borderColor: '#ddd'
-  },
+  chip: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 16, backgroundColor: '#eee', marginRight: 8, borderWidth: 1, borderColor: '#ddd' },
   active: { backgroundColor: '#2e7d32', borderColor: '#2e7d32' },
   text: { color: '#111' },
   textActive: { color: '#fff', fontWeight: '600' }
