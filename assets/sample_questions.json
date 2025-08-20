@@ -1,0 +1,6 @@
+[
+  { "quiz": "Banco de Dados", "question": "O que é chave primária?", "answer": "Um identificador único para registros", "tags": "conceitos" },
+  { "quiz": "Banco de Dados", "question": "O que é chave estrangeira?", "answer": "Um campo que referencia a chave primária de outra tabela", "tags": "conceitos" },
+  { "quiz": "Banco de Dados", "question": "O que é normalização?", "answer": "Processo de organizar dados para reduzir redundância", "tags": "conceitos" },
+  { "quiz": "Java", "question": "Qual classe abre conexão JDBC?", "answer": "DriverManager", "tags": "jdbc" }
+]

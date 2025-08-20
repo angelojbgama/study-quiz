@@ -1,0 +1,22 @@
+{
+  "expo": {
+  "androidStatusBar": {
+    "backgroundColor": "#f7f7f7",
+    "barStyle": "dark-content",
+    "translucent": false
+    },
+    "name": "StudyQuiz",
+    "slug": "study-quiz",
+    "scheme": "studyquiz",
+    "version": "1.1.0",
+    "orientation": "portrait",
+   "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.example.studyquiz",
+      "permissions": []
+    }
+    
+  }
+}
