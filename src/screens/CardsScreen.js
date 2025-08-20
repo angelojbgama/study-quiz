@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Pressable, Switch, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, Pressable, Switch } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -41,10 +42,12 @@ export default function CardsScreen({ route, navigation }) {
   }, [all, selected, onlyDue]);
 
   if (cards.length === 0) return (
-    <View style={styles.container}>
-      <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
-      <Text>Sem cartões para este filtro.</Text>
-    </View>
+    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
+      <View style={styles.container}>
+        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
+        <Text>Sem cartões para este filtro.</Text>
+      </View>
+    </SafeAreaView>
   );
 
   const cur = cards[idx];
@@ -57,26 +60,28 @@ export default function CardsScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
+    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
+      <View style={styles.container}>
+        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
 
-      <Pressable onPress={() => setShow(!show)} style={styles.card}>
-        <Text style={styles.term}>{!show ? cur.text : cur.answer}</Text>
-        <Text style={styles.hint}>{!show ? 'Toque para ver a resposta' : 'Toque para ocultar'}</Text>
-      </Pressable>
+        <Pressable onPress={() => setShow(!show)} style={styles.card}>
+          <Text style={styles.term}>{!show ? cur.text : cur.answer}</Text>
+          <Text style={styles.hint}>{!show ? 'Toque para ver a resposta' : 'Toque para ocultar'}</Text>
+        </Pressable>
 
-      {show ? (
-        <View style={styles.row}>
-          <View style={{ flex: 1 }}><Button title="Errei" onPress={async () => { setScore(s => ({ ...s, wrong: s.wrong + 1 })); await applySrsResult(cur.id, false); next(); }} /></View>
-          <View style={{ width: 8 }} />
-          <View style={{ flex: 1 }}><Button title="Acertei" onPress={async () => { setScore(s => ({ ...s, right: s.right + 1 })); await applySrsResult(cur.id, true); next(); }} /></View>
-        </View>
-      ) : (
-        <Button title="Mostrar resposta" onPress={() => setShow(true)} />
-      )}
+        {show ? (
+          <View style={styles.row}>
+            <View style={{ flex: 1 }}><Button title="Errei" onPress={async () => { setScore(s => ({ ...s, wrong: s.wrong + 1 })); await applySrsResult(cur.id, false); next(); }} /></View>
+            <View style={{ width: 8 }} />
+            <View style={{ flex: 1 }}><Button title="Acertei" onPress={async () => { setScore(s => ({ ...s, right: s.right + 1 })); await applySrsResult(cur.id, true); next(); }} /></View>
+          </View>
+        ) : (
+          <Button title="Mostrar resposta" onPress={() => setShow(true)} />
+        )}
 
-      <Text style={{ marginTop: 12, color: '#555' }}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
-    </View>
+        <Text style={{ marginTop: 12, color: '#555' }}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -106,6 +111,7 @@ function toggleTag(setSelected) {
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
 const styles = StyleSheet.create({
+  sa: { flex: 1, backgroundColor: '#f7f7f7' },
   container: { flex: 1, padding: 16 },
   panel: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', marginBottom: 12 },
   switchRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },

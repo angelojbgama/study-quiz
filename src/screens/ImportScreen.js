@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { importText } from '../util/importer';
@@ -32,16 +33,21 @@ export default function ImportScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Selecione um arquivo CSV ou JSON com perguntas e respostas.</Text>
-      <View style={{ height: 12 }} />
-      <Button title="Escolher arquivo" onPress={pick} />
-      <View style={{ height: 16 }} />
-      {loading ? <ActivityIndicator /> : <Text style={{ color: '#555' }}>{status}</Text>}
-      <View style={{ height: 12 }} />
-      <Text style={{ color: '#777' }}>CSV: quiz,pergunta,resposta,explicacao,tags</Text>
-    </View>
+    <SafeAreaView style={styles.sa} edges={['top','bottom']}>
+      <View style={styles.container}>
+        <Text>Selecione um arquivo CSV ou JSON com perguntas e respostas.</Text>
+        <View style={{ height: 12 }} />
+        <Button title="Escolher arquivo" onPress={pick} />
+        <View style={{ height: 16 }} />
+        {loading ? <ActivityIndicator /> : <Text style={{ color: '#555' }}>{status}</Text>}
+        <View style={{ height: 12 }} />
+        <Text style={{ color: '#777' }}>CSV: quiz,pergunta,resposta,explicacao,tags</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1, padding: 16 } });
+const styles = StyleSheet.create({
+  sa: { flex: 1, backgroundColor: '#f7f7f7' },
+  container: { flex: 1, padding: 16 }
+});
