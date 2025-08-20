@@ -8,6 +8,7 @@
     "android": "EXPO_OFFLINE=1 expo start --android",
     "ios": "EXPO_OFFLINE=1 expo start --ios",
     "web": "EXPO_OFFLINE=1 expo start --web",
+
     "build": "EXPO_OFFLINE=1 expo export"
   },
   "dependencies": {
