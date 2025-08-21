@@ -67,6 +67,7 @@ export default function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}
         style={({ pressed }) => [styles.item, pressed && { opacity: 0.85 }]}
         android_ripple={{ color: colors.border }}
+
         hitSlop={8}
         accessibilityRole="button"
         accessibilityLabel={`Abrir quiz ${item.title}`}
@@ -76,6 +77,7 @@ export default function HomeScreen({ navigation }) {
       </Pressable>
       <View style={styles.delBtn}>
         <PrimaryButton title="Excluir" onPress={() => handleDelete(item.id)} style={{ backgroundColor: colors.danger }} />
+
       </View>
     </View>
   );
@@ -116,3 +118,4 @@ export default function HomeScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
