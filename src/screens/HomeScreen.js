@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, Button, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, Text, Button, StyleSheet, Pressable, FlatList, Alert } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getQuizzes, countQuestions } from '../db';
+import { getQuizzes, countQuestions, deleteQuiz } from '../db';
 
 export default function HomeScreen({ navigation }) {
   const [quizzes, setQuizzes] = useState([]);
@@ -15,6 +15,13 @@ export default function HomeScreen({ navigation }) {
     setQuizzes(withCounts);
   };
 
+  const handleDelete = (id) => {
+    Alert.alert('Excluir', 'Deseja excluir este quiz?', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Excluir', style: 'destructive', onPress: async () => { await deleteQuiz(id); load(); } }
+    ]);
+  };
+
   useEffect(() => {
     const unsub = navigation.addListener('focus', load);
     return unsub;
@@ -26,18 +33,23 @@ export default function HomeScreen({ navigation }) {
   };
 
   const renderItem = ({ item }) => (
-    <Pressable
-      key={item.id}
-      onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}
-      style={({ pressed }) => [styles.item, pressed && { opacity: 0.85 }]}
-      android_ripple={{ color: '#e9e9e9' }}
-      hitSlop={8}
-      accessibilityRole="button"
-      accessibilityLabel={`Abrir quiz ${item.title}`}
-    >
-      <Text style={styles.itemTitle}>{item.title}</Text>
-      <Text style={styles.itemDesc}>{item.total} cartões</Text>
-    </Pressable>
+    <View style={styles.itemRow}>
+      <Pressable
+        key={item.id}
+        onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}
+        style={({ pressed }) => [styles.item, pressed && { opacity: 0.85 }]}
+        android_ripple={{ color: '#e9e9e9' }}
+        hitSlop={8}
+        accessibilityRole="button"
+        accessibilityLabel={`Abrir quiz ${item.title}`}
+      >
+        <Text style={styles.itemTitle}>{item.title}</Text>
+        <Text style={styles.itemDesc}>{item.total} cartões</Text>
+      </Pressable>
+      <View style={styles.delBtn}>
+        <Button title="Excluir" color="#b00020" onPress={() => handleDelete(item.id)} />
+      </View>
+    </View>
   );
 
   const listHeader = useMemo(() => (
@@ -86,7 +98,9 @@ const styles = StyleSheet.create({
   titleSmall: { fontSize: 18, fontWeight: '700', marginTop: 12 },
   subtitle: { color: '#555', marginTop: 4 },
   headerRow: { marginTop: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  item: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
+  itemRow: { flexDirection: 'row', alignItems: 'center' },
+  item: { flex: 1, padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
+  delBtn: { marginLeft: 8 },
   itemTitle: { fontSize: 16, fontWeight: '600', flexWrap: 'wrap' },
   itemDesc: { color: '#666', marginTop: 2 },
   empty: { color: '#666', paddingHorizontal: 16 },
