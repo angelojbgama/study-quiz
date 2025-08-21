@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
@@ -89,9 +90,9 @@ export default function BackupScreen() {
     <View style={styles.container}>
       <View style={styles.panel}>
         <Text style={styles.title}>Backup & Sincronização</Text>
-        <View style={{ marginBottom: 8 }}><Button title="Exportar (JSON) & Compartilhar" onPress={onExport} /></View>
-        <View style={{ marginBottom: 8 }}><Button title="Importar de arquivo (JSON)" onPress={onImport} /></View>
-        <View style={{ marginBottom: 8 }}><Button title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} /></View>
+        <View style={{ marginBottom: 8 }}><PrimaryButton title="Exportar (JSON) & Compartilhar" onPress={onExport} /></View>
+        <View style={{ marginBottom: 8 }}><PrimaryButton title="Importar de arquivo (JSON)" onPress={onImport} /></View>
+        <View style={{ marginBottom: 8 }}><PrimaryButton title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} /></View>
         {loading ? <ActivityIndicator /> : <Text style={{ color: '#555', marginTop: 8 }}>{status}</Text>}
         <Text style={{ color: '#777', marginTop: 12 }}>
           Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.

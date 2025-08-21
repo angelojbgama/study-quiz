@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { getQuizzes, countQuestions } from '../db';
 
 export default function HomeScreen({ navigation }) {
@@ -29,16 +30,16 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.title}>Bem-vindo 👋</Text>
         <Text style={styles.subtitle}>Monte seus baralhos e comece a estudar</Text>
         <View style={styles.row}>
-          <View style={styles.btn}><Button title="Estudar Hoje" onPress={() => goTab('Estudar')} /></View>
-          <View style={styles.btn}><Button title="Estatísticas" onPress={() => goTab('Estatísticas')} /></View>
-          <View style={styles.btn}><Button title="Backup" onPress={() => goTab('Backup')} /></View>
+          <View style={styles.btn}><PrimaryButton title="Estudar Hoje" onPress={() => goTab('Estudar')} /></View>
+          <View style={styles.btn}><PrimaryButton title="Estatísticas" onPress={() => goTab('Estatísticas')} /></View>
+          <View style={styles.btn}><PrimaryButton title="Backup" onPress={() => goTab('Backup')} /></View>
         </View>
       </View>
 
       <View style={styles.panel}>
         <View style={styles.headerRow}>
           <Text style={styles.titleSmall}>Seus Quizzes</Text>
-          <Button title="Importar" onPress={() => navigation.navigate('Import')} />
+          <PrimaryButton title="Importar" onPress={() => navigation.navigate('Import')} />
         </View>
         {quizzes.length === 0 ? (
           <Text style={{ color: '#666' }}>Crie um quiz ou importe perguntas.</Text>
@@ -50,7 +51,7 @@ export default function HomeScreen({ navigation }) {
         ))}
       </View>
 
-      <View style={styles.fab}><Button title="Novo Quiz" onPress={() => navigation.navigate('QuizEditor')} /></View>
+      <View style={styles.fab}><PrimaryButton title="Novo Quiz" onPress={() => navigation.navigate('QuizEditor')} /></View>
     </View>
   );
 }

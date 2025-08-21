@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { createQuestion } from '../db';
 
 export default function QuestionEditorScreen({ route, navigation }) {
@@ -24,7 +25,7 @@ export default function QuestionEditorScreen({ route, navigation }) {
       <TextInput style={styles.input} value={explanation} onChangeText={setExplanation} />
       <Text style={styles.label}>Tags (opcional)</Text>
       <TextInput style={styles.input} value={tags} onChangeText={setTags} />
-      <Button title="Salvar" onPress={save} disabled={!text.trim() || !answer.trim()} />
+      <PrimaryButton title="Salvar" onPress={save} disabled={!text.trim() || !answer.trim()} />
     </View>
   );
 }

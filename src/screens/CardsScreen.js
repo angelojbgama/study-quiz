@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Pressable, Switch } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
@@ -72,12 +73,12 @@ export default function CardsScreen({ route, navigation }) {
 
         {show ? (
           <View style={styles.row}>
-            <View style={{ flex: 1 }}><Button title="Errei" onPress={async () => { setScore(s => ({ ...s, wrong: s.wrong + 1 })); await applySrsResult(cur.id, false); next(); }} /></View>
+            <View style={{ flex: 1 }}><PrimaryButton title="Errei" onPress={async () => { setScore(s => ({ ...s, wrong: s.wrong + 1 })); await applySrsResult(cur.id, false); next(); }} style={{ flex: 1 }} /></View>
             <View style={{ width: 8 }} />
-            <View style={{ flex: 1 }}><Button title="Acertei" onPress={async () => { setScore(s => ({ ...s, right: s.right + 1 })); await applySrsResult(cur.id, true); next(); }} /></View>
+            <View style={{ flex: 1 }}><PrimaryButton title="Acertei" onPress={async () => { setScore(s => ({ ...s, right: s.right + 1 })); await applySrsResult(cur.id, true); next(); }} style={{ flex: 1 }} /></View>
           </View>
         ) : (
-          <Button title="Mostrar resposta" onPress={() => setShow(true)} />
+          <PrimaryButton title="Mostrar resposta" onPress={() => setShow(true)} />
         )}
 
         <Text style={{ marginTop: 12, color: '#555' }}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
