@@ -19,7 +19,14 @@ export default function TagChips({ tags = [], counts = {}, selected = new Set(),
 
 function Chip({ label, selected, onPress }) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.chip, selected && styles.active, pressed && { opacity: 0.8 }]}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.chip, selected && styles.active, pressed && { opacity: 0.8 }]}
+      hitSlop={8}
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      accessibilityLabel={`Filtro ${label}`}
+    >
       <Text style={[styles.text, selected && styles.textActive]}>{label}</Text>
     </Pressable>
   );
@@ -27,8 +34,8 @@ function Chip({ label, selected, onPress }) {
 
 const styles = StyleSheet.create({
   row: { paddingVertical: 4, alignItems: 'center' },
-  chip: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 16, backgroundColor: '#eee', marginRight: 8, borderWidth: 1, borderColor: '#ddd' },
+  chip: { paddingVertical: 8, paddingHorizontal: 14, borderRadius: 16, backgroundColor: '#eee', marginRight: 8, borderWidth: 1, borderColor: '#ddd' },
   active: { backgroundColor: '#2e7d32', borderColor: '#2e7d32' },
-  text: { color: '#111' },
+  text: { color: '#111', fontSize: 14 },
   textActive: { color: '#fff', fontWeight: '600' }
 });

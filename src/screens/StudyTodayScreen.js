@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -11,18 +12,14 @@ export default function StudyTodayScreen({ navigation }) {
   const [selected, setSelected] = useState(new Set());
   const [goal, setGoal] = useState('20');
   const [dueTotal, setDueTotal] = useState(0);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     (async () => {
       const qz = await getQuizzes();
       let allQ = [];
-      for (const deck of qz) {
-        const qs = await getQuestionsByQuiz(deck.id);
-        allQ = allQ.concat(qs);
-      }
-      setAll(allQ);
-      setTags(distinctTagsFromQuestions(allQ));
-      setCounts(tagCounts(allQ));
+      for (const deck of qz) allQ = allQ.concat(await getQuestionsByQuiz(deck.id));
+      setAll(allQ); setTags(distinctTagsFromQuestions(allQ)); setCounts(tagCounts(allQ));
     })();
   }, []);
 
@@ -44,37 +41,40 @@ export default function StudyTodayScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.panel}>
-        <Text style={styles.title}>Estudar Hoje</Text>
-        <TagChips
-          tags={tags}
-          counts={counts}
-          selected={selected}
-          onToggle={(t) => {
-            if (!t) { setSelected(new Set()); return; }
-            setSelected(prev => {
-              const next = new Set(prev);
-              const key = t.toLowerCase();
-              if (next.has(key)) next.delete(key); else next.add(key);
-              return next;
-            });
-          }}
-        />
-        <View style={styles.goalRow}>
-          <Text>Meta do dia:</Text>
-          <TextInput value={goal} onChangeText={setGoal} keyboardType="number-pad" style={styles.input} />
-          <Text>itens</Text>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.panel}>
+          <Text style={styles.title}>Estudar Hoje</Text>
+          <TagChips
+            tags={tags}
+            counts={counts}
+            selected={selected}
+            onToggle={(t)=>{
+              if (!t) { setSelected(new Set()); return; }
+              setSelected(prev => {
+                const next = new Set(prev);
+                const key = t.toLowerCase();
+                if (next.has(key)) next.delete(key); else next.add(key);
+                return next;
+              });
+            }}
+          />
+          <View style={styles.goalRow}>
+            <Text>Meta do dia:</Text>
+            <TextInput value={goal} onChangeText={setGoal} keyboardType="number-pad" style={styles.input} />
+            <Text>itens</Text>
+          </View>
+          <Text style={{ marginTop: 8, color: '#555' }}>Vencidos no filtro: {dueTotal}</Text>
+          <View style={{ height: 12 }} />
+          <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
         </View>
-        <Text style={{ marginTop: 8, color: '#555' }}>Vencidos no filtro: {dueTotal}</Text>
-        <View style={{ height: 12 }} />
-        <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  sa: { flex: 1, backgroundColor: '#f7f7f7' },
   container: { flex: 1, padding: 16 },
   panel: { backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', padding: 12 },
   title: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
