@@ -15,7 +15,7 @@
       "**/*"
     ],
     "android": {
-      "package": "com.9kernel.studyquiz",
+      "package": "com.ninekernel.studyquiz",
       "permissions": []
     },
     "plugins": [

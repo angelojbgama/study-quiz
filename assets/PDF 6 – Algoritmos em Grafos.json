@@ -1,0 +1,146 @@
+[
+  { 
+    "quiz": "Grafos", 
+    "question": "O que é um grafo?", 
+    "answer": "Uma estrutura formada por vértices e arestas que representam conexões", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "O que é um grafo direcionado?", 
+    "answer": "Um grafo em que as arestas possuem direção", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "O que é um grafo ponderado?", 
+    "answer": "Um grafo em que as arestas possuem pesos ou custos associados", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual a diferença entre grafo completo e grafo conexo?", 
+    "answer": "No completo todos os vértices estão conectados diretamente, no conexo há pelo menos um caminho entre todos os vértices", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "O que é uma matriz de adjacência?", 
+    "answer": "É uma matriz que indica se existe aresta entre dois vértices", 
+    "tags": "representação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "O que é uma lista de adjacência?", 
+    "answer": "É uma lista onde cada vértice aponta para os vértices vizinhos", 
+    "tags": "representação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual representação de grafos é mais eficiente em grafos esparsos?", 
+    "answer": "Lista de adjacência", 
+    "tags": "representação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual representação de grafos ocupa mais memória mas permite acesso rápido?", 
+    "answer": "Matriz de adjacência", 
+    "tags": "representação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual estrutura de dados é usada no BFS?", 
+    "answer": "Fila", 
+    "tags": "BFS"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual estrutura de dados é usada no DFS?", 
+    "answer": "Pilha ou recursão", 
+    "tags": "DFS"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo garante o caminho mais curto em grafos não ponderados?", 
+    "answer": "BFS", 
+    "tags": "BFS"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "DFS garante o caminho mais curto entre dois vértices?", 
+    "answer": "Não, apenas BFS garante em grafos não ponderados", 
+    "tags": "DFS"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra o menor caminho em grafos com pesos positivos?", 
+    "answer": "Dijkstra", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra o menor caminho mesmo com pesos negativos?", 
+    "answer": "Bellman-Ford", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra o menor caminho entre todos os pares de vértices?", 
+    "answer": "Floyd-Warshall", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Por que Dijkstra não funciona com arestas de peso negativo?", 
+    "answer": "Porque assume que distâncias parciais nunca diminuem", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual é o objetivo de uma árvore geradora mínima?", 
+    "answer": "Conectar todos os vértices de um grafo com o menor custo total", 
+    "tags": "MST"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo constrói a árvore geradora mínima escolhendo sempre a menor aresta disponível?", 
+    "answer": "Kruskal", 
+    "tags": "MST"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo constrói a árvore geradora mínima expandindo a partir de um vértice inicial?", 
+    "answer": "Prim", 
+    "tags": "MST"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual estrutura de dados é geralmente usada no algoritmo de Prim?", 
+    "answer": "Fila de prioridade (heap)", 
+    "tags": "MST"
+  },
+   { 
+    "quiz": "Grafos", 
+    "question": "Como redes sociais usam algoritmos de grafos?", 
+    "answer": "Para sugerir conexões, grupos e medir centralidade de usuários", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como sistemas de GPS usam algoritmos de grafos?", 
+    "answer": "Para calcular rotas mais curtas entre locais", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como grafos são usados em análise de epidemias?", 
+    "answer": "Modelando pessoas como vértices e contatos como arestas", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como grafos são usados em redes elétricas?", 
+    "answer": "Para planejar conexões de menor custo e evitar redundâncias", 
+    "tags": "aplicações"
+  }
+]

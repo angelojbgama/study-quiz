@@ -7,6 +7,7 @@ import { getQuestionsByQuiz, getQuizzes, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
 import useAppStyles from '../ui/useAppStyles';
+import SuccessCelebration from '../components/SuccessCelebration';
 
 export default function LearnScreen({ route, navigation }) {
   const { quizId, onlyDue = false, selectedTags = [], sessionLimit = 0 } = route.params || {};
@@ -16,12 +17,16 @@ export default function LearnScreen({ route, navigation }) {
   const [selected, setSelected] = useState(new Set(selectedTags.map(x => x.toLowerCase())));
   const [onlyDueState, setOnlyDue] = useState(onlyDue);
   const [state, setState] = useState({ index: 0, total: 0, score: 0, current: null, options: [], answered: null });
+  const [celebrate, setCelebrate] = useState(false);
+
   const styles = useAppStyles();
   const { colors } = useTheme();
 
   const local = useMemo(() => StyleSheet.create({
     switchRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card }
+    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card },
+    optionCorrect: { borderColor: colors.primary, backgroundColor: '#e6f2ff' },
+    optionWrong: { borderColor: '#dc3545', backgroundColor: '#fdecee' },
   }), [colors]);
 
   useEffect(() => {
@@ -66,7 +71,9 @@ export default function LearnScreen({ route, navigation }) {
     const chosen = state.options[choiceIdx];
     const isCorrect = chosen === state.current.answer;
     setState(st => ({ ...st, answered: { isCorrect, chosen } }));
-    await applySrsResult(state.current.id, isCorrect);
+    if (isCorrect) setCelebrate(true);
+    // não bloquear a animação: aplica SRS em paralelo
+    applySrsResult(state.current.id, isCorrect).catch(()=>{});
   };
 
   const next = () => {
@@ -133,25 +140,34 @@ export default function LearnScreen({ route, navigation }) {
 
           {!state.answered ? (
             state.options.map((opt, idx) => (
-              <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [local.option, pressed && { opacity: 0.8 }]}>
+              <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [local.option, pressed && { opacity: 0.85 }]}>
                 <Text style={styles.text}>{String(opt)}</Text>
               </Pressable>
             ))
           ) : (
             <View>
-              <Text style={{ fontWeight: '700', color: state.answered.isCorrect ? colors.primary : colors.danger }}>
-                {state.answered.isCorrect ? 'Correto!' : 'Incorreto.'}
-              </Text>
-              {!state.answered.isCorrect ? <Text style={styles.text}>Sua resposta: {String(state.answered.chosen)}</Text> : null}
-              <Text style={styles.text}>Resposta correta: {String(state.current.answer)}</Text>
-              {state.current.explanation ? <Text style={styles.text}>Explicação: {state.current.explanation}</Text> : null}
+              {state.options.map((opt, idx) => {
+                const isCorrect = opt === state.current.answer;
+                const isChosen = opt === state.answered?.chosen;
+                const styleVariant = isCorrect ? local.optionCorrect : (isChosen ? local.optionWrong : null);
+                return (
+                  <View key={idx} style={[local.option, styleVariant]}>
+                    <Text style={styles.text}>{String(opt)}</Text>
+                  </View>
+                );
+              })}
               <View style={{ height: 12 }} />
-              <PrimaryButton title="Próxima" onPress={next} />
+              <PrimaryButton title="Próxima" onPress={() => { setCelebrate(false); next(); }} />
             </View>
           )}
+
           <Text style={[styles.muted, { marginTop: 10 }]}>{state.index + 1} de {state.total}</Text>
         </View>
       </View>
+
+      {celebrate && (
+        <SuccessCelebration onDone={() => setCelebrate(false)} />
+      )}
     </SafeAreaView>
   );
 }
@@ -190,15 +206,5 @@ function buildOptions(question, seq, selectedSet) {
   const unique = Array.from(new Set([correct, ...distractors]));
   return shuffle(unique);
 }
-
-function sample(arr, n) {
-  const copy = [...arr];
-  const res = [];
-  while (res.length < n && copy.length > 0) {
-    const i = Math.floor(Math.random() * copy.length);
-    res.push(copy.splice(i,1)[0]);
-  }
-  while (res.length < n) res.push('Nenhuma das anteriores ' + (res.length + 1));
-  return res;
-}
+function sample(arr, n) { const copy = [...arr]; const res = []; while (res.length < n && copy.length) { const i = Math.floor(Math.random()*copy.length); res.push(copy.splice(i,1)[0]); } while (res.length < n) res.push('Nenhuma das anteriores ' + (res.length + 1)); return res; }
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }

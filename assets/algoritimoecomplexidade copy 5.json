@@ -1,0 +1,74 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "O(2n) é diferente de O(n)?", 
+    "answer": "Não, porque constantes são ignoradas na análise assintótica", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "O(n + log n) é simplificado para qual notação?", 
+    "answer": "O(n)", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "O(log n) cresce mais rápido que O(√n)?", 
+    "answer": "Não, O(√n) cresce mais rápido que O(log n)", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Toda função recursiva pode ser reescrita de forma iterativa?", 
+    "answer": "Sim, mas pode ser mais complexa e menos intuitiva", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Uma função recursiva sempre é mais eficiente que uma iterativa?", 
+    "answer": "Não, muitas vezes é menos eficiente devido à pilha de chamadas", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Quick Sort é sempre O(n log n)?", 
+    "answer": "Não, no pior caso pode ser O(n²)", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Heap Sort precisa de memória auxiliar extra como Merge Sort?", 
+    "answer": "Não, Heap Sort é feito in-place", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Uma BST sempre garante buscas em O(log n)?", 
+    "answer": "Não, se desbalanceada pode cair para O(n)", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Toda árvore AVL é uma BST?", 
+    "answer": "Sim, AVL é uma BST com balanceamento automático", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "DFS sempre encontra o caminho mais curto?", 
+    "answer": "Não, apenas BFS garante o caminho mais curto em arestas não ponderadas", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Dijkstra funciona em grafos com pesos negativos?", 
+    "answer": "Não, nesse caso deve-se usar Bellman-Ford", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Um grafo conexo e um grafo completo são a mesma coisa?", 
+    "answer": "Não, conexo significa que há caminho entre todos os vértices, completo significa que todos os vértices estão diretamente ligados", 
+    "tags": "conceitos"
+  }
+]

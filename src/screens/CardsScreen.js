@@ -1,3 +1,4 @@
+// src/screens/CardsScreen.js
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
@@ -7,6 +8,7 @@ import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
 import useAppStyles from '../ui/useAppStyles';
+import SuccessCelebration from '../components/SuccessCelebration';
 
 export default function CardsScreen({ route, navigation }) {
   const { quizId } = route.params || {};
@@ -19,6 +21,8 @@ export default function CardsScreen({ route, navigation }) {
   const [idx, setIdx] = useState(0);
   const [show, setShow] = useState(false);
   const [score, setScore] = useState({ right: 0, wrong: 0 });
+  const [celebrate, setCelebrate] = useState(false);
+
   const styles = useAppStyles();
   const { colors } = useTheme();
 
@@ -74,7 +78,10 @@ export default function CardsScreen({ route, navigation }) {
     if (idx + 1 >= cards.length) {
       alert(`Fim! Acertos: ${score.right}/${cards.length}`);
       navigation.goBack();
-    } else { setIdx(idx + 1); setShow(false); }
+    } else {
+      setIdx(idx + 1);
+      setShow(false);
+    }
   };
 
   return (
@@ -95,9 +102,31 @@ export default function CardsScreen({ route, navigation }) {
 
         {show ? (
           <View style={local.row}>
-            <View style={{ flex: 1 }}><PrimaryButton title="Errei" onPress={async () => { setScore(s => ({ ...s, wrong: s.wrong + 1 })); await applySrsResult(cur.id, false); next(); }} style={{ flex: 1 }} /></View>
+            <View style={{ flex: 1 }}>
+              <PrimaryButton
+                title="Errei"
+                onPress={async () => {
+                  setScore(s => ({ ...s, wrong: s.wrong + 1 }));
+                  // aplica SRS e avança imediatamente
+                  await applySrsResult(cur.id, false);
+                  next();
+                }}
+                style={{ flex: 1 }}
+              />
+            </View>
             <View style={{ width: 8 }} />
-            <View style={{ flex: 1 }}><PrimaryButton title="Acertei" onPress={async () => { setScore(s => ({ ...s, right: s.right + 1 })); await applySrsResult(cur.id, true); next(); }} style={{ flex: 1 }} /></View>
+            <View style={{ flex: 1 }}>
+              <PrimaryButton
+                title="Acertei"
+                onPress={() => {
+                  setScore(s => ({ ...s, right: s.right + 1 }));
+                  setCelebrate(true); // dispara a animação
+                  // aplica SRS sem bloquear a animação
+                  applySrsResult(cur.id, true).catch(() => {});
+                }}
+                style={{ flex: 1 }}
+              />
+            </View>
           </View>
         ) : (
           <PrimaryButton title="Mostrar resposta" onPress={() => setShow(true)} />
@@ -105,11 +134,19 @@ export default function CardsScreen({ route, navigation }) {
 
         <Text style={[styles.muted, { marginTop: 10 }]}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
       </View>
+
+      {celebrate && (
+        <SuccessCelebration
+          onDone={() => {
+            setCelebrate(false);
+            next(); // avança após a animação de acerto
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 }
 
-function Controls() { return null; } // (não usado mais)
 function toggleTag(setSelected) {
   return (t) => {
     if (!t) { setSelected(new Set()); return; }
@@ -121,4 +158,5 @@ function toggleTag(setSelected) {
     });
   };
 }
+
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }

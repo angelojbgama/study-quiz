@@ -1,0 +1,79 @@
+[
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é recursão em algoritmos?", 
+    "answer": "É quando uma função chama a si mesma para resolver subproblemas", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é o elemento essencial que toda função recursiva precisa ter?", 
+    "answer": "Um caso base que interrompe a recursão", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que acontece se uma função recursiva não tiver caso base?", 
+    "answer": "Ela entra em recursão infinita até causar erro de pilha (StackOverflow)", 
+    "tags": "erros"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é o caso base em uma função recursiva?", 
+    "answer": "A condição de parada que encerra a recursão", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Em fatorial recursivo, qual é o caso base?", 
+    "answer": "Quando n = 0 ou n = 1", 
+    "tags": "exemplo"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Em Fibonacci recursivo, qual é o caso base?", 
+    "answer": "Quando n = 0 retorna 0 e quando n = 1 retorna 1", 
+    "tags": "exemplo"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é recursão direta?", 
+    "answer": "Quando a função chama a si mesma diretamente", 
+    "tags": "tipos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é recursão indireta?", 
+    "answer": "Quando uma função chama outra que, por sua vez, chama a primeira", 
+    "tags": "tipos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é recursão de cauda (tail recursion)?", 
+    "answer": "É quando a chamada recursiva é a última instrução da função", 
+    "tags": "tipos"
+  },{ 
+    "quiz": "Recursividade", 
+    "question": "Qual é a complexidade do cálculo recursivo simples de Fibonacci?", 
+    "answer": "O(2^n)", 
+    "tags": "exemplo"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual técnica pode otimizar a recursão de Fibonacci?", 
+    "answer": "Memoização ou programação dinâmica", 
+    "tags": "otimização"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Quantos movimentos mínimos são necessários para resolver a Torre de Hanói com n discos?", 
+    "answer": "2^n - 1", 
+    "tags": "problemas clássicos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é o caso base típico da função Fatorial?", 
+    "answer": "Fatorial(0) = 1", 
+    "tags": "problemas clássicos"
+  }
+]

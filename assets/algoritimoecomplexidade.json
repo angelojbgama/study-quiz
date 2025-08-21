@@ -1,0 +1,156 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a complexidade da busca sequencial no pior caso?", 
+    "answer": "O(n)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a complexidade da busca binária?", 
+    "answer": "O(log n)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "O que representa a notação Big-O?", 
+    "answer": "O limite superior do crescimento de um algoritmo", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Um algoritmo com dois loops aninhados até n tem complexidade de que ordem?", 
+    "answer": "O(n²)", 
+    "tags": "estruturas de repetição"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a diferença entre melhor caso e pior caso?", 
+    "answer": "Melhor caso é a situação mais favorável, pior caso é a mais desfavorável em tempo de execução", 
+    "tags": "conceitos"
+  },
+
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é recursão em algoritmos?", 
+    "answer": "Quando uma função chama a si mesma para resolver subproblemas", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que é caso base em uma função recursiva?", 
+    "answer": "É a condição de parada que evita chamadas infinitas", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é a complexidade do cálculo recursivo de Fibonacci sem otimizações?", 
+    "answer": "O(2^n)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual técnica pode otimizar recursões como Fibonacci?", 
+    "answer": "Memoização ou programação dinâmica", 
+    "tags": "otimização"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é o número mínimo de movimentos na Torre de Hanói com n discos?", 
+    "answer": "2^n - 1", 
+    "tags": "problemas clássicos"
+  },
+
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade média do Merge Sort?", 
+    "answer": "O(n log n)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação escolhe um pivô e particiona o vetor?", 
+    "answer": "Quick Sort", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação usa uma árvore binária especial chamada heap?", 
+    "answer": "Heap Sort", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a principal desvantagem do Merge Sort?", 
+    "answer": "Precisa de memória extra para o vetor auxiliar", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo pode cair no pior caso O(n²) se o pivô for mal escolhido?", 
+    "answer": "Quick Sort", 
+    "tags": "complexidade"
+  },
+
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual a regra de uma árvore binária de busca (BST)?", 
+    "answer": "Valores menores ficam à esquerda e maiores à direita", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual travessia de uma BST retorna os valores em ordem crescente?", 
+    "answer": "Travessia em ordem (inorder)", 
+    "tags": "percursos"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual problema ocorre em uma BST simples sem balanceamento?", 
+    "answer": "Ela pode degenerar em uma lista ligada, piorando a complexidade para O(n)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual a diferença de altura permitida em uma árvore AVL entre subárvores?", 
+    "answer": "No máximo 1", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual operação é usada para rebalancear árvores AVL?", 
+    "answer": "Rotações simples ou duplas", 
+    "tags": "operações"
+  },
+
+  { 
+    "quiz": "Grafos", 
+    "question": "Quais são os dois componentes básicos de um grafo?", 
+    "answer": "Vértices e arestas", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual a diferença entre grafo direcionado e não direcionado?", 
+    "answer": "No direcionado as arestas têm direção, no não direcionado não", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra o caminho mais curto em grafos ponderados sem pesos negativos?", 
+    "answer": "Dijkstra", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra a árvore geradora mínima usando união de conjuntos?", 
+    "answer": "Kruskal", 
+    "tags": "árvore geradora"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo percorre um grafo por camadas usando fila?", 
+    "answer": "Busca em largura (BFS)", 
+    "tags": "percursos"
+  }
+]

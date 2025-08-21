@@ -1,0 +1,92 @@
+[
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Por que algoritmos de ordenação são importantes?", 
+    "answer": "Porque organizar dados é essencial para buscas rápidas e análises eficientes", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade mínima para ordenar eficientemente n elementos?", 
+    "answer": "O(n log n)", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual a estratégia usada pelo Merge Sort?", 
+    "answer": "Dividir para conquistar, dividindo o vetor e mesclando resultados ordenados", 
+    "tags": "merge sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade do Merge Sort em todos os casos?", 
+    "answer": "O(n log n)", 
+    "tags": "merge sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a principal desvantagem do Merge Sort?", 
+    "answer": "Necessita de memória auxiliar adicional", 
+    "tags": "merge sort"
+  },
+   { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a estratégia usada pelo Quick Sort?", 
+    "answer": "Escolher um pivô e particionar o vetor em torno dele", 
+    "tags": "quick sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade média do Quick Sort?", 
+    "answer": "O(n log n)", 
+    "tags": "quick sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade do Quick Sort no pior caso?", 
+    "answer": "O(n²)", 
+    "tags": "quick sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Como evitar que o Quick Sort caia no pior caso?", 
+    "answer": "Escolhendo bons pivôs, como o pivô aleatório ou mediana de três", 
+    "tags": "quick sort"
+  },
+   { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual estrutura de dados é usada no Heap Sort?", 
+    "answer": "Uma heap binária", 
+    "tags": "heap sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a complexidade do Heap Sort?", 
+    "answer": "O(n log n)", 
+    "tags": "heap sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "O Heap Sort precisa de memória auxiliar como o Merge Sort?", 
+    "answer": "Não, ele é feito in-place", 
+    "tags": "heap sort"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação é estável: Merge Sort ou Quick Sort?", 
+    "answer": "Merge Sort", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação é mais eficiente na prática para grandes volumes?", 
+    "answer": "Quick Sort", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo é usado em muitas bibliotecas modernas como no Python?", 
+    "answer": "Timsort (variante de Merge + Insertion Sort)", 
+    "tags": "comparação"
+  }
+]

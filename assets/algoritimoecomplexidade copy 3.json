@@ -1,0 +1,74 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    j = n\n    while j > 0:\n        j = j // 2\n        print(i, j)", 
+    "answer": "O(n log n)", 
+    "tags": "código"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    for j in range(i):\n        print(i, j)", 
+    "answer": "O(n²)", 
+    "tags": "código"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    for j in range(n):\n        for k in range(n):\n            print(i, j, k)", 
+    "answer": "O(n³)", 
+    "tags": "código"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é a complexidade da função abaixo?\n\ndef func(n):\n    if n <= 1:\n        return 1\n    return func(n-1) + func(n-1)", 
+    "answer": "O(2^n)", 
+    "tags": "código"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que acontece com a função abaixo?\n\ndef f(n):\n    if n == 0:\n        return 0\n    else:\n        return f(n+1)", 
+    "answer": "Entra em recursão infinita até estourar a pilha (StackOverflow)", 
+    "tags": "erros"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Se o Quick Sort escolher sempre o pior pivô, qual é sua complexidade?", 
+    "answer": "O(n²)", 
+    "tags": "complexidade"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual é a vantagem do Heap Sort em relação ao Merge Sort?", 
+    "answer": "Não precisa de memória auxiliar extra", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "O que acontece se inserirmos os valores 1,2,3,4,5 em uma BST simples?", 
+    "answer": "A árvore degenera em uma lista ligada (desbalanceada)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual é a sequência de saída da travessia pós-ordem da árvore abaixo?\n\n    2\n   / \\\n  1   3", 
+    "answer": "1, 3, 2", 
+    "tags": "percursos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo detecta ciclos em um grafo direcionado usando pilha de recursão?", 
+    "answer": "DFS", 
+    "tags": "percursos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual estrutura de dados é usada em Dijkstra para escolher sempre o próximo vértice com menor distância?", 
+    "answer": "Fila de prioridade (heap)", 
+    "tags": "caminhos mínimos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Se quisermos saber se um grafo é conexo (todos os vértices estão ligados), qual algoritmo podemos usar?", 
+    "answer": "BFS ou DFS", 
+    "tags": "aplicações"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Se um algoritmo executa em tempo O(n) e outro em O(n log n), qual tende a ser mais rápido para entradas muito grandes?", 
+    "answer": "O(n)", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Por que constantes (como 2n ou n+10) são ignoradas na análise assintótica?", 
+    "answer": "Porque não influenciam no crescimento para entradas muito grandes", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "O que acontece se uma função recursiva não tiver caso base?", 
+    "answer": "Ela entra em recursão infinita até estourar a pilha de execução (StackOverflow)", 
+    "tags": "erros"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é a vantagem da recursão em problemas como percorrer árvores?", 
+    "answer": "Simplifica a implementação, refletindo a estrutura hierárquica da árvore", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação é usado em muitas bibliotecas modernas, como no Python (sort)?", 
+    "answer": "Timsort (mistura de Merge Sort e Insertion Sort)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Entre Quick Sort e Merge Sort, qual precisa de memória auxiliar extra?", 
+    "answer": "Merge Sort", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Por que usamos árvores balanceadas como AVL em vez de BST simples?", 
+    "answer": "Para garantir sempre buscas O(log n), evitando que a árvore vire uma lista", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual é a principal diferença entre uma AVL e uma Red-Black Tree?", 
+    "answer": "A AVL é mais rigidamente balanceada, a Red-Black é menos balanceada mas tem inserções/remoções mais rápidas", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo você usaria em uma rede social para sugerir amigos em comum?", 
+    "answer": "BFS ou DFS para encontrar conexões de 2 níveis (amigos de amigos)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo é mais indicado para calcular rotas em GPS (estradas com distâncias positivas)?", 
+    "answer": "Dijkstra", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Se quisermos planejar a rede elétrica de uma cidade com menor custo, qual algoritmo usaríamos?", 
+    "answer": "Kruskal ou Prim (árvore geradora mínima)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Se precisarmos verificar se um grafo tem ciclos, qual algoritmo é adequado?", 
+    "answer": "DFS", 
+    "tags": "aplicações"
+  }
+]

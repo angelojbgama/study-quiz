@@ -1,0 +1,74 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Por que analisar a complexidade de algoritmos é importante em sistemas que lidam com grandes volumes de dados?", 
+    "answer": "Porque garante que o algoritmo seja escalável e não fique inviável com muitos dados", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Em um site de e-commerce com milhões de produtos, por que usar busca binária é melhor que busca sequencial?", 
+    "answer": "Porque reduz o tempo de busca de O(n) para O(log n)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Por que recursão é usada em algoritmos de navegação de pastas no computador?", 
+    "answer": "Porque pastas podem conter outras pastas, formando uma estrutura hierárquica natural para recursão", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Em jogos como xadrez, por que recursão é usada em algoritmos de decisão?", 
+    "answer": "Porque cada jogada leva a um novo estado que pode ser explorado recursivamente", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Por que algoritmos como Quick Sort ou Timsort são usados em bancos de dados?", 
+    "answer": "Porque conseguem ordenar milhões de registros de forma eficiente", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Por que bibliotecas de programação usam Insertion Sort em listas pequenas?", 
+    "answer": "Porque em listas pequenas o custo do algoritmo simples é menor que dividir para conquistar", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Por que bancos de dados usam árvores balanceadas como AVL ou B-Trees?", 
+    "answer": "Para garantir buscas rápidas e consistentes mesmo com muitos registros", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Por que uma árvore binária de busca é melhor que uma lista ordenada para inserções?", 
+    "answer": "Porque inserções em árvores são O(log n), enquanto em listas ordenadas podem ser O(n)", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como o Google Maps usa algoritmos de grafos?", 
+    "answer": "Para calcular rotas mais curtas entre cidades usando Dijkstra e variações", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como redes sociais como Facebook e Instagram usam grafos?", 
+    "answer": "Representando usuários como vértices e conexões como arestas para sugerir amigos", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Como grafos são usados em análise de redes de energia?", 
+    "answer": "Cada nó representa uma estação e as arestas representam conexões de transmissão", 
+    "tags": "aplicações"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo de grafos pode ser usado para planejar o menor custo em cabos de internet de uma cidade?", 
+    "answer": "Kruskal ou Prim para gerar uma árvore mínima de conexões", 
+    "tags": "aplicações"
+  }
+]

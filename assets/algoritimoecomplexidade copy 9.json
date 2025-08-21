@@ -1,0 +1,74 @@
+[
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Qual notação representa o limite inferior de desempenho de um algoritmo?", 
+    "answer": "Ω (Ômega)", 
+    "tags": "teoria"
+  },
+  { 
+    "quiz": "Análise de Algoritmos", 
+    "question": "Um algoritmo com complexidade O(n log n) sempre será mais rápido que O(n²)?", 
+    "answer": "Não necessariamente para n pequeno, mas sim para n grandes", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual é a vantagem da recursão de cauda (tail recursion)?", 
+    "answer": "Ela pode ser otimizada pelo compilador para não usar pilha extra", 
+    "tags": "conceitos"
+  },
+  { 
+    "quiz": "Recursividade", 
+    "question": "Qual problema clássico de recursão usa a fórmula 2^n - 1?", 
+    "answer": "Torre de Hanói", 
+    "tags": "problemas clássicos"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação é estável e sempre O(n log n)?", 
+    "answer": "Merge Sort", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Ordenação Avançada", 
+    "question": "Qual algoritmo de ordenação é rápido na prática, mas pode cair para O(n²)?", 
+    "answer": "Quick Sort", 
+    "tags": "comparação"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual é a principal operação usada para manter uma árvore AVL balanceada?", 
+    "answer": "Rotações (simples e duplas)", 
+    "tags": "operações"
+  },
+  { 
+    "quiz": "Árvores Binárias e AVL", 
+    "question": "Qual travessia de uma BST resulta em valores ordenados?", 
+    "answer": "Travessia em ordem (in-order)", 
+    "tags": "percursos"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual estrutura de dados é mais eficiente para grafos esparsos?", 
+    "answer": "Lista de adjacência", 
+    "tags": "representação"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo encontra a árvore geradora mínima escolhendo sempre a menor aresta disponível?", 
+    "answer": "Kruskal", 
+    "tags": "árvore geradora"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "DFS garante o caminho mais curto entre dois vértices?", 
+    "answer": "Não, apenas BFS garante o menor caminho em arestas não ponderadas", 
+    "tags": "pegadinha"
+  },
+  { 
+    "quiz": "Grafos", 
+    "question": "Qual algoritmo calcula o caminho mínimo entre todos os pares de vértices?", 
+    "answer": "Floyd-Warshall", 
+    "tags": "caminhos mínimos"
+  }
+]

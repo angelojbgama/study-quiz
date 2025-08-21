@@ -1,0 +1,98 @@
+[
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa dizer que um algoritmo é correto?",
+    "answer": "Que ele resolve o problema proposto para todas as entradas válidas",
+    "tags": "corretude"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo incorreto pode parecer funcionar em alguns casos?",
+    "answer": "Sim, mas ele falha em entradas específicas ou casos limites",
+    "tags": "corretude"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que se avalia na análise de algoritmos além da corretude?",
+    "answer": "A eficiência em termos de tempo de execução e uso de memória",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação O (Big-O)?",
+    "answer": "O limite superior assintótico do crescimento de um algoritmo",
+    "tags": "notação"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Ω (Ômega)?",
+    "answer": "O limite inferior do crescimento de um algoritmo",
+    "tags": "notação"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Θ (Teta)?",
+    "answer": "O crescimento exato do algoritmo, limitando superior e inferior",
+    "tags": "notação"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a simplificação de O(n + log n)?",
+    "answer": "O(n)",
+    "tags": "pegadinha"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa melhor caso na análise de algoritmos?",
+    "answer": "O cenário mais favorável, onde o algoritmo executa mais rápido",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa pior caso na análise de algoritmos?",
+    "answer": "O cenário mais desfavorável, onde o algoritmo executa mais lentamente",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa caso médio?",
+    "answer": "O desempenho esperado do algoritmo em entradas típicas",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Na busca binária, qual é o caso pior em termos de complexidade?",
+    "answer": "O(log n)",
+    "tags": "exemplo"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Na busca sequencial, qual é o caso pior em termos de complexidade?",
+    "answer": "O(n)",
+    "tags": "exemplo"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual a complexidade de um duplo loop aninhado até n?",
+    "answer": "O(n²)",
+    "tags": "código"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual a complexidade de um loop que dobra a variável a cada iteração até n?",
+    "answer": "O(log n)",
+    "tags": "código"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um algoritmo tem um loop O(n) externo e um loop O(log n) interno, qual a complexidade?",
+    "answer": "O(n log n)",
+    "tags": "código"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um algoritmo realiza sempre 100 operações, qual é sua complexidade?",
+    "answer": "O(1)",
+    "tags": "código"
+  }
+]
