@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, FlatList, Alert } from 'react-native
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import PrimaryButton from '../components/PrimaryButton';
+
 import { getQuizzes, countQuestions, deleteQuiz } from '../db';
 
 export default function HomeScreen({ navigation }) {
@@ -66,7 +67,8 @@ export default function HomeScreen({ navigation }) {
         key={item.id}
         onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}
         style={({ pressed }) => [styles.item, pressed && { opacity: 0.85 }]}
-        android_ripple={{ color: colors.border }}
+
+        android_ripple={{ color: '#e9e9e9' }}
         hitSlop={8}
         accessibilityRole="button"
         accessibilityLabel={`Abrir quiz ${item.title}`}
@@ -75,7 +77,8 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.itemDesc}>{item.total} cartões</Text>
       </Pressable>
       <View style={styles.delBtn}>
-        <PrimaryButton title="Excluir" onPress={() => handleDelete(item.id)} style={{ backgroundColor: colors.danger }} />
+
+        <Button title="Excluir" color="#b00020" onPress={() => handleDelete(item.id)} />
       </View>
     </View>
   );
@@ -116,3 +119,22 @@ export default function HomeScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+
+const styles = StyleSheet.create({
+  sa: { flex: 1, backgroundColor: '#f7f7f7' },
+  panel: { backgroundColor: '#fff', borderRadius: 12, padding: 12, borderWidth: 1, borderColor: '#eee', marginBottom: 8 },
+  row: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 8 },
+  btn: { minWidth: 140, marginRight: 8, marginTop: 8 },
+  title: { fontSize: 20, fontWeight: '700' },
+  titleSmall: { fontSize: 18, fontWeight: '700', marginTop: 12 },
+  subtitle: { color: '#555', marginTop: 4 },
+  headerRow: { marginTop: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  itemRow: { flexDirection: 'row', alignItems: 'center' },
+  item: { flex: 1, padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
+  delBtn: { marginLeft: 8 },
+  itemTitle: { fontSize: 16, fontWeight: '600', flexWrap: 'wrap' },
+  itemDesc: { color: '#666', marginTop: 2 },
+  empty: { color: '#666', paddingHorizontal: 16 },
+  fab: { position: 'absolute', right: 16, minWidth: 140 }
+});
