@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View, TextInput, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
+import PrimaryButton from '../components/PrimaryButton';
 import { createQuiz } from '../db';
 
 export default function QuizEditorScreen({ navigation }) {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   const save = async () => { await createQuiz(title, desc); navigation.goBack(); };
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    label: { fontWeight: '600', marginBottom: 6, color: colors.text },
+    input: {
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 8,
+      padding: 12,
+      backgroundColor: colors.card,
+      marginBottom: 12,
+      color: colors.text
+    },
+    footer: { paddingHorizontal: 16 }
+  }), [colors]);
 
   return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
@@ -33,16 +51,9 @@ export default function QuizEditorScreen({ navigation }) {
           />
         </ScrollView>
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 8) }]}>
-          <Button title="Salvar" onPress={save} disabled={!title.trim()} />
+          <PrimaryButton title="Salvar" onPress={save} disabled={!title.trim()} />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  label: { fontWeight: '600', marginBottom: 6 },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, backgroundColor: '#fff', marginBottom: 12 },
-  footer: { paddingHorizontal: 16 }
-});

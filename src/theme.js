@@ -1,34 +1,37 @@
-import { MD3LightTheme as DefaultTheme } from 'react-native-paper';
-import { DefaultTheme as NavDefaultTheme } from '@react-navigation/native';
+import { DefaultTheme as NavDefaultTheme, DarkTheme as NavDarkTheme } from '@react-navigation/native';
 
-const brand = {
-  primary: '#2e7d32',     // verde
-  secondary: '#1565c0',   // azul
-  surface: '#ffffff',
-  background: '#f7f7f7',
+const base = {
+  primary: '#1976d2', // blue
+  danger: '#dc3545',
+  buttonText: '#ffffff',
 };
 
-export const appTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: brand.primary,
-    secondary: brand.secondary,
-    surface: brand.surface,
-    background: brand.background,
-  },
-  roundness: 10
+export const lightColors = {
+  ...base,
+  background: '#ffffff',
+  card: '#f2f2f2',
+  text: '#000000',
+  border: '#dddddd',
+  notification: base.primary,
+  muted: '#666666',
 };
 
-export const navTheme = {
+export const darkColors = {
+  ...base,
+  background: '#000000',
+  card: '#1e1e1e',
+  text: '#ffffff',
+  border: '#333333',
+  notification: base.primary,
+  muted: '#aaaaaa',
+};
+
+export const navLightTheme = {
   ...NavDefaultTheme,
-  colors: {
-    ...NavDefaultTheme.colors,
-    primary: brand.primary,
-    background: brand.background,
-    card: brand.surface,
-    text: '#111',
-    border: '#ddd',
-    notification: brand.secondary
-  }
+  colors: { ...NavDefaultTheme.colors, ...lightColors },
+};
+
+export const navDarkTheme = {
+  ...NavDarkTheme,
+  colors: { ...NavDarkTheme.colors, ...darkColors },
 };

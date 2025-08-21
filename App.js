@@ -2,14 +2,13 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationContainer, useTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
 
-import { navTheme } from './src/theme';
+import { navLightTheme, navDarkTheme } from './src/theme';
 
 import HomeScreen from './src/screens/HomeScreen';
 import QuizEditorScreen from './src/screens/QuizEditorScreen';
@@ -27,15 +26,16 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: navTheme.colors.primary,
-        tabBarInactiveTintColor: '#666',
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
         tabBarStyle: {
-          backgroundColor: '#fff',
-          borderTopColor: '#eee',
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
           height: 56,
           paddingTop: 6,
           paddingBottom: 6
@@ -71,18 +71,20 @@ export default function App() {
   useEffect(() => { initDb(); }, []);
   return (
     <SafeAreaProvider>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-        <Stack.Navigator>
-          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-          <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
-          <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
-          <Stack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Nova Pergunta' }} />
-          <Stack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
-          <Stack.Screen name="Cards" component={CardsScreen} options={{ title: 'Cartões' }} />
-          <Stack.Screen name="Learn" component={LearnScreen} options={{ title: 'Aprender' }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer theme={scheme === 'dark' ? navDarkTheme : navLightTheme}>
+          <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+          <Stack.Navigator>
+            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+            <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
+            <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
+            <Stack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Nova Pergunta' }} />
+            <Stack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
+            <Stack.Screen name="Cards" component={CardsScreen} options={{ title: 'Cartões' }} />
+            <Stack.Screen name="Learn" component={LearnScreen} options={{ title: 'Aprender' }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
