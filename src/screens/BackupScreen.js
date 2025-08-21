@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
@@ -14,6 +15,16 @@ export default function BackupScreen() {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: { flex: 1, padding: 16 },
+    panel: { backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: 12 },
+    title: { fontSize: 18, fontWeight: '700', marginBottom: 8, color: colors.text },
+    status: { color: colors.muted, marginTop: 8 },
+    hint: { color: colors.muted, marginTop: 12 }
+  }), [colors]);
 
   const onExport = async () => {
     try {
@@ -95,8 +106,8 @@ export default function BackupScreen() {
           <View style={{ marginBottom: 8 }}><Button title="Exportar (JSON) & Compartilhar" onPress={onExport} disabled={loading} /></View>
           <View style={{ marginBottom: 8 }}><Button title="Importar de arquivo (JSON)" onPress={onImport} disabled={loading} /></View>
           <View style={{ marginBottom: 8 }}><Button title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} disabled={loading} /></View>
-          {loading ? <ActivityIndicator /> : <Text style={{ color: '#555', marginTop: 8 }}>{status}</Text>}
-          <Text style={{ color: '#777', marginTop: 12 }}>
+          {loading ? <ActivityIndicator /> : <Text style={styles.status}>{status}</Text>}
+          <Text style={styles.hint}>
             Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
           </Text>
         </View>
@@ -104,10 +115,3 @@ export default function BackupScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, padding: 16 },
-  panel: { backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', padding: 12 },
-  title: { fontSize: 18, fontWeight: '700', marginBottom: 8 }
-});

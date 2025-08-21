@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -13,6 +14,18 @@ export default function StudyTodayScreen({ navigation }) {
   const [goal, setGoal] = useState('20');
   const [dueTotal, setDueTotal] = useState(0);
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: { flex: 1, padding: 16 },
+    panel: { backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: 12 },
+    title: { fontSize: 18, fontWeight: '700', marginBottom: 8, color: colors.text },
+    goalRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
+    input: { width: 70, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 8, textAlign: 'center', marginHorizontal: 8, backgroundColor: colors.card, color: colors.text },
+    due: { marginTop: 8, color: colors.muted },
+    text: { color: colors.text }
+  }), [colors]);
 
   useEffect(() => {
     (async () => {
@@ -60,11 +73,11 @@ export default function StudyTodayScreen({ navigation }) {
             }}
           />
           <View style={styles.goalRow}>
-            <Text>Meta do dia:</Text>
+            <Text style={styles.text}>Meta do dia:</Text>
             <TextInput value={goal} onChangeText={setGoal} keyboardType="number-pad" style={styles.input} />
-            <Text>itens</Text>
+            <Text style={styles.text}>itens</Text>
           </View>
-          <Text style={{ marginTop: 8, color: '#555' }}>Vencidos no filtro: {dueTotal}</Text>
+          <Text style={styles.due}>Vencidos no filtro: {dueTotal}</Text>
           <View style={{ height: 12 }} />
           <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
         </View>
@@ -73,11 +86,3 @@ export default function StudyTodayScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, padding: 16 },
-  panel: { backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', padding: 12 },
-  title: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
-  goalRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-  input: { width: 70, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 8, textAlign: 'center', marginHorizontal: 8 }
-});

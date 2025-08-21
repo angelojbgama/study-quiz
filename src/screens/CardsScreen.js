@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import { getQuestionsByQuiz, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -18,6 +19,19 @@ export default function CardsScreen({ route, navigation }) {
   const [show, setShow] = useState(false);
   const [score, setScore] = useState({ right: 0, wrong: 0 });
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: { flex: 1, padding: 16 },
+    panel: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: 12 },
+    switchRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
+    card: { minHeight: 200, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: 16, justifyContent: 'center', alignItems: 'center' },
+    term: { fontSize: 18, fontWeight: '700', textAlign: 'center', color: colors.text },
+    hint: { marginTop: 8, color: colors.muted },
+    row: { flexDirection: 'row', marginTop: 12 },
+    progress: { marginTop: 12, color: colors.muted }
+  }), [colors]);
 
   useEffect(() => {
     (async () => {
@@ -46,8 +60,8 @@ export default function CardsScreen({ route, navigation }) {
   if (cards.length === 0) return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
-        <Text>Sem cartões para este filtro.</Text>
+        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} colors={colors} styles={styles} />
+        <Text style={{ color: colors.muted }}>Sem cartões para este filtro.</Text>
       </View>
     </SafeAreaView>
   );
@@ -64,7 +78,7 @@ export default function CardsScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} />
+        <Controls tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} onlyDue={onlyDue} setOnlyDue={setOnlyDue} colors={colors} styles={styles} />
 
         <Pressable onPress={() => setShow(!show)} style={styles.card}>
           <Text style={styles.term}>{!show ? cur.text : cur.answer}</Text>
@@ -81,18 +95,17 @@ export default function CardsScreen({ route, navigation }) {
           <PrimaryButton title="Mostrar resposta" onPress={() => setShow(true)} />
         )}
 
-        <Text style={{ marginTop: 12, color: '#555' }}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
+        <Text style={styles.progress}>{idx + 1} / {cards.length} • Acertos: {score.right}</Text>
       </View>
     </SafeAreaView>
   );
 }
-
-function Controls({ tags, counts, selected, onToggle, onlyDue, setOnlyDue }) {
+function Controls({ tags, counts, selected, onToggle, onlyDue, setOnlyDue, colors, styles }) {
   return (
     <View style={styles.panel}>
       <TagChips tags={tags} counts={counts} selected={selected} onToggle={onToggle} />
       <View style={styles.switchRow}>
-        <Text style={{ marginRight: 8 }}>Somente vencidos (SRS)</Text>
+        <Text style={{ marginRight: 8, color: colors.text }}>Somente vencidos (SRS)</Text>
         <Switch value={onlyDue} onValueChange={setOnlyDue} />
       </View>
     </View>
@@ -112,13 +125,3 @@ function toggleTag(setSelected) {
 }
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, padding: 16 },
-  panel: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', marginBottom: 12 },
-  switchRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-  card: { minHeight: 200, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', padding: 16, justifyContent: 'center', alignItems: 'center' },
-  term: { fontSize: 18, fontWeight: '700', textAlign: 'center' },
-  hint: { marginTop: 8, color: '#666' },
-  row: { flexDirection: 'row', marginTop: 12 }
-});

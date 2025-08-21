@@ -1,13 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import { getQuestionsByQuiz } from '../db';
 
 export default function QuestionListScreen({ route, navigation }) {
   const { quizId, title } = route.params || {};
   const [questions, setQuestions] = useState([]);
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: { flex: 1, paddingHorizontal: 16, paddingTop: 16 },
+    actions: { marginBottom: 10, alignItems: 'flex-end' },
+    list: { flex: 1 },
+    card: { padding: 12, backgroundColor: colors.card, borderRadius: 8, marginBottom: 8, borderWidth: 1, borderColor: colors.border },
+    q: { fontWeight: '700', fontSize: 16, flexWrap: 'wrap', color: colors.text },
+    a: { marginTop: 6, color: colors.text },
+    exp: { marginTop: 6, color: colors.text },
+    tags: { marginTop: 4, color: colors.muted },
+    footer: { flexDirection: 'row', marginTop: 8 }
+  }), [colors]);
 
   useEffect(() => { navigation.setOptions({ title: title || 'Perguntas' }); }, [title]);
 
@@ -45,16 +60,3 @@ export default function QuestionListScreen({ route, navigation }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, paddingHorizontal: 16, paddingTop: 16 },
-  actions: { marginBottom: 10, alignItems: 'flex-end' },
-  list: { flex: 1 },
-  card: { padding: 12, backgroundColor: '#fff', borderRadius: 8, marginBottom: 8, borderWidth: 1, borderColor: '#eee' },
-  q: { fontWeight: '700', fontSize: 16, flexWrap: 'wrap' },
-  a: { marginTop: 6 },
-  exp: { marginTop: 6, color: '#333' },
-  tags: { marginTop: 4, color: '#555' },
-  footer: { flexDirection: 'row', marginTop: 8 }
-});

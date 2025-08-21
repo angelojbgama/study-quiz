@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import { distinctTagsFromQuestions, parseTags } from '../util/tags';
 
 export default function StatsScreen() {
   const [rows, setRows] = useState([]);
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    header: { marginBottom: 8 },
+    title: { fontSize: 18, fontWeight: '700', color: colors.text },
+    row: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border },
+    tag: { fontWeight: '700', marginBottom: 6, flexWrap: 'wrap', color: colors.text },
+    detail: { color: colors.text },
+    empty: { color: colors.muted, textAlign: 'center', marginTop: 16 },
+    progressOuter: { height: 6, backgroundColor: colors.border, borderRadius: 6, overflow: 'hidden', marginTop: 6 },
+    progressInner: { height: 6, backgroundColor: colors.primary }
+  }), [colors]);
 
   useEffect(() => {
     (async () => {
@@ -37,7 +51,7 @@ export default function StatsScreen() {
   const renderItem = ({ item }) => (
     <View style={styles.row}>
       <Text style={styles.tag}>{item.tag}</Text>
-      <Text>Total: {item.total} • Vencidos: {item.due} • Acurácia: {item.accRate}% ({item.attempts})</Text>
+      <Text style={styles.detail}>Total: {item.total} • Vencidos: {item.due} • Acurácia: {item.accRate}% ({item.attempts})</Text>
       <View style={styles.progressOuter}>
         <View style={[styles.progressInner, { width: `${item.accRate}%` }]} />
       </View>
@@ -63,14 +77,3 @@ export default function StatsScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  header: { marginBottom: 8 },
-  title: { fontSize: 18, fontWeight: '700' },
-  row: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
-  tag: { fontWeight: '700', marginBottom: 6, flexWrap: 'wrap' },
-  empty: { color: '#666', textAlign: 'center', marginTop: 16 },
-  progressOuter: { height: 6, backgroundColor: '#eee', borderRadius: 6, overflow: 'hidden', marginTop: 6 },
-  progressInner: { height: 6, backgroundColor: '#2e7d32' }
-});

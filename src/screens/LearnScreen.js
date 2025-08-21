@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Switch, Pressable } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@react-navigation/native';
 import { getQuestionsByQuiz, getQuizzes, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -15,6 +16,23 @@ export default function LearnScreen({ route, navigation }) {
   const [onlyDueState, setOnlyDue] = useState(onlyDue);
   const [state, setState] = useState({ index: 0, total: 0, score: 0, current: null, options: [], answered: null });
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: { flex: 1, padding: 16 },
+    panel: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: 12 },
+    switchRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    title: { fontSize: 18, fontWeight: '700', marginVertical: 8, color: colors.text },
+    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card },
+    progressOuter: { height: 8, backgroundColor: colors.border, borderRadius: 8, overflow: 'hidden' },
+    progressInner: { height: 8, backgroundColor: colors.primary },
+    hint: { color: colors.muted },
+    resultCorrect: { fontWeight: '700', color: colors.primary },
+    resultWrong: { fontWeight: '700', color: colors.danger },
+    answerText: { marginTop: 6, flexWrap: 'wrap', color: colors.text },
+    muted: { color: colors.muted }
+  }), [colors]);
 
   useEffect(() => {
     (async () => {
@@ -81,11 +99,11 @@ export default function LearnScreen({ route, navigation }) {
           <View style={styles.panel}>
             <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
             <View style={styles.switchRow}>
-              <Text>Somente vencidas (SRS)</Text>
+              <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
               <Switch value={onlyDueState} onValueChange={setOnlyDue} />
             </View>
           </View>
-          <Text style={{ color: '#666' }}>Sem questões para este filtro.</Text>
+          <Text style={styles.hint}>Sem questões para este filtro.</Text>
         </View>
       </SafeAreaView>
     );
@@ -97,7 +115,7 @@ export default function LearnScreen({ route, navigation }) {
         <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
           <View style={styles.panel}>
             <Text style={styles.title}>Sessão concluída</Text>
-            <Text>Pontuação: {state.score}/{state.total}</Text>
+            <Text style={{ color: colors.text }}>Pontuação: {state.score}/{state.total}</Text>
             <View style={{ height: 12 }} />
             <PrimaryButton title="Concluir" onPress={() => navigation.goBack()} />
           </View>
@@ -109,44 +127,44 @@ export default function LearnScreen({ route, navigation }) {
   const progress = state.total ? (state.index + 1) / state.total : 0;
 
   return (
-    <SafeAreaView style={styles.sa} edges={['bottom']}>
-      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-        <View style={styles.panel}>
-          <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
-          <View style={styles.switchRow}>
-            <Text>Somente vencidas (SRS)</Text>
-            <Switch value={onlyDueState} onValueChange={setOnlyDue} />
+      <SafeAreaView style={styles.sa} edges={['bottom']}>
+        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+          <View style={styles.panel}>
+            <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
+            <View style={styles.switchRow}>
+              <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
+              <Switch value={onlyDueState} onValueChange={setOnlyDue} />
+            </View>
+          </View>
+
+          <View style={styles.panel}>
+            <View style={styles.progressOuter}><View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} /></View>
+            <Text style={styles.title}>{state.current.text}</Text>
+
+            {!state.answered ? (
+              state.options.map((opt, idx) => (
+                <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [styles.option, pressed && { opacity: 0.8 }] }>
+                  <Text style={{ flexWrap: 'wrap', color: colors.text }}>{String(opt)}</Text>
+                </Pressable>
+              ))
+            ) : (
+              <View>
+                <Text style={state.answered.isCorrect ? styles.resultCorrect : styles.resultWrong}>
+                  {state.answered.isCorrect ? 'Correto!' : 'Incorreto.'}
+                </Text>
+                {!state.answered.isCorrect ? <Text style={styles.answerText}>Sua resposta: {String(state.answered.chosen)}</Text> : null}
+                <Text style={styles.answerText}>Resposta correta: {String(state.current.answer)}</Text>
+                {state.current.explanation ? <Text style={styles.answerText}>Explicação: {state.current.explanation}</Text> : null}
+                <View style={{ height: 12 }} />
+                <PrimaryButton title="Próxima" onPress={next} />
+              </View>
+            )}
+            <Text style={[styles.muted, { marginTop: 10 }]}>{state.index + 1} de {state.total}</Text>
           </View>
         </View>
-
-        <View style={styles.panel}>
-          <View style={styles.progressOuter}><View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} /></View>
-          <Text style={styles.title}>{state.current.text}</Text>
-
-          {!state.answered ? (
-            state.options.map((opt, idx) => (
-              <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [styles.option, pressed && { opacity: 0.8 }]}>
-                <Text style={{ flexWrap: 'wrap' }}>{String(opt)}</Text>
-              </Pressable>
-            ))
-          ) : (
-            <View>
-              <Text style={{ fontWeight: '700', color: state.answered.isCorrect ? '#2e7d32' : '#b00020' }}>
-                {state.answered.isCorrect ? 'Correto!' : 'Incorreto.'}
-              </Text>
-              {!state.answered.isCorrect ? <Text style={{ marginTop: 6, flexWrap: 'wrap' }}>Sua resposta: {String(state.answered.chosen)}</Text> : null}
-              <Text style={{ marginTop: 6, flexWrap: 'wrap' }}>Resposta correta: {String(state.current.answer)}</Text>
-              {state.current.explanation ? <Text style={{ marginTop: 6, color: '#333', flexWrap: 'wrap' }}>Explicação: {state.current.explanation}</Text> : null}
-              <View style={{ height: 12 }} />
-              <PrimaryButton title="Próxima" onPress={next} />
-            </View>
-          )}
-          <Text style={{ marginTop: 10, color: '#555' }}>{state.index + 1} de {state.total}</Text>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
-}
+      </SafeAreaView>
+    );
+  }
 
 function toggleTag(setSelected) {
   return (t) => {
@@ -196,13 +214,3 @@ function sample(arr, n) {
 
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
-const styles = StyleSheet.create({
-  sa: { flex: 1, backgroundColor: '#f7f7f7' },
-  container: { flex: 1, padding: 16 },
-  panel: { padding: 12, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#eee', marginBottom: 12 },
-  switchRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  title: { fontSize: 18, fontWeight: '700', marginVertical: 8 },
-  option: { padding: 12, borderWidth: 1, borderColor: '#ddd', borderRadius: 8, marginTop: 8, backgroundColor: '#fafafa' },
-  progressOuter: { height: 8, backgroundColor: '#eee', borderRadius: 8, overflow: 'hidden' },
-  progressInner: { height: 8, backgroundColor: '#2e7d32' }
-});
