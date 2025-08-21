@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, useTheme } from '@react-navigation/native';
@@ -9,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { navLightTheme, navDarkTheme } from './src/theme';
+import { navLightTheme } from './src/theme';
 
 import HomeScreen from './src/screens/HomeScreen';
 import QuizEditorScreen from './src/screens/QuizEditorScreen';
@@ -68,14 +67,13 @@ function Tabs() {
 }
 
 export default function App() {
-  const scheme = useColorScheme();
   useEffect(() => { initDb(); }, []);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer theme={scheme === 'dark' ? navDarkTheme : navLightTheme}>
+        <NavigationContainer theme={navLightTheme}>
 
-          <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+          <StatusBar style="dark" />
           <Stack.Navigator>
             <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
             <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />

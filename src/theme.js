@@ -1,4 +1,4 @@
-import { DefaultTheme as NavDefaultTheme, DarkTheme as NavDarkTheme } from '@react-navigation/native';
+import { DefaultTheme as NavDefaultTheme } from '@react-navigation/native';
 
 const base = {
   primary: '#1976d2', // blue
@@ -16,22 +16,7 @@ export const lightColors = {
   muted: '#666666',
 };
 
-export const darkColors = {
-  ...base,
-  background: '#000000',
-  card: '#1e1e1e',
-  text: '#ffffff',
-  border: '#333333',
-  notification: base.primary,
-  muted: '#aaaaaa',
-};
-
 export const navLightTheme = {
   ...NavDefaultTheme,
   colors: { ...NavDefaultTheme.colors, ...lightColors },
-};
-
-export const navDarkTheme = {
-  ...NavDarkTheme,
-  colors: { ...NavDarkTheme.colors, ...darkColors },
 };
