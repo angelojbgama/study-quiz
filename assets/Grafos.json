@@ -1,0 +1,272 @@
+[
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo?",
+    "answer": "Par ordenado de conjuntos disjuntos (V,E), onde V são vértices e E são arestas",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual foi o problema histórico das Pontes de Königsberg?",
+    "answer": "Passar por todas as 7 pontes uma única vez e retornar ao ponto inicial",
+    "tags": "história,euler"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que são vértices adjacentes?",
+    "answer": "Dois vértices que são extremidades de uma mesma aresta",
+    "tags": "conceitos,adjacência"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um laço em grafos?",
+    "answer": "Aresta cujas duas extremidades são o mesmo nó",
+    "tags": "conceitos,tipos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que são arestas paralelas?",
+    "answer": "Duas arestas distintas com extremidades idênticas",
+    "tags": "conceitos,tipos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quando um grafo é considerado simples?",
+    "answer": "Quando não contém arestas paralelas nem laços",
+    "tags": "tipos,simples"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é o grau de um vértice?",
+    "answer": "Número de arestas incidentes ao vértice",
+    "tags": "conceitos,grau"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que diz o teorema da soma dos graus?",
+    "answer": "A soma dos graus de todos os vértices é o dobro do número de arestas",
+    "tags": "teoremas,grau"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quando um grafo é conexo?",
+    "answer": "Quando existe caminho entre quaisquer pares de vértices",
+    "tags": "tipos,conexo"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo completo?",
+    "answer": "Grafo onde existem arestas ligando todos os pares de nós",
+    "tags": "tipos,completo"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a fórmula do número de arestas em grafo completo?",
+    "answer": "n(n-1)/2, onde n é o número de vértices",
+    "tags": "completo,fórmulas"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo complementar?",
+    "answer": "Grafo com as arestas que faltam no grafo original para ser completo",
+    "tags": "tipos,complementar"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quando um grafo é nulo ou vazio?",
+    "answer": "Quando o conjunto de arestas é vazio",
+    "tags": "tipos,nulo"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo regular?",
+    "answer": "Grafo onde todos os vértices têm o mesmo grau",
+    "tags": "tipos,regular"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um ciclo em grafos?",
+    "answer": "Grafo conexo regular onde todos os vértices têm grau 2",
+    "tags": "tipos,ciclo"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo direcionado?",
+    "answer": "Grafo onde as arestas têm direção única (dígrafo)",
+    "tags": "tipos,direcionado"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que são grau de entrada e saída?",
+    "answer": "Número de arestas convergentes e divergentes de um vértice em dígrafo",
+    "tags": "direcionado,grau"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é grafo subjacente?",
+    "answer": "Grafo obtido removendo a direção das arestas de um dígrafo",
+    "tags": "direcionado,subjacente"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é matriz de adjacência?",
+    "answer": "Matriz n×n onde aij=1 se existe aresta entre i e j, 0 caso contrário",
+    "tags": "representação,matriz"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade de espaço da matriz de adjacência?",
+    "answer": "O(n²), onde n é o número de vértices",
+    "tags": "representação,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é matriz de incidência?",
+    "answer": "Matriz n×m onde bij=1 se aresta j incide no vértice i",
+    "tags": "representação,matriz"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade de espaço da matriz de incidência?",
+    "answer": "O(n×m), onde n são vértices e m são arestas",
+    "tags": "representação,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como funciona a busca em profundidade (DFS)?",
+    "answer": "Explora o vértice mais profundo possível antes de retroceder",
+    "tags": "busca,DFS"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é backtracking na busca em profundidade?",
+    "answer": "Retornar ao vértice anterior quando não há mais arestas a explorar",
+    "tags": "busca,DFS,backtracking"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade da busca em profundidade?",
+    "answer": "O(n+a) ou O(max(n,a)), onde n são vértices e a são arestas",
+    "tags": "busca,DFS,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como funciona a busca em largura (BFS)?",
+    "answer": "Visita todos os vizinhos de um nível antes de ir ao próximo",
+    "tags": "busca,BFS"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é usada na BFS?",
+    "answer": "Fila (FIFO - First In First Out)",
+    "tags": "busca,BFS,estruturas"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é usada na DFS?",
+    "answer": "Pilha (implícita na recursão ou explícita)",
+    "tags": "busca,DFS,estruturas"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade da busca em largura?",
+    "answer": "O(n+a), igual à DFS, mas usa mais memória",
+    "tags": "busca,BFS,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um caminho em grafos?",
+    "answer": "Sequência de vértices onde existe aresta entre consecutivos",
+    "tags": "caminhos,conceitos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um caminho simples?",
+    "answer": "Caminho que não passa duas vezes pelo mesmo vértice",
+    "tags": "caminhos,tipos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um circuito em grafos?",
+    "answer": "Caminho onde primeiro e último vértice são iguais, arestas distintas",
+    "tags": "caminhos,circuito"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual o objetivo do algoritmo de Dijkstra?",
+    "answer": "Encontrar o caminho de custo mínimo entre dois nós",
+    "tags": "dijkstra,caminho-mínimo"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a estratégia do algoritmo de Dijkstra?",
+    "answer": "Escolher sempre o nó não visitado com menor distância à origem",
+    "tags": "dijkstra,estratégia"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual restrição o Dijkstra tem sobre pesos?",
+    "answer": "Todos os pesos das arestas devem ser não-negativos",
+    "tags": "dijkstra,restrições"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é o problema do caixeiro-viajante?",
+    "answer": "Encontrar o circuito de custo mínimo passando por todos os vértices",
+    "tags": "caixeiro-viajante,NP"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Por que o caixeiro-viajante é NP-Completo?",
+    "answer": "Solução ótima requer algoritmos exponenciais ou fatoriais",
+    "tags": "caixeiro-viajante,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como funciona o algoritmo de força bruta?",
+    "answer": "Lista todos os circuitos possíveis e escolhe o de menor custo",
+    "tags": "caixeiro-viajante,força-bruta"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade do algoritmo de força bruta?",
+    "answer": "O(n!), fatorial do número de vértices",
+    "tags": "caixeiro-viajante,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como funciona o algoritmo do vizinho mais próximo?",
+    "answer": "Sempre vai para o vizinho não visitado de menor custo",
+    "tags": "caixeiro-viajante,heurística"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a complexidade do vizinho mais próximo?",
+    "answer": "O(n), mas pode dar resultado longe do ótimo",
+    "tags": "caixeiro-viajante,complexidade"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual o corolário do teorema da soma dos graus?",
+    "answer": "Todo grafo possui número par de vértices de grau ímpar",
+    "tags": "teoremas,grau"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que acontece ao remover um vértice?",
+    "answer": "Remove-se o vértice e todas as arestas incidentes a ele",
+    "tags": "operações,remoção"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Para que servem grafos em redes sociais?",
+    "answer": "Modelar relações entre perfis, sugerir amigos, analisar conexões",
+    "tags": "aplicações,redes-sociais"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença de memória entre DFS e BFS?",
+    "answer": "DFS usa O(n) na pilha, BFS pode usar espaço exponencial na fila",
+    "tags": "busca,memória,comparação"
+  }
+]

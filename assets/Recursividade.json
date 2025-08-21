@@ -1,0 +1,272 @@
+[
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursividade?",
+    "answer": "Método onde a solução de um problema depende de soluções menores do mesmo problema",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quais são as duas partes de uma definição recursiva?",
+    "answer": "Caso base (determina casos simples) e passo recursivo (define outros casos)",
+    "tags": "conceitos,estrutura"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é o caso base em recursão?",
+    "answer": "Condição de parada que resolve o problema diretamente sem recursão",
+    "tags": "conceitos,caso-base"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é o passo recursivo?",
+    "answer": "Parte que define casos em termos de casos anteriores/menores",
+    "tags": "conceitos,passo-recursivo"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual a definição recursiva do fatorial?",
+    "answer": "n! = n × (n-1)! com caso base 0! = 1",
+    "tags": "exemplos,fatorial"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como calcular Fibonacci recursivamente?",
+    "answer": "F(n) = F(n-1) + F(n-2), com F(0)=0 e F(1)=1",
+    "tags": "exemplos,fibonacci"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é indução matemática em recursão?",
+    "answer": "Princípio que garante que funções recursivas ficam bem definidas",
+    "tags": "conceitos,indução"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quais as três leis da recursão?",
+    "answer": "Ter caso base, mudar estado aproximando do caso base, chamar a si mesma",
+    "tags": "leis,regras"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Por que ter um caso base é essencial?",
+    "answer": "Para evitar loop infinito e garantir que a recursão termine",
+    "tags": "caso-base,importância"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que significa 'dividir para conquistar'?",
+    "answer": "Quebrar problema em subproblemas menores até resolver trivialmente",
+    "tags": "estratégia,dividir-conquistar"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão em cauda?",
+    "answer": "Quando a chamada recursiva é o último comando executado na função",
+    "tags": "tipos,tail-recursion"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual a vantagem da recursão em cauda?",
+    "answer": "Otimização de memória, pois não precisa manter estados anteriores",
+    "tags": "tail-recursion,otimização"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão indireta?",
+    "answer": "Função A chama B, que chama C, que eventualmente chama A novamente",
+    "tags": "tipos,indireta"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão aninhada?",
+    "answer": "Função recursiva recebe como argumento outra chamada recursiva",
+    "tags": "tipos,aninhada"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Exemplo de recursão aninhada?",
+    "answer": "Função de Ackermann: A(n-1, A(n, m-1))",
+    "tags": "exemplos,ackermann"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é procedimento reentrante?",
+    "answer": "Procedimento que pode ter várias chamadas abertas ao mesmo tempo",
+    "tags": "conceitos,reentrante"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como a recursão usa a memória?",
+    "answer": "Empilha cada chamada na pilha de execução até o caso base",
+    "tags": "memória,pilha"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual o problema de memória em recursão?",
+    "answer": "Pode causar estouro de pilha com muitas chamadas recursivas",
+    "tags": "problemas,stack-overflow"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Vantagem da recursão sobre iteração?",
+    "answer": "Código mais elegante, simples e próximo à definição matemática",
+    "tags": "comparação,vantagens"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Desvantagem da recursão sobre iteração?",
+    "answer": "Maior uso de memória e tempo devido ao empilhamento",
+    "tags": "comparação,desvantagens"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quando evitar recursão?",
+    "answer": "Quando há muitas chamadas recursivas ou crescimento exponencial",
+    "tags": "boas-práticas,evitar"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Por que Fibonacci recursivo é ineficiente?",
+    "answer": "Cada chamada gera duas novas, crescimento exponencial de chamadas",
+    "tags": "fibonacci,problemas"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quantas chamadas para Fibonacci(31)?",
+    "answer": "4.356.617 chamadas recursivas",
+    "tags": "fibonacci,complexidade"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é a Torre de Hanói?",
+    "answer": "Problema de mover discos entre hastes sem colocar maior sobre menor",
+    "tags": "exemplos,torre-hanoi"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como resolver Torre de Hanói recursivamente?",
+    "answer": "Mover n-1 para auxiliar, mover maior para destino, mover n-1 para destino",
+    "tags": "torre-hanoi,solução"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é sequência recursiva?",
+    "answer": "Sequência onde cada termo é definido em função dos anteriores",
+    "tags": "sequências,definição"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Exemplo de sequência recursiva?",
+    "answer": "Potências de 2: a(n+1) = 2×a(n), com a(0)=1",
+    "tags": "sequências,exemplos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como definir função recursiva?",
+    "answer": "Especificar valor base e regra para calcular a partir de valores menores",
+    "tags": "funções,definição"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é somatório recursivo?",
+    "answer": "Soma de sequência onde cada termo depende dos anteriores",
+    "tags": "somatório,conceitos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como definir conjuntos recursivamente?",
+    "answer": "Elementos iniciais (base) + regras para formar novos elementos",
+    "tags": "conjuntos,definição"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que são strings recursivas?",
+    "answer": "Strings formadas adicionando símbolos a strings já existentes",
+    "tags": "strings,definição"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quando usar recursão?",
+    "answer": "Problemas com definição recursiva natural ou estruturas hierárquicas",
+    "tags": "boas-práticas,quando-usar"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Exemplo de uso apropriado de recursão?",
+    "answer": "Percorrer árvores, algoritmos de ordenação, busca binária",
+    "tags": "aplicações,exemplos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é explosão exponencial em recursão?",
+    "answer": "Crescimento exponencial do número de chamadas recursivas",
+    "tags": "problemas,exponencial"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como evitar explosão exponencial?",
+    "answer": "Usar programação dinâmica ou memorização (memoization)",
+    "tags": "otimização,solução"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Diferença entre recursão e iteração em performance?",
+    "answer": "Iteração geralmente mais rápida, recursão usa mais memória",
+    "tags": "comparação,performance"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é pilha de execução em recursão?",
+    "answer": "Estrutura que armazena o estado de cada chamada recursiva",
+    "tags": "memória,pilha"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como calcular raiz quadrada recursivamente?",
+    "answer": "Aproximações sucessivas usando média aritmética até tolerância",
+    "tags": "exemplos,raiz-quadrada"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é pesquisa binária recursiva?",
+    "answer": "Busca dividindo vetor ao meio recursivamente até achar elemento",
+    "tags": "exemplos,busca-binária"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual a complexidade da pesquisa binária recursiva?",
+    "answer": "O(log n), pois divide o problema pela metade a cada passo",
+    "tags": "busca-binária,complexidade"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Por que recursão é importante em programação funcional?",
+    "answer": "Paradigma funcional baseia-se em funções puras e recursão",
+    "tags": "paradigmas,funcional"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Exemplos de linguagens funcionais?",
+    "answer": "Haskell, F#, Lisp, Clojure, Erlang",
+    "tags": "linguagens,funcional"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é programação dinâmica?",
+    "answer": "Técnica que otimiza recursão armazenando resultados intermediários",
+    "tags": "otimização,dinâmica"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Como converter iteração em recursão?",
+    "answer": "Substituir loops por chamadas recursivas com mudança de parâmetros",
+    "tags": "conversão,técnicas"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual o limite prático de recursão?",
+    "answer": "Depende do tamanho da pilha, geralmente milhares de chamadas",
+    "tags": "limites,prático"
+  }
+]
