@@ -3,12 +3,13 @@ import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { navTheme } from './src/theme';
+import { navLightTheme, navDarkTheme } from './src/theme';
 
 import HomeScreen from './src/screens/HomeScreen';
 import QuizEditorScreen from './src/screens/QuizEditorScreen';
@@ -26,15 +27,16 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: navTheme.colors.primary,
-        tabBarInactiveTintColor: '#666',
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
         tabBarStyle: {
-          backgroundColor: '#fff',
-          borderTopColor: '#eee',
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
           height: 56,
           paddingTop: 6,
           paddingBottom: 6
