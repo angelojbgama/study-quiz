@@ -57,6 +57,10 @@ export async function createQuiz(title, description = '') {
   const res = await db.runAsync('INSERT INTO quiz(title, description) VALUES (?,?)', [title, description]);
   return res.lastInsertRowId;
 }
+export async function deleteQuiz(id) {
+  const db = await getDb();
+  await db.runAsync('DELETE FROM quiz WHERE id = ?', [id]);
+}
 export async function countQuestions(quizId) {
   const db = await getDb();
   const row = await db.getFirstAsync('SELECT COUNT(*) as c FROM question WHERE quizId = ?', [quizId]);
