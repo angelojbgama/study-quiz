@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz } from '../db';
 
@@ -17,7 +18,7 @@ export default function QuestionListScreen({ route, navigation }) {
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.actions}>
-          <Button title="Adicionar" onPress={() => navigation.navigate('QuestionEditor', { quizId })} />
+          <PrimaryButton title="Adicionar" onPress={() => navigation.navigate('QuestionEditor', { quizId })} />
         </View>
 
         <ScrollView style={styles.list} contentContainerStyle={{ paddingBottom: 16 }}>
@@ -33,11 +34,11 @@ export default function QuestionListScreen({ route, navigation }) {
 
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 8) }]}>
           <View style={{ flex: 1 }}>
-            <Button title="Cartões" onPress={() => navigation.navigate('Cards', { quizId })} />
+            <PrimaryButton title="Cartões" onPress={() => navigation.navigate('Cards', { quizId })} />
           </View>
           <View style={{ width: 8 }} />
           <View style={{ flex: 1 }}>
-            <Button title="Aprender" onPress={() => navigation.navigate('Learn', { quizId })} />
+            <PrimaryButton title="Aprender" onPress={() => navigation.navigate('Learn', { quizId })} />
           </View>
         </View>
       </View>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Switch, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Switch, Pressable } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getQuestionsByQuiz, getQuizzes, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
@@ -98,7 +99,7 @@ export default function LearnScreen({ route, navigation }) {
             <Text style={styles.title}>Sessão concluída</Text>
             <Text>Pontuação: {state.score}/{state.total}</Text>
             <View style={{ height: 12 }} />
-            <Button title="Concluir" onPress={() => navigation.goBack()} />
+            <PrimaryButton title="Concluir" onPress={() => navigation.goBack()} />
           </View>
         </View>
       </SafeAreaView>
@@ -137,7 +138,7 @@ export default function LearnScreen({ route, navigation }) {
               <Text style={{ marginTop: 6, flexWrap: 'wrap' }}>Resposta correta: {String(state.current.answer)}</Text>
               {state.current.explanation ? <Text style={{ marginTop: 6, color: '#333', flexWrap: 'wrap' }}>Explicação: {state.current.explanation}</Text> : null}
               <View style={{ height: 12 }} />
-              <Button title="Próxima" onPress={next} />
+              <PrimaryButton title="Próxima" onPress={next} />
             </View>
           )}
           <Text style={{ marginTop: 10, color: '#555' }}>{state.index + 1} de {state.total}</Text>

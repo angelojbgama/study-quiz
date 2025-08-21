@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -68,7 +69,7 @@ export default function StudyTodayScreen({ navigation }) {
         </View>
         <Text style={{ marginTop: 8, color: '#555' }}>Vencidos no filtro: {dueTotal}</Text>
         <View style={{ height: 12 }} />
-        <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
+        <PrimaryButton title="Iniciar sessão (Aprender)" onPress={startLearn} />
       </View>
     </View>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { importText } from '../util/importer';
@@ -35,7 +36,7 @@ export default function ImportScreen({ navigation }) {
     <View style={styles.container}>
       <Text>Selecione um arquivo CSV ou JSON com perguntas e respostas.</Text>
       <View style={{ height: 12 }} />
-      <Button title="Escolher arquivo" onPress={pick} />
+      <PrimaryButton title="Escolher arquivo" onPress={pick} />
       <View style={{ height: 16 }} />
       {loading ? <ActivityIndicator /> : <Text style={{ color: '#555' }}>{status}</Text>}
       <View style={{ height: 12 }} />

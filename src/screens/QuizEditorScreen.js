@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 import { createQuiz } from '../db';
 
 export default function QuizEditorScreen({ navigation }) {
@@ -14,7 +15,7 @@ export default function QuizEditorScreen({ navigation }) {
       <TextInput style={styles.input} value={title} onChangeText={setTitle} />
       <Text style={styles.label}>Descrição (opcional)</Text>
       <TextInput style={[styles.input, { height: 100 }]} multiline value={desc} onChangeText={setDesc} />
-      <Button title="Salvar" onPress={save} disabled={!title.trim()} />
+      <PrimaryButton title="Salvar" onPress={save} disabled={!title.trim()} />
     </View>
   );
 }
