@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationContainer, useTheme } from '@react-navigation/native';
 
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -73,7 +73,8 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <NavigationContainer theme={scheme === 'dark' ? navDarkTheme : navLightTheme}>
+
           <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
           <Stack.Navigator>
             <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
