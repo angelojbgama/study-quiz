@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import PrimaryButton from '../components/PrimaryButton';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
+import useAppStyles from '../ui/useAppStyles';
 
 export default function StudyTodayScreen({ navigation }) {
   const [all, setAll] = useState([]);
@@ -13,19 +14,7 @@ export default function StudyTodayScreen({ navigation }) {
   const [selected, setSelected] = useState(new Set());
   const [goal, setGoal] = useState('20');
   const [dueTotal, setDueTotal] = useState(0);
-  const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
-
-  const styles = useMemo(() => StyleSheet.create({
-    sa: { flex: 1, backgroundColor: colors.background },
-    container: { flex: 1, padding: 16 },
-    panel: { backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: 12 },
-    title: { fontSize: 18, fontWeight: '700', marginBottom: 8, color: colors.text },
-    goalRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-    input: { width: 70, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 8, textAlign: 'center', marginHorizontal: 8, backgroundColor: colors.card, color: colors.text },
-    due: { marginTop: 8, color: colors.muted },
-    text: { color: colors.text }
-  }), [colors]);
+  const styles = useAppStyles();
 
   useEffect(() => {
     (async () => {
@@ -55,9 +44,9 @@ export default function StudyTodayScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
-      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+      <View style={styles.container}>
         <View style={styles.panel}>
-          <Text style={styles.title}>Estudar Hoje</Text>
+          <Text style={styles.h2}>Estudar Hoje</Text>
           <TagChips
             tags={tags}
             counts={counts}
@@ -72,17 +61,24 @@ export default function StudyTodayScreen({ navigation }) {
               });
             }}
           />
-          <View style={styles.goalRow}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
             <Text style={styles.text}>Meta do dia:</Text>
-            <TextInput value={goal} onChangeText={setGoal} keyboardType="number-pad" style={styles.input} />
+            <TextInput
+              value={goal}
+              onChangeText={setGoal}
+              keyboardType="number-pad"
+              style={[styles.input, { width: 70, marginHorizontal: 8, textAlign: 'center' }]}
+            />
             <Text style={styles.text}>itens</Text>
           </View>
-          <Text style={styles.due}>Vencidos no filtro: {dueTotal}</Text>
-          <View style={{ height: 12 }} />
-          <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
+          <Text style={[styles.muted, { marginTop: 8 }]}>Vencidos no filtro: {dueTotal}</Text>
+
+          {/* BOTÃO UNIFICADO */}
+          <View style={{ marginTop: 12 }}>
+            <PrimaryButton title="Iniciar sessão (Aprender)" onPress={startLearn} />
+          </View>
         </View>
       </View>
     </SafeAreaView>
   );
 }
-

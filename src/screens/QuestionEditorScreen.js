@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import { View, TextInput, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import PrimaryButton from '../components/PrimaryButton';
 import { createQuestion } from '../db';
+import useAppStyles from '../ui/useAppStyles';
 
 export default function QuestionEditorScreen({ route, navigation }) {
   const { quizId } = route.params || {};
@@ -11,40 +11,26 @@ export default function QuestionEditorScreen({ route, navigation }) {
   const [answer, setAnswer] = useState('');
   const [explanation, setExplanation] = useState('');
   const [tags, setTags] = useState('');
-  const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
+  const styles = useAppStyles(80);
 
   const save = async () => { await createQuestion(quizId, text, answer, explanation, tags); navigation.goBack(); };
-
-  const styles = useMemo(() => StyleSheet.create({
-    sa: { flex: 1, backgroundColor: colors.background },
-    label: { fontWeight: '600', marginBottom: 6, color: colors.text },
-    input: {
-      borderWidth: 1,
-      borderColor: colors.border,
-      borderRadius: 8,
-      padding: 12,
-      backgroundColor: colors.card,
-      marginBottom: 12,
-      color: colors.text
-    },
-    footer: { paddingHorizontal: 16 }
-  }), [colors]);
 
   return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 80 }} keyboardShouldPersistTaps="handled">
-          <Text style={styles.label}>Pergunta (termo)</Text>
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+          <Text style={styles.h2}>Nova Pergunta</Text>
+          <View style={{ height: 8 }} />
+          <Text style={styles.text}>Pergunta (termo)</Text>
           <TextInput style={[styles.input, { height: 100 }]} multiline value={text} onChangeText={setText} textAlignVertical="top" />
-          <Text style={styles.label}>Resposta (definição)</Text>
+          <Text style={styles.text}>Resposta (definição)</Text>
           <TextInput style={styles.input} value={answer} onChangeText={setAnswer} />
-          <Text style={styles.label}>Explicação (opcional)</Text>
+          <Text style={styles.text}>Explicação (opcional)</Text>
           <TextInput style={styles.input} value={explanation} onChangeText={setExplanation} />
-          <Text style={styles.label}>Tags (opcional)</Text>
+          <Text style={styles.text}>Tags (opcional)</Text>
           <TextInput style={styles.input} value={tags} onChangeText={setTags} placeholder="separe por vírgulas" />
         </ScrollView>
-        <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 8) }]}>
+        <View style={{ paddingHorizontal: 16, paddingBottom: 16 }}>
           <PrimaryButton title="Salvar" onPress={save} disabled={!text.trim() || !answer.trim()} />
         </View>
       </KeyboardAvoidingView>

@@ -15,11 +15,16 @@
       "**/*"
     ],
     "android": {
-      "package": "com.example.studyquiz",
+      "package": "com.9kernel.studyquiz",
       "permissions": []
     },
     "plugins": [
       "expo-sqlite"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "63c6fc84-4fb5-4478-b5b1-f7628b949b79"
+      }
+    }
   }
 }

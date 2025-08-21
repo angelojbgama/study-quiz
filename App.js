@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer, useTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,7 +26,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
-  const { colors } = useTheme();
+  const colors = navLightTheme.colors;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -68,13 +68,24 @@ function Tabs() {
 
 export default function App() {
   useEffect(() => { initDb(); }, []);
+  const colors = navLightTheme.colors;
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer theme={navLightTheme}>
-
           <StatusBar style="dark" />
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: colors.card },
+              headerTitleStyle: { color: colors.text },
+              // BACK padronizado:
+              headerTintColor: colors.primary,
+              headerBackTitleVisible: false,
+              // opcional: remover sombra do header
+              headerShadowVisible: false
+            }}
+          >
             <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
             <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />

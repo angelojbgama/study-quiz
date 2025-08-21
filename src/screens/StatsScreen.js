@@ -1,26 +1,15 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import { distinctTagsFromQuestions, parseTags } from '../util/tags';
+import useAppStyles from '../ui/useAppStyles';
 
 export default function StatsScreen() {
   const [rows, setRows] = useState([]);
-  const insets = useSafeAreaInsets();
+  const styles = useAppStyles();
   const { colors } = useTheme();
-
-  const styles = useMemo(() => StyleSheet.create({
-    sa: { flex: 1, backgroundColor: colors.background },
-    header: { marginBottom: 8 },
-    title: { fontSize: 18, fontWeight: '700', color: colors.text },
-    row: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border },
-    tag: { fontWeight: '700', marginBottom: 6, flexWrap: 'wrap', color: colors.text },
-    detail: { color: colors.text },
-    empty: { color: colors.muted, textAlign: 'center', marginTop: 16 },
-    progressOuter: { height: 6, backgroundColor: colors.border, borderRadius: 6, overflow: 'hidden', marginTop: 6 },
-    progressInner: { height: 6, backgroundColor: colors.primary }
-  }), [colors]);
 
   useEffect(() => {
     (async () => {
@@ -49,10 +38,10 @@ export default function StatsScreen() {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View style={styles.row}>
-      <Text style={styles.tag}>{item.tag}</Text>
-      <Text style={styles.detail}>Total: {item.total} • Vencidos: {item.due} • Acurácia: {item.accRate}% ({item.attempts})</Text>
-      <View style={styles.progressOuter}>
+    <View style={styles.card}>
+      <Text style={[styles.text, { fontWeight: '700', marginBottom: 6 }]}>{item.tag}</Text>
+      <Text style={styles.text}>Total: {item.total} • Vencidos: {item.due} • Acurácia: {item.accRate}% ({item.attempts})</Text>
+      <View style={[styles.progressOuter, { marginTop: 6 }]}>
         <View style={[styles.progressInner, { width: `${item.accRate}%` }]} />
       </View>
     </View>
@@ -64,14 +53,10 @@ export default function StatsScreen() {
         data={rows}
         keyExtractor={(item) => item.tag}
         renderItem={renderItem}
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <Text style={styles.title}>Estatísticas por Tag</Text>
-          </View>
-        }
-        ListEmptyComponent={<Text style={styles.empty}>Nenhum dado ainda.</Text>}
-        contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 16 }}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        ListHeaderComponent={<View style={{ marginBottom: 8 }}><Text style={styles.h2}>Estatísticas por Tag</Text></View>}
+        ListEmptyComponent={<Text style={[styles.muted, { textAlign: 'center', marginTop: 16 }]}>Nenhum dado ainda.</Text>}
+        contentContainerStyle={{ padding: 16 }}
+        ItemSeparatorComponent={() => <View style={styles.listSep} />}
         showsVerticalScrollIndicator
       />
     </SafeAreaView>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Switch, Pressable } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import { getQuestionsByQuiz, getQuizzes, applySrsResult } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
+import useAppStyles from '../ui/useAppStyles';
 
 export default function LearnScreen({ route, navigation }) {
   const { quizId, onlyDue = false, selectedTags = [], sessionLimit = 0 } = route.params || {};
@@ -15,23 +16,12 @@ export default function LearnScreen({ route, navigation }) {
   const [selected, setSelected] = useState(new Set(selectedTags.map(x => x.toLowerCase())));
   const [onlyDueState, setOnlyDue] = useState(onlyDue);
   const [state, setState] = useState({ index: 0, total: 0, score: 0, current: null, options: [], answered: null });
-  const insets = useSafeAreaInsets();
+  const styles = useAppStyles();
   const { colors } = useTheme();
 
-  const styles = useMemo(() => StyleSheet.create({
-    sa: { flex: 1, backgroundColor: colors.background },
-    container: { flex: 1, padding: 16 },
-    panel: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: 12 },
+  const local = useMemo(() => StyleSheet.create({
     switchRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    title: { fontSize: 18, fontWeight: '700', marginVertical: 8, color: colors.text },
-    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card },
-    progressOuter: { height: 8, backgroundColor: colors.border, borderRadius: 8, overflow: 'hidden' },
-    progressInner: { height: 8, backgroundColor: colors.primary },
-    hint: { color: colors.muted },
-    resultCorrect: { fontWeight: '700', color: colors.primary },
-    resultWrong: { fontWeight: '700', color: colors.danger },
-    answerText: { marginTop: 6, flexWrap: 'wrap', color: colors.text },
-    muted: { color: colors.muted }
+    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card }
   }), [colors]);
 
   useEffect(() => {
@@ -95,15 +85,15 @@ export default function LearnScreen({ route, navigation }) {
   if (!state.current) {
     return (
       <SafeAreaView style={styles.sa} edges={['bottom']}>
-        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.container}>
           <View style={styles.panel}>
             <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
-            <View style={styles.switchRow}>
-              <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
+            <View style={local.switchRow}>
+              <Text style={styles.text}>Somente vencidas (SRS)</Text>
               <Switch value={onlyDueState} onValueChange={setOnlyDue} />
             </View>
           </View>
-          <Text style={styles.hint}>Sem questões para este filtro.</Text>
+          <Text style={styles.muted}>Sem questões para este filtro.</Text>
         </View>
       </SafeAreaView>
     );
@@ -112,10 +102,10 @@ export default function LearnScreen({ route, navigation }) {
   if (state.finished) {
     return (
       <SafeAreaView style={styles.sa} edges={['bottom']}>
-        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.container}>
           <View style={styles.panel}>
-            <Text style={styles.title}>Sessão concluída</Text>
-            <Text style={{ color: colors.text }}>Pontuação: {state.score}/{state.total}</Text>
+            <Text style={styles.h2}>Sessão concluída</Text>
+            <Text style={styles.text}>Pontuação: {state.score}/{state.total}</Text>
             <View style={{ height: 12 }} />
             <PrimaryButton title="Concluir" onPress={() => navigation.goBack()} />
           </View>
@@ -127,44 +117,44 @@ export default function LearnScreen({ route, navigation }) {
   const progress = state.total ? (state.index + 1) / state.total : 0;
 
   return (
-      <SafeAreaView style={styles.sa} edges={['bottom']}>
-        <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-          <View style={styles.panel}>
-            <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
-            <View style={styles.switchRow}>
-              <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
-              <Switch value={onlyDueState} onValueChange={setOnlyDue} />
-            </View>
-          </View>
-
-          <View style={styles.panel}>
-            <View style={styles.progressOuter}><View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} /></View>
-            <Text style={styles.title}>{state.current.text}</Text>
-
-            {!state.answered ? (
-              state.options.map((opt, idx) => (
-                <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [styles.option, pressed && { opacity: 0.8 }] }>
-                  <Text style={{ flexWrap: 'wrap', color: colors.text }}>{String(opt)}</Text>
-                </Pressable>
-              ))
-            ) : (
-              <View>
-                <Text style={state.answered.isCorrect ? styles.resultCorrect : styles.resultWrong}>
-                  {state.answered.isCorrect ? 'Correto!' : 'Incorreto.'}
-                </Text>
-                {!state.answered.isCorrect ? <Text style={styles.answerText}>Sua resposta: {String(state.answered.chosen)}</Text> : null}
-                <Text style={styles.answerText}>Resposta correta: {String(state.current.answer)}</Text>
-                {state.current.explanation ? <Text style={styles.answerText}>Explicação: {state.current.explanation}</Text> : null}
-                <View style={{ height: 12 }} />
-                <PrimaryButton title="Próxima" onPress={next} />
-              </View>
-            )}
-            <Text style={[styles.muted, { marginTop: 10 }]}>{state.index + 1} de {state.total}</Text>
+    <SafeAreaView style={styles.sa} edges={['bottom']}>
+      <View style={styles.container}>
+        <View style={styles.panel}>
+          <TagChips tags={tags} counts={counts} selected={selected} onToggle={toggleTag(setSelected)} />
+          <View style={local.switchRow}>
+            <Text style={styles.text}>Somente vencidas (SRS)</Text>
+            <Switch value={onlyDueState} onValueChange={setOnlyDue} />
           </View>
         </View>
-      </SafeAreaView>
-    );
-  }
+
+        <View style={styles.panel}>
+          <View style={styles.progressOuter}><View style={[styles.progressInner, { width: `${Math.round(progress * 100)}%` }]} /></View>
+          <Text style={[styles.h2, { marginVertical: 8 }]}>{state.current.text}</Text>
+
+          {!state.answered ? (
+            state.options.map((opt, idx) => (
+              <Pressable key={idx} onPress={() => onAnswer(idx)} style={({ pressed }) => [local.option, pressed && { opacity: 0.8 }]}>
+                <Text style={styles.text}>{String(opt)}</Text>
+              </Pressable>
+            ))
+          ) : (
+            <View>
+              <Text style={{ fontWeight: '700', color: state.answered.isCorrect ? colors.primary : colors.danger }}>
+                {state.answered.isCorrect ? 'Correto!' : 'Incorreto.'}
+              </Text>
+              {!state.answered.isCorrect ? <Text style={styles.text}>Sua resposta: {String(state.answered.chosen)}</Text> : null}
+              <Text style={styles.text}>Resposta correta: {String(state.current.answer)}</Text>
+              {state.current.explanation ? <Text style={styles.text}>Explicação: {state.current.explanation}</Text> : null}
+              <View style={{ height: 12 }} />
+              <PrimaryButton title="Próxima" onPress={next} />
+            </View>
+          )}
+          <Text style={[styles.muted, { marginTop: 10 }]}>{state.index + 1} de {state.total}</Text>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}
 
 function toggleTag(setSelected) {
   return (t) => {
@@ -211,6 +201,4 @@ function sample(arr, n) {
   while (res.length < n) res.push('Nenhuma das anteriores ' + (res.length + 1));
   return res;
 }
-
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-

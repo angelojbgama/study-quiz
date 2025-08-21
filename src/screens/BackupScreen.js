@@ -1,12 +1,14 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
 import * as AuthSession from 'expo-auth-session';
 import { exportAllData, importFullBackup } from '../db';
+import PrimaryButton from '../components/PrimaryButton';
+import useAppStyles from '../ui/useAppStyles';
 
 const GOOGLE_CLIENT_ID = 'GOOGLE_CLIENT_ID_AQUI.apps.googleusercontent.com';
 const DRIVE_UPLOAD_SCOPE = 'https://www.googleapis.com/auth/drive.file';
@@ -14,17 +16,8 @@ const DRIVE_UPLOAD_SCOPE = 'https://www.googleapis.com/auth/drive.file';
 export default function BackupScreen() {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
-  const insets = useSafeAreaInsets();
+  const styles = useAppStyles();
   const { colors } = useTheme();
-
-  const styles = useMemo(() => StyleSheet.create({
-    sa: { flex: 1, backgroundColor: colors.background },
-    container: { flex: 1, padding: 16 },
-    panel: { backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, padding: 12 },
-    title: { fontSize: 18, fontWeight: '700', marginBottom: 8, color: colors.text },
-    status: { color: colors.muted, marginTop: 8 },
-    hint: { color: colors.muted, marginTop: 12 }
-  }), [colors]);
 
   const onExport = async () => {
     try {
@@ -100,14 +93,24 @@ export default function BackupScreen() {
 
   return (
     <SafeAreaView style={styles.sa} edges={['bottom']}>
-      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+      <View style={styles.container}>
         <View style={styles.panel}>
-          <Text style={styles.title}>Backup & Sincronização</Text>
-          <View style={{ marginBottom: 8 }}><Button title="Exportar (JSON) & Compartilhar" onPress={onExport} disabled={loading} /></View>
-          <View style={{ marginBottom: 8 }}><Button title="Importar de arquivo (JSON)" onPress={onImport} disabled={loading} /></View>
-          <View style={{ marginBottom: 8 }}><Button title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} disabled={loading} /></View>
-          {loading ? <ActivityIndicator /> : <Text style={styles.status}>{status}</Text>}
-          <Text style={styles.hint}>
+          <Text style={styles.h2}>Backup & Sincronização</Text>
+
+          <View style={{ marginTop: 8 }}>
+            <PrimaryButton title="Exportar (JSON) & Compartilhar" onPress={onExport} disabled={loading} />
+          </View>
+          <View style={{ marginTop: 8 }}>
+            <PrimaryButton title="Importar de arquivo (JSON)" onPress={onImport} disabled={loading} />
+          </View>
+          <View style={{ marginTop: 8 }}>
+            <PrimaryButton title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} disabled={loading} />
+          </View>
+
+          <View style={{ marginTop: 12 }}>
+            {loading ? <ActivityIndicator /> : <Text style={styles.muted}>{status}</Text>}
+          </View>
+          <Text style={[styles.muted, { marginTop: 12 }]}>
             Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
           </Text>
         </View>
