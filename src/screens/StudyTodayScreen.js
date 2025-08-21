@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-=======
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
 import { getQuizzes, getQuestionsByQuiz } from '../db';
 import TagChips from '../components/TagChips';
 import { distinctTagsFromQuestions, tagCounts, parseTags } from '../util/tags';
@@ -73,12 +68,6 @@ export default function StudyTodayScreen({ navigation }) {
           <View style={{ height: 12 }} />
           <Button title="Iniciar sessão (Aprender)" onPress={startLearn} />
         </View>
-<<<<<<< HEAD
-=======
-        <Text style={{ marginTop: 8, color: '#555' }}>Vencidos no filtro: {dueTotal}</Text>
-        <View style={{ height: 12 }} />
-        <PrimaryButton title="Iniciar sessão (Aprender)" onPress={startLearn} />
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
       </View>
     </SafeAreaView>
   );

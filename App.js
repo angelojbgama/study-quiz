@@ -70,7 +70,6 @@ export default function App() {
   const scheme = useColorScheme();
   useEffect(() => { initDb(); }, []);
   return (
-<<<<<<< HEAD
     <SafeAreaProvider>
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
@@ -85,24 +84,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
-=======
-    <NavigationContainer theme={navTheme}>
-      <StatusBar style="light" backgroundColor={navTheme.colors.primary} />
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: navTheme.colors.primary },
-          headerTintColor: '#fff'
-        }}
-      >
-        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
-        <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
-        <Stack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Nova Pergunta' }} />
-        <Stack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
-        <Stack.Screen name="Cards" component={CardsScreen} options={{ title: 'Cartões' }} />
-        <Stack.Screen name="Learn" component={LearnScreen} options={{ title: 'Aprender' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
   );
 }

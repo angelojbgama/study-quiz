@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, Button, StyleSheet, Pressable, FlatList } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-=======
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
 import { getQuizzes, countQuestions } from '../db';
 
 export default function HomeScreen({ navigation }) {
@@ -31,7 +25,6 @@ export default function HomeScreen({ navigation }) {
     if (parent) parent.navigate(routeName); else navigation.navigate(routeName);
   };
 
-<<<<<<< HEAD
   const renderItem = ({ item }) => (
     <Pressable
       key={item.id}
@@ -60,36 +53,6 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.titleSmall}>Seus Quizzes</Text>
         <Button title="Importar" onPress={() => navigation.navigate('Import')} />
       </View>
-=======
-  return (
-    <View style={styles.container}>
-      <View style={styles.panel}>
-        <Text style={styles.title}>Bem-vindo 👋</Text>
-        <Text style={styles.subtitle}>Monte seus baralhos e comece a estudar</Text>
-        <View style={styles.row}>
-          <View style={styles.btn}><PrimaryButton title="Estudar Hoje" onPress={() => goTab('Estudar')} /></View>
-          <View style={styles.btn}><PrimaryButton title="Estatísticas" onPress={() => goTab('Estatísticas')} /></View>
-          <View style={styles.btn}><PrimaryButton title="Backup" onPress={() => goTab('Backup')} /></View>
-        </View>
-      </View>
-
-      <View style={styles.panel}>
-        <View style={styles.headerRow}>
-          <Text style={styles.titleSmall}>Seus Quizzes</Text>
-          <PrimaryButton title="Importar" onPress={() => navigation.navigate('Import')} />
-        </View>
-        {quizzes.length === 0 ? (
-          <Text style={{ color: '#666' }}>Crie um quiz ou importe perguntas.</Text>
-        ) : quizzes.map(item => (
-          <Pressable key={item.id} style={styles.item} onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}>
-            <Text style={styles.itemTitle}>{item.title}</Text>
-            <Text style={styles.itemDesc}>{item.total} cartões</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <View style={styles.fab}><PrimaryButton title="Novo Quiz" onPress={() => navigation.navigate('QuizEditor')} /></View>
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
     </View>
   ), []);
 

@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
 import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-=======
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
@@ -93,7 +88,6 @@ export default function BackupScreen() {
   };
 
   return (
-<<<<<<< HEAD
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.panel}>
@@ -106,18 +100,6 @@ export default function BackupScreen() {
             Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
           </Text>
         </View>
-=======
-    <View style={styles.container}>
-      <View style={styles.panel}>
-        <Text style={styles.title}>Backup & Sincronização</Text>
-        <View style={{ marginBottom: 8 }}><PrimaryButton title="Exportar (JSON) & Compartilhar" onPress={onExport} /></View>
-        <View style={{ marginBottom: 8 }}><PrimaryButton title="Importar de arquivo (JSON)" onPress={onImport} /></View>
-        <View style={{ marginBottom: 8 }}><PrimaryButton title="Enviar backup para Google Drive" onPress={onDriveLoginAndUpload} /></View>
-        {loading ? <ActivityIndicator /> : <Text style={{ color: '#555', marginTop: 8 }}>{status}</Text>}
-        <Text style={{ color: '#777', marginTop: 12 }}>
-          Observação: crie um OAuth Client (Expo) e coloque o CLIENT_ID em BackupScreen.js.
-        </Text>
->>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
       </View>
     </SafeAreaView>
   );
