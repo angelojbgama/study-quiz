@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { View, TextInput, Button, StyleSheet, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+=======
+import { View, TextInput, StyleSheet, Text } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
+>>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
 import { createQuestion } from '../db';
 
 export default function QuestionEditorScreen({ route, navigation }) {
@@ -14,6 +19,7 @@ export default function QuestionEditorScreen({ route, navigation }) {
   const save = async () => { await createQuestion(quizId, text, answer, explanation, tags); navigation.goBack(); };
 
   return (
+<<<<<<< HEAD
     <SafeAreaView style={styles.sa} edges={['bottom']}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 80 }} keyboardShouldPersistTaps="handled">
@@ -31,6 +37,19 @@ export default function QuestionEditorScreen({ route, navigation }) {
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
+=======
+    <View style={styles.container}>
+      <Text style={styles.label}>Pergunta (termo)</Text>
+      <TextInput style={[styles.input, { height: 100 }]} multiline value={text} onChangeText={setText} />
+      <Text style={styles.label}>Resposta (definição)</Text>
+      <TextInput style={styles.input} value={answer} onChangeText={setAnswer} />
+      <Text style={styles.label}>Explicação (opcional)</Text>
+      <TextInput style={styles.input} value={explanation} onChangeText={setExplanation} />
+      <Text style={styles.label}>Tags (opcional)</Text>
+      <TextInput style={styles.input} value={tags} onChangeText={setTags} />
+      <PrimaryButton title="Salvar" onPress={save} disabled={!text.trim() || !answer.trim()} />
+    </View>
+>>>>>>> 642b7f6d21dfb5692952ed71aa2eba2824c6da18
   );
 }
 
