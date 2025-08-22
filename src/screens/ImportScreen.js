@@ -51,6 +51,7 @@ export default function ImportScreen({ navigation }) {
 
   const doImport = async (text) => {
     setStatus("Importando...");
+    // Suporta: JSON array de perguntas, JSONL (um objeto por linha) ou CSV
     const { importedCount, quizzesCount } = await importText(text);
     setStatus(
       `Importado com sucesso! Itens: ${importedCount} • Quizzes: ${quizzesCount}`
@@ -91,7 +92,7 @@ export default function ImportScreen({ navigation }) {
                   Importe CSV/JSON com perguntas e respostas.
                 </Text>
                 <PrimaryButton
-                  title={loading ? "Processando..." : "Escolher arquivo"}
+                  title={loading ? "Processando..." : "Escolher arquivo (JSON/CSV)"}
                   onPress={pick}
                   disabled={loading}
                 />

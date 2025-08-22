@@ -8,6 +8,7 @@ import * as Sharing from "expo-sharing";
 import * as DocumentPicker from "expo-document-picker";
 import * as AuthSession from "expo-auth-session";
 import { exportAllData, importFullBackup } from "../db";
+import { importText } from "../util/importer"; // 👈 permite importar perguntas (JSON/JSONL/CSV)
 import useAppStyles from "../ui/useAppStyles";
 import PrimaryButton from "../components/PrimaryButton";
 import { VStack } from "../ui/Stack";
@@ -46,22 +47,45 @@ export default function BackupScreen() {
     }
   };
 
+  // Agora aceita:
+  // - Arquivo de BACKUP (formato {version, exportedAt, data:[...]})
+  // - Lista de PERGUNTAS (JSON array / JSONL / CSV) usando importText
   const onImport = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: "application/json",
+        type: ["application/json", "text/csv", "text/plain"],
         copyToCacheDirectory: true,
       });
       if (result.canceled) return;
+
       setLoading(true);
       setStatus("Lendo arquivo...");
       const asset = result.assets[0];
       const text = await FileSystem.readAsStringAsync(asset.uri, {
         encoding: FileSystem.EncodingType.UTF8,
       });
-      const parsed = JSON.parse(text);
-      await importFullBackup(parsed.data || parsed);
-      setStatus("Importação concluída!");
+
+      // Tenta detectar “backup oficial”
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        parsed = null;
+      }
+
+      if (parsed && Array.isArray(parsed?.data)) {
+        // Formato de backup
+        setStatus("Importando backup...");
+        await importFullBackup(parsed.data);
+        setStatus(`Importação de backup concluída! Conjuntos: ${parsed.data.length}`);
+      } else {
+        // Qualquer outro (JSON array de perguntas, JSONL ou CSV)
+        setStatus("Importando perguntas...");
+        const { importedCount, quizzesCount } = await importText(text);
+        setStatus(
+          `Importado com sucesso! Itens: ${importedCount} • Quizzes: ${quizzesCount}`
+        );
+      }
     } catch (e) {
       console.error(e);
       setStatus("Falha ao importar: " + e.message);
@@ -135,7 +159,7 @@ export default function BackupScreen() {
                 disabled={loading}
               />
               <PrimaryButton
-                title="Importar de arquivo (JSON)"
+                title="Importar de arquivo (Backup ou Perguntas JSON/CSV)"
                 onPress={onImport}
                 disabled={loading}
               />
