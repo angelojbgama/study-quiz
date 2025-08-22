@@ -1,4 +1,5 @@
-import { createQuiz, createQuestion } from '../db';
+// src/util/importer.js
+import { createQuiz, createQuestion, replaceOptions } from '../db';
 
 /**
  * Importa texto em JSON, JSONL ou CSV.
@@ -189,16 +190,38 @@ async function importBundles(bundles) {
     const quizId = await createQuiz(quizTitle, '');
     quizzes++;
     for (const b of items) {
-      await createQuestion(
+      const qId = await createQuestion(
         quizId,
         b.question,
         b.answer,
         b.explanation,
-        b.tags,
-        b.wrong1,
-        b.wrong2,
-        b.wrong3
+        b.tags
       );
+
+      // Se existirem incorretas, persiste as alternativas
+      const wrongs = [b.wrong1, b.wrong2, b.wrong3]
+        .map(x => String(x || '').trim())
+        .filter(Boolean);
+
+      const opts = [
+        { text: String(b.answer || '').trim(), isCorrect: true },
+        ...wrongs.map(w => ({ text: w, isCorrect: false })),
+      ];
+
+      // Dedup por texto e mínimo de 2 opções
+      const seen = new Set();
+      const dedup = [];
+      for (const o of opts) {
+        const t = o.text;
+        if (!t) continue;
+        if (seen.has(t)) continue;
+        seen.add(t);
+        dedup.push(o);
+      }
+      if (dedup.length >= 2) {
+        await replaceOptions(qId, dedup);
+      }
+
       imported++;
     }
   }

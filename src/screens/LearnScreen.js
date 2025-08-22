@@ -13,14 +13,14 @@ import {
   Pressable,
   Switch,
   Animated,
-  ScrollView, // 👈 add
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme, useFocusEffect } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 
 import PrimaryButton from "../components/PrimaryButton";
-import { getQuestionsByQuiz, getQuizzes, applySrsResult } from "../db";
+import { getQuestionsByQuiz, getQuizzes, applySrsResult, getOptionsByQuestion } from "../db"; // 👈 importa getOptionsByQuestion
 import TagChips from "../components/TagChips";
 import { distinctTagsFromQuestions, tagCounts, parseTags } from "../util/tags";
 import useAppStyles from "../ui/useAppStyles";
@@ -55,11 +55,9 @@ export default function LearnScreen({ route, navigation }) {
   const tagStatsRef = useRef(new Map());
   const wrongMapRef = useRef(new Map());
 
-  // Travas síncronas anti-multi-toque
   const answeringRef = useRef(false);
   const finishingRef = useRef(false);
 
-  // Animações / overlays
   const [celebrate, setCelebrate] = useState(false);
   const [showFail, setShowFail] = useState(false);
 
@@ -173,13 +171,11 @@ export default function LearnScreen({ route, navigation }) {
     let shuffled = shuffle(filtered);
     if (sessionLimit && sessionLimit > 0) shuffled = shuffled.slice(0, sessionLimit);
 
-    // Zera travas síncronas e contadores
     answeringRef.current = false;
     finishingRef.current = false;
 
     setSeq(shuffled);
     setIndex(0);
-    setOptions(shuffled.length ? buildOptions(shuffled[0], shuffled, selected) : []);
     setAnswered(null);
     setLock(false);
     setCelebrate(false);
@@ -189,6 +185,17 @@ export default function LearnScreen({ route, navigation }) {
     setWrongCount(0);
     tagStatsRef.current = new Map();
     wrongMapRef.current = new Map();
+
+    // carrega opções do 1º item (usa salvas se houver)
+    if (shuffled.length) {
+      (async () => {
+        const first = shuffled[0];
+        const opts = await buildOptionsPreferred(first, shuffled, selected);
+        setOptions(opts);
+      })();
+    } else {
+      setOptions([]);
+    }
   }, [all, selected, onlyDueState, sessionLimit, questionIds]);
 
   const current = seq[index];
@@ -218,7 +225,7 @@ export default function LearnScreen({ route, navigation }) {
     setLock(true);
 
     const chosen = options[choiceIdx];
-    const isCorrect = chosen === current.answer;
+    const isCorrect = chosen === current.answer; // 👈 continua válido, pois garantimos a presença da correta
     setAnswered({ isCorrect, chosen });
 
     applySrsResult(current.id, isCorrect).catch(() => {});
@@ -248,11 +255,16 @@ export default function LearnScreen({ route, navigation }) {
       answeringRef.current = false;
       const nextQ = seq[nextIndex];
       setIndex(nextIndex);
-      setOptions(buildOptions(nextQ, seq, selected));
       setAnswered(null);
       setLock(false);
       setCelebrate(false);
       setShowFail(false);
+
+      // carrega opções do próximo (salvas se houver)
+      (async () => {
+        const opts = await buildOptionsPreferred(nextQ, seq, selected);
+        setOptions(opts);
+      })();
     }
   };
 
@@ -417,7 +429,33 @@ function toggleTag(setSelected) {
   };
 }
 
-function buildOptions(question, seq, selectedSet) {
+// Prioriza alternativas salvas; se não houver, usa gerador automático
+async function buildOptionsPreferred(question, seq, selectedSet) {
+  try {
+    const rows = await getOptionsByQuestion(question.id);
+    const texts = Array.from(
+      new Set(
+        (rows || [])
+          .map((o) => String(o.text || "").trim())
+          .filter(Boolean)
+      )
+    );
+    // garante presença da correta
+    const ans = String(question.answer || "").trim();
+    if (ans && !texts.includes(ans)) texts.unshift(ans);
+
+    if (texts.length >= 2) {
+      return shuffle(texts);
+    }
+  } catch {
+    // fallback silencioso
+  }
+  // fallback
+  return buildOptionsAuto(question, seq, selectedSet);
+}
+
+// Gerador automático (respostas de questões com tags próximas)
+function buildOptionsAuto(question, seq, selectedSet) {
   const correct = question.answer;
   let poolCandidates;
   if (selectedSet && selectedSet.size > 0) {
