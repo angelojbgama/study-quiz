@@ -1,13 +1,14 @@
-// src/util/importer.js
 import { createQuiz, createQuestion } from '../db';
 
 /**
  * Importa texto em JSON, JSONL ou CSV.
  * - JSON: array de objetos. Chaves aceitas (flexíveis):
- *   { quiz|deck, question|pergunta|questao|termo, answer|resposta, explanation|explicacao, tags }
+ *   { quiz|deck, question|pergunta|questao|termo, answer|resposta, explanation|explicacao,
+ *     tags, wrong1|incorreta1|errada1, wrong2|incorreta2|errada2, wrong3|incorreta3|errada3 }
  *   -> tags pode ser string ou array
  * - JSONL: um objeto JSON por linha (mesmas chaves acima)
- * - CSV: quiz, pergunta/question, resposta/answer, explicacao/explanation, tags
+ * - CSV (com ou sem cabeçalho):
+ *   quiz,pergunta/resposta/explicacao/tags,wrong1,wrong2,wrong3
  *
  * Retorna: { importedCount, quizzesCount }
  */
@@ -36,12 +37,9 @@ export async function importText(text) {
 /* ===================== Helpers de formato ===================== */
 
 function looksLikeJSONArray(s) {
-  // Ex.: [ { ... }, { ... } ]
   return s.startsWith('[') && s.endsWith(']');
 }
-
 function looksLikeJSONL(s) {
-  // Heurística: várias linhas iniciando com { e terminando com }
   const lines = s.split(/\r?\n/).filter(Boolean);
   if (lines.length < 1) return false;
   return lines.every(l => {
@@ -63,7 +61,22 @@ function normalizeRecord(obj) {
   if (Array.isArray(tags)) tags = tags.join(', ');
   tags = String(tags || '').trim();
 
-  return { quiz, question, answer, explanation, tags };
+  const wrong1 = pickWrong(o, 1);
+  const wrong2 = pickWrong(o, 2);
+  const wrong3 = pickWrong(o, 3);
+
+  return { quiz, question, answer, explanation, tags, wrong1, wrong2, wrong3 };
+}
+
+function pickWrong(o, n) {
+  const keys = [
+    `wrong${n}`, `incorreta${n}`, `errada${n}`,
+    `distrator${n}`, `distrator_${n}`, `alt${n}`, `alternativa${n}`
+  ];
+  for (const k of keys) {
+    if (o[k] != null && String(o[k]).trim() !== '') return String(o[k]).trim();
+  }
+  return '';
 }
 
 /* ===================== Import JSON Array/JSONL ===================== */
@@ -78,20 +91,35 @@ async function importJsonArray(list) {
 /* ===================== Import CSV ===================== */
 
 async function importCsv(text) {
-  const rows = parseCsv(text);
-  // Mapeia tanto PT quanto EN nas colunas
-  const bundles = rows.map(cols => normalizeRecord({
-    quiz: cols[0],
-    question: cols[1],
-    answer: cols[2],
-    explanation: cols[3],
-    tags: cols[4]
-  })).filter(b => b.question && b.answer);
+  const { rows, header } = parseCsv(text);
+  let bundles;
 
+  if (header && header.length) {
+    // Com cabeçalho: mapear por nome
+    bundles = rows.map(cols => {
+      const obj = {};
+      header.forEach((h, i) => { obj[h] = cols[i]; });
+      return normalizeRecord(obj);
+    });
+  } else {
+    // Sem cabeçalho: posições fixas
+    bundles = rows.map(cols => normalizeRecord({
+      quiz: cols[0],
+      question: cols[1],
+      answer: cols[2],
+      explanation: cols[3],
+      tags: cols[4],
+      wrong1: cols[5],
+      wrong2: cols[6],
+      wrong3: cols[7],
+    }));
+  }
+
+  bundles = bundles.filter(b => b.question && b.answer);
   return await importBundles(bundles);
 }
 
-// CSV com aspas e "" escape; detecta ; ou , ; ignora cabeçalho conhecido
+// CSV com aspas e "" escape; detecta ; ou , ; identifica cabeçalho
 function parseCsv(text) {
   const lines = text.split(/\r?\n/);
   const first = lines[0] || '';
@@ -123,25 +151,29 @@ function parseCsv(text) {
   row.push(field); rows.push(row);
 
   // remove linhas completamente vazias
-  const clean = rows.filter(r => r.some(v => String(v || '').trim() !== ''));
+  let clean = rows.filter(r => r.some(v => String(v || '').trim() !== ''));
 
-  // detecta e remove cabeçalho se presente
-  if (clean.length && isHeaderRow(clean[0])) clean.shift();
+  // detecta header
+  let header = null;
+  if (clean.length) {
+    const maybe = clean[0].map(c => String(c || '').trim().toLowerCase());
+    const known = new Set([
+      'quiz',
+      'pergunta','questão','questao','question',
+      'resposta','answer',
+      'explicacao','explicação','explanation',
+      'tags',
+      'wrong1','wrong2','wrong3',
+      'incorreta1','incorreta2','incorreta3',
+      'errada1','errada2','errada3'
+    ]);
+    if (maybe.some(c => known.has(c))) {
+      header = maybe;
+      clean = clean.slice(1);
+    }
+  }
 
-  return clean;
-}
-
-function isHeaderRow(cols) {
-  const header = cols.map(c => String(c || '').trim().toLowerCase());
-  const known = new Set([
-    'quiz',
-    'pergunta', 'questão', 'questao', 'question',
-    'resposta', 'answer',
-    'explicacao', 'explicação', 'explanation',
-    'tags'
-  ]);
-  // Se alguma coluna bate com nomes conhecidos, tratamos como header
-  return header.some(c => known.has(c));
+  return { rows: clean, header };
 }
 
 /* ===================== Persistência ===================== */
@@ -157,7 +189,16 @@ async function importBundles(bundles) {
     const quizId = await createQuiz(quizTitle, '');
     quizzes++;
     for (const b of items) {
-      await createQuestion(quizId, b.question, b.answer, b.explanation, b.tags);
+      await createQuestion(
+        quizId,
+        b.question,
+        b.answer,
+        b.explanation,
+        b.tags,
+        b.wrong1,
+        b.wrong2,
+        b.wrong3
+      );
       imported++;
     }
   }
