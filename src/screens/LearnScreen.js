@@ -13,6 +13,7 @@ import {
   Pressable,
   Switch,
   Animated,
+  ScrollView, // 👈 add
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme, useFocusEffect } from "@react-navigation/native";
@@ -67,26 +68,10 @@ export default function LearnScreen({ route, navigation }) {
   const runShake = () => {
     shakeX.setValue(0);
     Animated.sequence([
-      Animated.timing(shakeX, {
-        toValue: -8,
-        duration: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeX, {
-        toValue: 8,
-        duration: 90,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeX, {
-        toValue: -6,
-        duration: 70,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeX, {
-        toValue: 0,
-        duration: 60,
-        useNativeDriver: true,
-      }),
+      Animated.timing(shakeX, { toValue: -8, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 8, duration: 90, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -6, duration: 70, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 0, duration: 60, useNativeDriver: true }),
     ]).start();
   };
 
@@ -228,7 +213,6 @@ export default function LearnScreen({ route, navigation }) {
   };
 
   const onAnswer = async (choiceIdx) => {
-    // trava sincrona + estados
     if (answeringRef.current || lock || !current || !options.length || answered) return;
     answeringRef.current = true;
     setLock(true);
@@ -261,7 +245,7 @@ export default function LearnScreen({ route, navigation }) {
     if (nextIndex >= total) {
       finishSession();
     } else {
-      answeringRef.current = false; // libera toques para a próxima
+      answeringRef.current = false;
       const nextQ = seq[nextIndex];
       setIndex(nextIndex);
       setOptions(buildOptions(nextQ, seq, selected));
@@ -273,7 +257,7 @@ export default function LearnScreen({ route, navigation }) {
   };
 
   const finishSession = () => {
-    if (finishingRef.current) return; // evita replace() duplicado
+    if (finishingRef.current) return;
     finishingRef.current = true;
 
     const correct = correctCount;
@@ -317,7 +301,11 @@ export default function LearnScreen({ route, navigation }) {
   if (!current) {
     return (
       <SafeAreaView style={styles.sa} edges={["bottom"]}>
-        <View style={[styles.container, { paddingBottom: 16 }]}>
+        <ScrollView
+          contentContainerStyle={[styles.container, { paddingBottom: 16 }]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator
+        >
           <View style={local.panel}>
             <TagChips
               tags={tags}
@@ -331,7 +319,7 @@ export default function LearnScreen({ route, navigation }) {
             </View>
           </View>
           <Text style={local.hint}>Sem questões para este filtro.</Text>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -340,7 +328,11 @@ export default function LearnScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.sa} edges={["bottom"]}>
-      <View style={[styles.container, { paddingBottom: 16 }]}>
+      <ScrollView
+        contentContainerStyle={[styles.container, { paddingBottom: 16 }]}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator
+      >
         <View style={local.panel}>
           <TagChips
             tags={tags}
@@ -400,9 +392,8 @@ export default function LearnScreen({ route, navigation }) {
             </View>
           )}
         </Animated.View>
-      </View>
+      </ScrollView>
 
-      {/* Overlays de feedback */}
       {celebrate && <SuccessCelebration onDone={() => setCelebrate(false)} />}
       {showFail && <FailFeedback onDone={() => setShowFail(false)} />}
     </SafeAreaView>

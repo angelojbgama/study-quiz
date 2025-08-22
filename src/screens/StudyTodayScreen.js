@@ -196,7 +196,6 @@ export default function StudyTodayScreen({ navigation }) {
           <View style={styles.panel}>
             <Text style={styles.h2}>Estudar Hoje</Text>
 
-            {/* Cabeçalho das tags + limpar */}
             <View style={local.tagsHeader}>
               <Text style={styles.text}>Filtrar por tags</Text>
               {selected.size > 0 ? (
@@ -208,7 +207,6 @@ export default function StudyTodayScreen({ navigation }) {
               )}
             </View>
 
-            {/* Filtro por tags */}
             <TagChips
               tags={tags}
               counts={counts}
@@ -228,7 +226,6 @@ export default function StudyTodayScreen({ navigation }) {
               }}
             />
 
-            {/* Meta + presets */}
             <View style={[local.row, local.metaRow]}>
               <Text style={styles.text}>Meta do dia:</Text>
               <TextInput
@@ -267,7 +264,6 @@ export default function StudyTodayScreen({ navigation }) {
               })}
             </View>
 
-            {/* Progresso vs meta */}
             <View style={local.progWrap}>
               <View
                 style={[

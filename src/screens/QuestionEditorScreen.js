@@ -16,35 +16,28 @@ import {
   createQuestion,
   getQuestionById,
   updateQuestion,
-  getOptionsByQuestion,
-  addOption,
-  updateOption,
-  deleteOption,
-  setCorrectOption,
-  setQuestionAnswer,
+  replaceOptions,
 } from "../db";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { HStack, VStack } from "../ui/Stack";
+import { VStack } from "../ui/Stack";
 
 export default function QuestionEditorScreen({ route, navigation }) {
   const { quizId, questionId } = route.params || {};
   const styles = useAppStyles(80);
+
+  const isEditing = !!questionId;
 
   // Campos base
   const [text, setText] = useState("");
   const [explanation, setExplanation] = useState("");
   const [tags, setTags] = useState("");
 
-  // Criação (simples)
+  // Campo de resposta correta (sempre disponível)
   const [answer, setAnswer] = useState("");
+
+  // Criação: atalho para alternativas erradas
   const [wrong1, setWrong1] = useState("");
   const [wrong2, setWrong2] = useState("");
   const [wrong3, setWrong3] = useState("");
-
-  // Edição (completa)
-  const [options, setOptions] = useState([]); // [{id,text,isCorrect}]
-
-  const isEditing = !!questionId;
 
   useEffect(() => {
     (async () => {
@@ -53,68 +46,60 @@ export default function QuestionEditorScreen({ route, navigation }) {
       setText(q?.text || "");
       setExplanation(q?.explanation || "");
       setTags(q?.tags || "");
-      const opts = await getOptionsByQuestion(questionId);
-      setOptions(opts);
+      setAnswer(q?.answer || "");
     })();
   }, [isEditing, questionId]);
 
   const saveCreate = async () => {
-    if (!text.trim() || !answer.trim()) return;
-    await createQuestion(
-      quizId,
-      text,
-      answer,
-      explanation,
-      tags,
-      wrong1,
-      wrong2,
-      wrong3
-    );
+    const t = text.trim();
+    const a = answer.trim();
+    if (!t || !a) {
+      Alert.alert("Atenção", "Preencha a pergunta e a resposta correta.");
+      return;
+    }
+
+    // 1) cria a pergunta
+    const newId = await createQuestion(quizId, t, a, explanation, tags);
+
+    // 2) se tiver alternativas erradas, grava todas agora
+    const opts = [
+      { text: a, isCorrect: true },
+      ...[wrong1, wrong2, wrong3]
+        .map((w) => String(w || "").trim())
+        .filter(Boolean)
+        .map((w) => ({ text: w, isCorrect: false })),
+    ];
+    if (opts.length > 1) {
+      await replaceOptions(newId, opts);
+    }
+
     navigation.goBack();
   };
 
   const saveEdit = async () => {
-    if (!text.trim()) return;
-    await updateQuestion(questionId, { text, explanation, tags });
+    const t = text.trim();
+    if (!t) {
+      Alert.alert("Atenção", "Preencha a pergunta.");
+      return;
+    }
+    await updateQuestion(questionId, {
+      text: t,
+      explanation,
+      tags,
+      answer: String(answer || "").trim(),
+    });
     navigation.goBack();
   };
 
-  const addWrong = async () => {
-    const wrongCount = options.filter((o) => !o.isCorrect).length;
-    if (wrongCount >= 3) {
-      Alert.alert("Limite", "No máximo 3 alternativas erradas.");
+  const goEditOptions = () => {
+    if (!isEditing) {
+      Alert.alert(
+        "Salve primeiro",
+        "Crie a pergunta antes de editar as alternativas."
+      );
       return;
     }
-    const id = await addOption(questionId, "Nova alternativa", 0);
-    const fresh = await getOptionsByQuestion(questionId);
-    setOptions(fresh);
-  };
-
-  const onChangeOption = async (opt, newText) => {
-    setOptions((opts) =>
-      opts.map((o) => (o.id === opt.id ? { ...o, text: newText } : o))
-    );
-  };
-  const onBlurOption = async (opt) => {
-    await updateOption(opt.id, opt.text);
-    if (opt.isCorrect) await setQuestionAnswer(questionId, opt.text);
-  };
-
-  const onDeleteOption = async (opt) => {
-    const corrects = options.filter((o) => o.isCorrect);
-    if (opt.isCorrect && corrects.length === 1) {
-      Alert.alert("Ops", "Pelo menos uma alternativa correta é necessária.");
-      return;
-    }
-    await deleteOption(opt.id);
-    const fresh = await getOptionsByQuestion(questionId);
-    setOptions(fresh);
-  };
-
-  const onMarkCorrect = async (opt) => {
-    await setCorrectOption(questionId, opt.id);
-    const fresh = await getOptionsByQuestion(questionId);
-    setOptions(fresh);
+    navigation.navigate("OptionEditor", { questionId });
   };
 
   return (
@@ -126,6 +111,7 @@ export default function QuestionEditorScreen({ route, navigation }) {
         <ScrollView
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator
         >
           <Text style={styles.h2}>
             {isEditing ? "Editar Pergunta" : "Nova Pergunta"}
@@ -141,112 +127,80 @@ export default function QuestionEditorScreen({ route, navigation }) {
             textAlignVertical="top"
           />
 
-          {isEditing ? (
-            <VStack space={12}>
-              <Text style={styles.h2}>Alternativas</Text>
-              <VStack space={8}>
-                {options.map((opt) => (
-                  <View key={opt.id} style={[styles.card, { padding: 12 }]}>
-                    <HStack space={8} style={{ alignItems: "center" }}>
-                      <MaterialCommunityIcons
-                        name={
-                          opt.isCorrect
-                            ? "checkbox-marked-circle"
-                            : "checkbox-blank-circle-outline"
-                        }
-                        size={24}
-                        color={opt.isCorrect ? "#2e7d32" : "#777"}
-                        onPress={() => onMarkCorrect(opt)}
-                      />
-                      <View style={{ flex: 1 }}>
-                        <TextInput
-                          style={styles.input}
-                          value={opt.text}
-                          onChangeText={(t) => onChangeOption(opt, t)}
-                          onBlur={() => onBlurOption(opt)}
-                          placeholder={
-                            opt.isCorrect
-                              ? "Resposta correta"
-                              : "Alternativa errada"
-                          }
-                        />
-                      </View>
-                      <MaterialCommunityIcons
-                        name="trash-can-outline"
-                        size={22}
-                        color="#dc3545"
-                        onPress={() => onDeleteOption(opt)}
-                      />
-                    </HStack>
-                    {opt.isCorrect ? (
-                      <Text style={styles.muted}>Correta</Text>
-                    ) : null}
-                  </View>
-                ))}
-              </VStack>
-
-              <PrimaryButton
-                variant="secondary"
-                title="Adicionar alternativa errada"
-                onPress={addWrong}
-                accessibilityHint="Adiciona uma alternativa incorreta"
-              />
-            </VStack>
-          ) : (
-            <VStack space={12}>
-              <Text style={styles.text}>Resposta correta</Text>
+          <VStack space={12}>
+            <View>
+              <Text style={[styles.text, { marginTop: 12 }]}>
+                Resposta correta
+              </Text>
               <TextInput
                 style={styles.input}
                 value={answer}
                 onChangeText={setAnswer}
+                placeholder="Digite a resposta correta"
               />
+            </View>
 
-              <Text style={styles.text}>Alternativas erradas (até 3)</Text>
-              <TextInput
-                style={styles.input}
-                value={wrong1}
-                onChangeText={setWrong1}
-                placeholder="Opcional"
-              />
-              <TextInput
-                style={styles.input}
-                value={wrong2}
-                onChangeText={setWrong2}
-                placeholder="Opcional"
-              />
-              <TextInput
-                style={styles.input}
-                value={wrong3}
-                onChangeText={setWrong3}
-                placeholder="Opcional"
-              />
-            </VStack>
-          )}
+            {!isEditing ? (
+              <>
+                <Text style={styles.text}>
+                  Alternativas erradas (opcional, até 3)
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  value={wrong1}
+                  onChangeText={setWrong1}
+                  placeholder="Errada 1"
+                />
+                <TextInput
+                  style={styles.input}
+                  value={wrong2}
+                  onChangeText={setWrong2}
+                  placeholder="Errada 2"
+                />
+                <TextInput
+                  style={styles.input}
+                  value={wrong3}
+                  onChangeText={setWrong3}
+                  placeholder="Errada 3"
+                />
+              </>
+            ) : null}
 
-          <Text style={[styles.text, { marginTop: 12 }]}>
-            Explicação (opcional)
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={explanation}
-            onChangeText={setExplanation}
-            placeholder="Dica, passo, memória..."
-          />
+            <Text style={[styles.text, { marginTop: 12 }]}>
+              Explicação (opcional)
+            </Text>
+            <TextInput
+              style={styles.input}
+              value={explanation}
+              onChangeText={setExplanation}
+              placeholder="Dica, passo, memória..."
+            />
 
-          <Text style={styles.text}>Tags (opcional)</Text>
-          <TextInput
-            style={styles.input}
-            value={tags}
-            onChangeText={setTags}
-            placeholder="separe por vírgulas"
-          />
+            <Text style={styles.text}>Tags (opcional)</Text>
+            <TextInput
+              style={styles.input}
+              value={tags}
+              onChangeText={setTags}
+              placeholder="separe por vírgulas"
+            />
+          </VStack>
+
+          {isEditing ? (
+            <View style={{ marginTop: 16 }}>
+              <PrimaryButton
+                variant="secondary"
+                title="Editar alternativas"
+                onPress={goEditOptions}
+              />
+            </View>
+          ) : null}
         </ScrollView>
 
         <View style={{ paddingHorizontal: 16, paddingBottom: 16 }}>
           <PrimaryButton
             title="Salvar"
             onPress={isEditing ? saveEdit : saveCreate}
-            disabled={!text.trim() || (!isEditing && !answer.trim())}
+            disabled={!text.trim() || !String(answer || "").trim()}
           />
         </View>
       </KeyboardAvoidingView>

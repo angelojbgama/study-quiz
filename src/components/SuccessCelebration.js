@@ -114,7 +114,6 @@ export default function SuccessCelebration({
       pointerEvents="none"
       style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}
     >
-      {/* Check central */}
       <Animated.View
         style={{
           position: "absolute",
@@ -131,7 +130,6 @@ export default function SuccessCelebration({
         />
       </Animated.View>
 
-      {/* Confete */}
       {particles.map((p, i) => (
         <Animated.View
           key={i}

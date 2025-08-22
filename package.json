@@ -23,6 +23,7 @@
     "expo-sharing": "~13.1.5",
     "expo-sqlite": "~15.2.14",
     "expo-status-bar": "~2.2.3",
+    "haptics": "^1.0.0",
     "hermes": "^0.4.4",
     "react": "^19.0.0",
     "react-native": "^0.79.5",

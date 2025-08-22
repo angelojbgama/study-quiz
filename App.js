@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -19,8 +19,8 @@ import QuestionEditorScreen from './src/screens/QuestionEditorScreen';
 import ImportScreen from './src/screens/ImportScreen';
 import LearnScreen from './src/screens/LearnScreen';
 import CardsScreen from './src/screens/CardsScreen';
-import ConclusionScreen from './src/screens/ConclusionScreen'; // 👈 novo
-import OptionEditorScreen from './src/screens/OptionEditorScreen'; // 👈 novo
+import ConclusionScreen from './src/screens/ConclusionScreen';
+import OptionEditorScreen from './src/screens/OptionEditorScreen';
 
 import StatsScreen from './src/screens/StatsScreen';
 import StudyTodayScreen from './src/screens/StudyTodayScreen';
@@ -33,8 +33,7 @@ const Tab = createBottomTabNavigator();
 function Tabs() {
   const colors = navLightTheme.colors;
 
-  // 👉 SafeAreaView com edges=['top'] APENAS nas telas do Tab
-  // Isso cria a “faixa branca” no topo somente onde não há botão de voltar.
+  // Faixa branca no topo (quando NÃO há back button)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }} edges={['top']}>
       <Tab.Navigator
@@ -76,45 +75,60 @@ function Tabs() {
   );
 }
 
+// Navigator que ajusta a “faixa” quando HÁ botão de voltar
+function RootNavigator() {
+  const insets = useSafeAreaInsets();
+  const colors = navLightTheme.colors;
+
+  // extra de respiro quando há botão de voltar (iOS)
+  const EXTRA_WITH_BACK = 6;
+
+  return (
+    <Stack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: colors.card },
+        headerTitleStyle: { color: colors.text, fontSize: 16, fontWeight: '600' },
+        headerTintColor: colors.primary,
+        headerBackTitleVisible: false,
+        headerShadowVisible: false,
+
+        // Header compacto no Android, com “faixa” controlada no iOS
+        statusBarTranslucent: false,
+        headerStatusBarHeight:
+          Platform.OS === 'android'
+            ? 0
+            : (insets?.top || 0) + (navigation.canGoBack() ? EXTRA_WITH_BACK : 0),
+
+        contentStyle: { backgroundColor: colors.background },
+      })}
+    >
+      <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
+      <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
+      <Stack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Nova Pergunta' }} />
+      <Stack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
+      <Stack.Screen name="Cards" component={CardsScreen} options={{ title: 'Cartões' }} />
+      <Stack.Screen name="Learn" component={LearnScreen} options={{ title: 'Aprender' }} />
+      <Stack.Screen
+        name="Conclusion"
+        component={ConclusionScreen}
+        options={{ title: 'Conclusão', headerBackVisible: false, gestureEnabled: false }}
+      />
+      <Stack.Screen name="OptionEditor" component={OptionEditorScreen} options={{ title: 'Alternativas' }} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   useEffect(() => { initDb(); }, []);
   const colors = navLightTheme.colors;
 
   return (
     <SafeAreaProvider>
-
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }} edges={['bottom']}>
         <NavigationContainer theme={navLightTheme}>
           <StatusBar style="dark" />
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: colors.card },
-              headerTitleStyle: { color: colors.text, fontSize: 16, fontWeight: '600' },
-              headerTintColor: colors.primary,
-              headerBackTitleVisible: false,
-              headerShadowVisible: false,
-
-              // Header compacto no Android
-              statusBarTranslucent: false,
-              ...(Platform.OS === 'android' ? { headerStatusBarHeight: 0 } : null),
-
-              contentStyle: { backgroundColor: colors.background },
-            }}
-          >
-            {/* Tabs sem header, com safe-area superior próprio */}
-            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-
-            {/* Demais telas (com botão de voltar) — sem safe-area top extra */}
-            <Stack.Screen name="QuizEditor" component={QuizEditorScreen} options={{ title: 'Novo Quiz' }} />
-            <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
-            <Stack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Nova Pergunta' }} />
-            <Stack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
-            <Stack.Screen name="Cards" component={CardsScreen} options={{ title: 'Cartões' }} />
-            <Stack.Screen name="Learn" component={LearnScreen} options={{ title: 'Aprender' }} />
-            <Stack.Screen name="Conclusion" component={ConclusionScreen} options={{ title: 'Conclusão', headerBackVisible: false, gestureEnabled: false }} />
-            <Stack.Screen name="OptionEditor" component={OptionEditorScreen} options={{ title: 'Alternativas' }} />
-
-          </Stack.Navigator>
+          <RootNavigator />
         </NavigationContainer>
       </SafeAreaView>
     </SafeAreaProvider>

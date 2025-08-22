@@ -252,7 +252,6 @@ export default function QuestionListScreen({ route, navigation }) {
 
     return (
       <View style={local.card} ref={menuAnchorRef}>
-        {/* botão menu — canto superior direito */}
         <Pressable
           hitSlop={8}
           style={({ pressed }) => [local.menuBtn, pressed && { opacity: 0.7 }]}
@@ -267,7 +266,6 @@ export default function QuestionListScreen({ route, navigation }) {
           />
         </Pressable>
 
-        {/* badge vencida — deslocado para a esquerda do menu */}
         {isDue ? (
           <View style={local.badge} accessibilityLabel="Cartão vencido">
             <Text style={local.badgeTxt}>
@@ -304,11 +302,9 @@ export default function QuestionListScreen({ route, navigation }) {
     <SafeAreaView style={styles.sa} edges={["bottom"]}>
       <View style={styles.container}>
         <VStack space={12}>
-          {/* Painel topo */}
           <View style={styles.panel}>
             <View style={local.headerPad} />
 
-            {/* Grid 2 colunas: Cartões | Quiz */}
             <View style={local.grid}>
               <View style={local.col}>
                 <PrimaryButton
@@ -328,7 +324,6 @@ export default function QuestionListScreen({ route, navigation }) {
               </View>
             </View>
 
-            {/* Busca — vem depois do grid, com margem superior */}
             <TextInput
               value={query}
               onChangeText={setQuery}
@@ -339,7 +334,6 @@ export default function QuestionListScreen({ route, navigation }) {
               returnKeyType="search"
             />
 
-            {/* Filtro por tags */}
             <View style={{ marginTop: 10 }}>
               <TagChips
                 tags={tags}
@@ -362,7 +356,6 @@ export default function QuestionListScreen({ route, navigation }) {
             </View>
           </View>
 
-          {/* Lista com scroll */}
           {filtered.length === 0 ? (
             <Text style={styles.muted}>Nenhum item encontrado.</Text>
           ) : (
@@ -378,7 +371,6 @@ export default function QuestionListScreen({ route, navigation }) {
         </VStack>
       </View>
 
-      {/* FAB (+) para adicionar pergunta */}
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Adicionar nova pergunta"
@@ -394,7 +386,6 @@ export default function QuestionListScreen({ route, navigation }) {
         />
       </Pressable>
 
-      {/* Bottom sheet: menu contextual */}
       <Modal
         transparent
         visible={!!menuFor}

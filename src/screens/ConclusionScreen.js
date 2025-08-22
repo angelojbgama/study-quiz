@@ -239,7 +239,6 @@ export default function ConclusionScreen({ route, navigation }) {
           {durationStr ? ` • ${durationStr}` : ""}
         </Text>
 
-        {/* Stats */}
         <View style={local.statsRow}>
           <View style={local.statCard}>
             <Text style={local.statNum}>
@@ -258,7 +257,6 @@ export default function ConclusionScreen({ route, navigation }) {
         </View>
       </View>
 
-      {/* Tags com mais erros */}
       <View style={local.listHeaderGap} />
       <View style={local.section}>
         <Text style={local.sectionTitle}>Tags com mais erros</Text>
@@ -279,11 +277,9 @@ export default function ConclusionScreen({ route, navigation }) {
         )}
       </View>
 
-      {/* Mais desafiadoras (título acima da lista) */}
       <View style={local.listHeaderGap} />
       <View style={local.section}>
         <Text style={local.sectionTitle}>Mais desafiadoras</Text>
-        {/* conteúdo virá no renderItem do FlatList */}
       </View>
     </View>
   );

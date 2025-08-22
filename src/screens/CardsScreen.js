@@ -304,7 +304,6 @@ export default function CardsScreen({ route, navigation }) {
         contentContainerStyle={[styles.container, { paddingBottom: SP }]}
         keyboardShouldPersistTaps="handled"
       >
-        {/* filtros */}
         <View style={styles.panel}>
           <TagChips
             tags={tags}
@@ -318,7 +317,6 @@ export default function CardsScreen({ route, navigation }) {
           </View>
         </View>
 
-        {/* progresso */}
         <View style={local.section}>
           <View style={local.progressOuter}>
             <View
@@ -333,7 +331,6 @@ export default function CardsScreen({ route, navigation }) {
           </Text>
         </View>
 
-        {/* cartão */}
         <Animated.View
           style={[
             styles.card,
@@ -383,7 +380,6 @@ export default function CardsScreen({ route, navigation }) {
           )}
         </Animated.View>
 
-        {/* ações */}
         {show ? (
           <View style={[local.row]}>
             <View style={{ flex: 1 }}>

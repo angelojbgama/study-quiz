@@ -1,6 +1,6 @@
 // src/screens/BackupScreen.js
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
 import * as FileSystem from "expo-file-system";
@@ -119,7 +119,11 @@ export default function BackupScreen() {
 
   return (
     <SafeAreaView style={styles.sa} edges={["bottom"]}>
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator
+      >
         <VStack space={12}>
           <View style={styles.panel}>
             <Text style={styles.h2}>Backup & Sincronização</Text>
@@ -153,7 +157,7 @@ export default function BackupScreen() {
             </Text>
           </View>
         </VStack>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

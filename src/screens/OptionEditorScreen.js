@@ -7,10 +7,10 @@ import {
   StyleSheet,
   Pressable,
   FlatList,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
@@ -18,7 +18,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import PrimaryButton from "../components/PrimaryButton";
 import useAppStyles from "../ui/useAppStyles";
-import { getQuestionById, getOptionsByQuestion, replaceOptions } from "../db";
+import { getQuestionById, getOptionsByQuestion, replaceOptions, updateQuestion } from "../db"; // 👈 import updateQuestion
 
 export default function OptionEditorScreen({ route, navigation }) {
   const { questionId } = route.params || {};
@@ -31,7 +31,6 @@ export default function OptionEditorScreen({ route, navigation }) {
     (async () => {
       const q = await getQuestionById(questionId);
       const opts = await getOptionsByQuestion(questionId);
-      // Se não houver opções, cria estrutura padrão: 1 correta + 3 erradas vazias
       const normalized =
         opts && opts.length
           ? opts.map((o) => ({
@@ -103,7 +102,7 @@ export default function OptionEditorScreen({ route, navigation }) {
     );
   };
 
-  const updateText = (index, text) => {
+  const updateTextLocal = (index, text) => {
     setOptions((prev) =>
       prev.map((o, i) => (i === index ? { ...o, text } : o))
     );
@@ -113,7 +112,6 @@ export default function OptionEditorScreen({ route, navigation }) {
     setOptions((prev) => {
       const next = [...prev];
       const removed = next.splice(index, 1)[0];
-      // Se removeu a correta, promove a primeira como correta
       if (removed?.isCorrect && next.length > 0) {
         next[0] = { ...next[0], isCorrect: true };
       }
@@ -141,7 +139,15 @@ export default function OptionEditorScreen({ route, navigation }) {
       );
       return;
     }
+
     await replaceOptions(questionId, trimmed);
+
+    // 🔐 Mantém question.answer consistente com a alternativa correta
+    const correctText = trimmed.find((o) => o.isCorrect)?.text || "";
+    if (correctText) {
+      await updateQuestion(questionId, { answer: correctText });
+    }
+
     navigation.goBack();
   };
 
@@ -164,6 +170,7 @@ export default function OptionEditorScreen({ route, navigation }) {
         <ScrollView
           contentContainerStyle={[styles.container, { paddingBottom: 16 }]}
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator
         >
           <View style={styles.panel}>
             <Text style={styles.h3}>Pergunta</Text>
@@ -179,51 +186,27 @@ export default function OptionEditorScreen({ route, navigation }) {
             <Text style={styles.h3}>Alternativas</Text>
             <View style={{ height: 8 }} />
             {options.map((opt, idx) => (
-              <View
-                key={opt.id ?? idx}
-                style={[local.itemRow, { marginBottom: 8 }]}
-              >
-                <Pressable
-                  onPress={() => setCorrect(idx)}
-                  hitSlop={8}
-                  accessibilityLabel="Marcar como correta"
-                >
+              <View key={opt.id ?? idx} style={[local.itemRow, { marginBottom: 8 }]}>
+                <Pressable onPress={() => setCorrect(idx)} hitSlop={8} accessibilityLabel="Marcar como correta">
                   <View style={local.radio}>
                     {opt.isCorrect ? <View style={local.radioDot} /> : null}
                   </View>
                 </Pressable>
                 <TextInput
                   value={opt.text}
-                  onChangeText={(t) => updateText(idx, t)}
-                  placeholder={
-                    opt.isCorrect ? "Resposta correta" : "Resposta incorreta"
-                  }
+                  onChangeText={(t) => updateTextLocal(idx, t)}
+                  placeholder={opt.isCorrect ? "Resposta correta" : "Resposta incorreta"}
                   placeholderTextColor={colors.muted}
                   style={local.input}
                 />
-                <Pressable
-                  onPress={() => removeOption(idx)}
-                  hitSlop={8}
-                  style={({ pressed }) => [
-                    local.trash,
-                    pressed && { opacity: 0.7 },
-                  ]}
-                >
-                  <MaterialCommunityIcons
-                    name="trash-can-outline"
-                    size={18}
-                    color={colors.danger || "#dc3545"}
-                  />
+                <Pressable onPress={() => removeOption(idx)} hitSlop={8} style={({ pressed }) => [local.trash, pressed && { opacity: 0.7 }]}>
+                  <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.danger || "#dc3545"} />
                 </Pressable>
               </View>
             ))}
 
             <View style={local.addRow}>
-              <PrimaryButton
-                title="Adicionar incorreta"
-                variant="secondary"
-                onPress={addWrong}
-              />
+              <PrimaryButton title="Adicionar incorreta" variant="secondary" onPress={addWrong} />
             </View>
           </View>
 
