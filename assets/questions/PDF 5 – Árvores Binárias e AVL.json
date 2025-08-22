@@ -3,90 +3,150 @@
     "quiz": "Árvores Binárias e AVL", 
     "question": "O que é uma árvore binária de busca (BST)?", 
     "answer": "É uma árvore em que o valor da subárvore esquerda é sempre menor e da direita sempre maior que o nó pai", 
-    "tags": "conceitos"
+    "wrong1": "É uma árvore em que o pai é sempre maior que ambos os filhos (propriedade de heap)",
+    "wrong2": "É uma árvore em que as alturas das subárvores são sempre iguais",
+    "wrong3": "É uma árvore completa em que todos os níveis estão totalmente preenchidos",
+    "tags": "conceitos",
+    "explicacao": "A propriedade de BST compara chaves: esquerda < nó < direita. Não exige ser completa nem ter alturas iguais."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a principal vantagem de uma BST em relação a listas?", 
     "answer": "Permite buscas, inserções e remoções em O(log n) se estiver balanceada", 
-    "tags": "conceitos"
+    "wrong1": "Garante buscas em O(1) para qualquer caso",
+    "wrong2": "Sempre usa menos memória que uma lista",
+    "wrong3": "Ordena automaticamente os dados em O(1)",
+    "tags": "conceitos",
+    "explicacao": "BSTs balanceadas mantêm altura proporcional a log n, suportando operações fundamentais em O(log n)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "O que acontece com uma BST se inserirmos elementos já ordenados?", 
     "answer": "Ela pode se desbalancear e degenerar em uma lista", 
-    "tags": "conceitos"
+    "wrong1": "Ela se balanceia automaticamente sem rotações",
+    "wrong2": "Ela se transforma em uma heap",
+    "wrong3": "As buscas passam a ser O(1)",
+    "tags": "conceitos",
+    "explicacao": "Inserções ordenadas podem produzir uma árvore degenera (altura ~ n), piorando buscas para O(n)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual travessia em uma BST retorna os elementos em ordem crescente?", 
     "answer": "Travessia em ordem (in-order)", 
-    "tags": "percursos"
+    "wrong1": "Pré-ordem (pre-order)",
+    "wrong2": "Pós-ordem (post-order)",
+    "wrong3": "Nível a nível (level-order)",
+    "tags": "percursos",
+    "explicacao": "Em BST, visitar esquerda → nó → direita produz a sequência ordenada das chaves."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a ordem da travessia pré-ordem (pre-order)?", 
     "answer": "Visita a raiz, depois a esquerda e depois a direita", 
-    "tags": "percursos"
+    "wrong1": "Visita a esquerda, depois a direita e por último a raiz",
+    "wrong2": "Visita a esquerda, depois a raiz e depois a direita",
+    "wrong3": "Visita a raiz, depois a direita e depois a esquerda",
+    "tags": "percursos",
+    "explicacao": "Pre-order: nó → esquerda → direita. Útil para copiar/serializar a estrutura."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a ordem da travessia pós-ordem (post-order)?", 
     "answer": "Visita a esquerda, depois a direita e por último a raiz", 
-    "tags": "percursos"
+    "wrong1": "Visita a raiz, depois a esquerda e depois a direita",
+    "wrong2": "Visita a esquerda, depois a raiz e depois a direita",
+    "wrong3": "Visita a direita, depois a esquerda e por último a raiz",
+    "tags": "percursos",
+    "explicacao": "Post-order: esquerda → direita → nó. Útil para desalocar/avaliar subárvores antes do pai."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "O que é uma árvore AVL?", 
     "answer": "É uma árvore binária de busca que se mantém balanceada automaticamente", 
-    "tags": "conceitos"
+    "wrong1": "É uma árvore em que as inserções sempre ocorrem na folha mais à esquerda",
+    "wrong2": "É uma heap binária usada para prioridade",
+    "wrong3": "É uma árvore em que cada nó tem exatamente três filhos",
+    "tags": "conceitos",
+    "explicacao": "AVL é uma BST que aplica rotações para manter o fator de balanceamento controlado."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a condição de balanceamento de uma AVL?", 
     "answer": "A diferença de altura entre as subárvores esquerda e direita de qualquer nó é no máximo 1", 
-    "tags": "conceitos"
+    "wrong1": "A soma das alturas das subárvores deve ser igual a n",
+    "wrong2": "A diferença de altura pode chegar a 2 sem desbalancear",
+    "wrong3": "Ambas as subárvores devem ter exatamente o mesmo número de nós",
+    "tags": "conceitos",
+    "explicacao": "O fator de balanceamento em AVL deve ser -1, 0 ou +1 para todo nó."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a altura máxima de uma árvore AVL com n nós?", 
     "answer": "O(log n)", 
-    "tags": "conceitos"
+    "wrong1": "O(n)",
+    "wrong2": "O(√n)",
+    "wrong3": "O(1)",
+    "tags": "conceitos",
+    "explicacao": "O balanceamento garante altura assintoticamente logarítmica no número de nós."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual rotação é usada quando há desbalanceamento na esquerda da subárvore esquerda?", 
     "answer": "Rotação simples à direita", 
-    "tags": "rotações"
+    "wrong1": "Rotação simples à esquerda",
+    "wrong2": "Rotação dupla à esquerda",
+    "wrong3": "Rotação dupla à direita",
+    "tags": "rotações",
+    "explicacao": "Caso LL: a árvore pende para a esquerda; uma rotação à direita restaura o balanceamento."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual rotação é usada quando há desbalanceamento na direita da subárvore direita?", 
     "answer": "Rotação simples à esquerda", 
-    "tags": "rotações"
+    "wrong1": "Rotação simples à direita",
+    "wrong2": "Rotação dupla à direita",
+    "wrong3": "Rotação dupla à esquerda",
+    "tags": "rotações",
+    "explicacao": "Caso RR: a árvore pende para a direita; uma rotação à esquerda corrige o desequilíbrio."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual rotação é usada quando há desbalanceamento na esquerda da subárvore direita?", 
     "answer": "Rotação dupla à direita", 
-    "tags": "rotações"
+    "wrong1": "Rotação dupla à esquerda",
+    "wrong2": "Rotação simples à esquerda",
+    "wrong3": "Rotação simples à direita",
+    "tags": "rotações",
+    "explicacao": "Caso RL: faz-se primeiro rotação à esquerda no filho direito e depois rotação à direita no nó raiz do desequilíbrio."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual rotação é usada quando há desbalanceamento na direita da subárvore esquerda?", 
     "answer": "Rotação dupla à esquerda", 
-    "tags": "rotações"
+    "wrong1": "Rotação dupla à direita",
+    "wrong2": "Rotação simples à direita",
+    "wrong3": "Rotação simples à esquerda",
+    "tags": "rotações",
+    "explicacao": "Caso LR: faz-se primeiro rotação à direita no filho esquerdo e depois rotação à esquerda no nó raiz do desequilíbrio."
   },
-   { 
+  { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a vantagem de uma árvore AVL em relação a uma BST simples?", 
     "answer": "Mantém buscas em O(log n) mesmo após muitas inserções", 
-    "tags": "comparação"
+    "wrong1": "Consome menos memória do que qualquer BST",
+    "wrong2": "Elimina a necessidade de rotações",
+    "wrong3": "Garante operações em O(1) para busca",
+    "tags": "comparação",
+    "explicacao": "AVL evita degeneração por meio de rotações, garantindo altura logarítmica e desempenho consistente."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual a diferença entre uma AVL e uma Red-Black Tree?", 
     "answer": "AVL é mais rigidamente balanceada, Red-Black é mais flexível mas mais rápida em inserções/remoções", 
-    "tags": "comparação"
+    "wrong1": "AVL não é uma árvore de busca",
+    "wrong2": "Red-Black exige fator de balanceamento 0 ou ±1 como a AVL",
+    "wrong3": "Não há diferenças práticas entre elas",
+    "tags": "comparação",
+    "explicacao": "AVL mantém altura mais próxima de log n (melhor busca); Red-Black relaxa o balanceamento e reduz o custo de updates."
   }
 ]

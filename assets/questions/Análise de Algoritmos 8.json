@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "Você precisa processar 1 bilhão de registros em um banco de dados. É melhor um algoritmo O(n log n) ou O(n²)?", 
     "answer": "O(n log n), pois O(n²) seria inviável em grandes entradas", 
-    "tags": "casos reais"
+    "wrong1": "O(n²), porque faz uma análise mais completa",
+    "wrong2": "O(log n), pois ignora o fator n",
+    "wrong3": "Depende só do hardware, a complexidade não importa",
+    "tags": "casos reais",
+    "explicacao": "Para n muito grande, o crescimento quadrático explode (10¹⁸ operações). n·log₂n cresce bem mais devagar."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "Um site de buscas precisa indexar páginas rapidamente. Por que priorizar algoritmos O(log n) ou O(n) em vez de O(n²)?", 
     "answer": "Porque apenas algoritmos mais eficientes permitem escalar para milhões de registros", 
-    "tags": "casos reais"
+    "wrong1": "Porque usam menos linhas de código",
+    "wrong2": "Porque sempre usam menos memória do que O(n²)",
+    "wrong3": "Porque O(n²) é melhor só quando há paralelização",
+    "tags": "casos reais",
+    "explicacao": "Indexadores lidam com volumes massivos; custos quadráticos não escalam. Custos lineares ou logarítmicos são viáveis."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Em um editor de arquivos, por que a busca de arquivos em pastas pode ser implementada de forma recursiva?", 
     "answer": "Porque pastas podem conter outras pastas, formando uma estrutura hierárquica natural", 
-    "tags": "casos reais"
+    "wrong1": "Porque recursão é sempre mais rápida que iteração",
+    "wrong2": "Porque recursão não usa pilha de chamadas",
+    "wrong3": "Porque recursão sempre consome menos memória",
+    "tags": "casos reais",
+    "explicacao": "O sistema de diretórios é uma árvore; a recursão espelha a estrutura e simplifica o código."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Por que recursão é usada em algoritmos de jogos como exploração de labirintos?", 
     "answer": "Porque permite explorar cada caminho até encontrar uma saída de forma elegante", 
-    "tags": "casos reais"
+    "wrong1": "Porque garante sempre o caminho mais curto",
+    "wrong2": "Porque não utiliza pilha (stack)",
+    "wrong3": "Porque a complexidade é sempre O(1)",
+    "tags": "casos reais",
+    "explicacao": "Backtracking recursivo modela a exploração de caminhos; não garante menor caminho sem técnicas adicionais."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Em um e-commerce, por que usar algoritmos eficientes de ordenação é fundamental?", 
     "answer": "Porque ordenar milhões de produtos com algoritmos ineficientes tornaria o sistema lento", 
-    "tags": "casos reais"
+    "wrong1": "Porque evita a necessidade de banco de dados",
+    "wrong2": "Porque garante sempre O(n) independente dos dados",
+    "wrong3": "Porque impede qualquer inconsistência de dados",
+    "tags": "casos reais",
+    "explicacao": "Ordenações frequentes exigem O(n log n) na prática; algoritmos quadráticos causam lentidão perceptível."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Por que o algoritmo Timsort é usado no Python e no Java?", 
     "answer": "Porque combina eficiência de Merge Sort e Insertion Sort, adaptando-se a dados reais", 
-    "tags": "casos reais"
+    "wrong1": "Porque é sempre O(n) em qualquer caso",
+    "wrong2": "Porque usa pivô aleatório para dividir",
+    "wrong3": "Porque é o mais simples de implementar",
+    "tags": "casos reais",
+    "explicacao": "Timsort detecta runs já ordenadas (dados quase ordenados) e é estável, performando muito bem em cenários reais."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Por que bancos de dados como MySQL usam árvores balanceadas?", 
     "answer": "Para garantir buscas rápidas e previsíveis mesmo com milhões de registros", 
-    "tags": "casos reais"
+    "wrong1": "Porque eliminam acessos a disco",
+    "wrong2": "Porque inserções ficam O(1) sempre",
+    "wrong3": "Porque ocupam menos espaço que arrays em todos os casos",
+    "tags": "casos reais",
+    "explicacao": "Estruturas balanceadas mantêm altura O(log n), garantindo desempenho consistente em busca/insere/remove."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Por que uma árvore binária é mais adequada que uma lista para buscas frequentes?", 
     "answer": "Porque permite buscas em O(log n) em vez de O(n)", 
-    "tags": "casos reais"
+    "wrong1": "Porque listas têm busca O(log n)",
+    "wrong2": "Porque árvores sempre usam menos memória",
+    "wrong3": "Porque árvores são sempre mais simples de implementar",
+    "tags": "casos reais",
+    "explicacao": "Em listas, busca é linear; em BSTs balanceadas, a altura logarítmica acelera buscas repetidas."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como algoritmos de grafos são usados em redes sociais?", 
     "answer": "Para sugerir amigos em comum e analisar conexões entre usuários", 
-    "tags": "casos reais"
+    "wrong1": "Para ordenar a timeline estritamente por hora",
+    "wrong2": "Para criptografar mensagens entre usuários",
+    "wrong3": "Para comprimir imagens de perfil",
+    "tags": "casos reais",
+    "explicacao": "Grafos modelam relacionamentos; métricas e percursos identificam conexões relevantes (amigos de amigos)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como um sistema GPS usa grafos?", 
     "answer": "Para calcular rotas mais curtas entre pontos no mapa usando Dijkstra e variações", 
-    "tags": "casos reais"
+    "wrong1": "Para desenhar o mapa na tela",
+    "wrong2": "Para reconhecer placas de veículos",
+    "wrong3": "Para medir a temperatura das vias",
+    "tags": "casos reais",
+    "explicacao": "Vias/ruas são arestas com pesos (distância/tempo). Algoritmos de caminhos mínimos escolhem rotas eficientes."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como grafos são usados em análise de epidemias?", 
     "answer": "Modelando pessoas como vértices e contatos como arestas para rastrear propagação", 
-    "tags": "casos reais"
+    "wrong1": "Para calcular apenas a média de idades",
+    "wrong2": "Para ordenar nomes alfabeticamente",
+    "wrong3": "Para comprimir registros médicos",
+    "tags": "casos reais",
+    "explicacao": "A estrutura de contatos define cadeias de transmissão; grafos ajudam a prever e conter surtos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como empresas de energia usam algoritmos de grafos?", 
     "answer": "Para planejar redes elétricas de menor custo usando árvores geradoras mínimas", 
-    "tags": "casos reais"
+    "wrong1": "Para encontrar apenas ciclos de tamanho máximo",
+    "wrong2": "Para ordenar cidades alfabeticamente",
+    "wrong3": "Para ajustar modelos por regressão linear",
+    "tags": "casos reais",
+    "explicacao": "MSTs (Kruskal/Prim) minimizam custo total de conexão mantendo a rede conectada."
   }
 ]

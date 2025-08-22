@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "Se um loop roda O(log n) vezes e n = 64, quantas iterações ele fará aproximadamente?", 
     "answer": "6, pois log₂(64) = 6", 
-    "tags": "cálculo"
+    "wrong1": "5, pois log₂(64) = 5",
+    "wrong2": "64, uma por elemento",
+    "wrong3": "7, pois log₁₀(64) ≈ 7",
+    "tags": "cálculo",
+    "explicacao": "Para loops O(log n) consideramos log base 2 por padrão em contexto de algoritmos: log₂(64)=6."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "Um algoritmo O(n²) faz 100 operações quando n=10. Aproximadamente quantas fará quando n=100?", 
     "answer": "10.000 operações", 
-    "tags": "cálculo"
+    "wrong1": "1.000 operações",
+    "wrong2": "100.000 operações",
+    "wrong3": "20.000 operações",
+    "tags": "cálculo",
+    "explicacao": "Escala quadrática: multiplicar n por 10 multiplica custo por 10²=100 → 100×100=10.000."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Quantos movimentos são necessários para resolver a Torre de Hanói com 6 discos?", 
     "answer": "63 movimentos (2^6 - 1)", 
-    "tags": "cálculo"
+    "wrong1": "64 movimentos",
+    "wrong2": "32 movimentos",
+    "wrong3": "31 movimentos",
+    "tags": "cálculo",
+    "explicacao": "Para n discos, mínimos movimentos = 2^n − 1. Para n=6: 64−1=63."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Quantas chamadas recursivas a função Fibonacci(5) fará na versão ingênua?", 
     "answer": "15 chamadas", 
-    "tags": "cálculo"
+    "wrong1": "11 chamadas",
+    "wrong2": "31 chamadas",
+    "wrong3": "5 chamadas",
+    "tags": "cálculo",
+    "explicacao": "Para a implementação ingênua, #chamadas = 2·F(n+1) − 1. Como F(6)=8, 2·8−1=15."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade de ordenar 1 milhão de números usando Quick Sort no caso médio?", 
     "answer": "O(n log n), ou aproximadamente 20 milhões de comparações", 
-    "tags": "cálculo"
+    "wrong1": "Aproximadamente 1 milhão de comparações",
+    "wrong2": "Aproximadamente 1 bilhão de comparações",
+    "wrong3": "Aproximadamente 60 milhões de comparações",
+    "tags": "cálculo",
+    "explicacao": "n log₂ n para n=10⁶ dá ~10⁶×~20 ≈ 2×10⁷. (Constantes variam conforme implementação.)"
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Quantas comparações faz o Merge Sort para n=8 elementos?", 
     "answer": "24 comparações aproximadamente", 
-    "tags": "cálculo"
+    "wrong1": "16 comparações",
+    "wrong2": "21 comparações",
+    "wrong3": "32 comparações",
+    "tags": "cálculo",
+    "explicacao": "Para potências de 2, no pior caso ≈ n·log₂n = 8·3 = 24 comparações."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a altura máxima de uma árvore AVL com 7 nós?", 
     "answer": "3, pois a árvore se mantém balanceada", 
-    "tags": "cálculo"
+    "wrong1": "2",
+    "wrong2": "4",
+    "wrong3": "5",
+    "tags": "cálculo",
+    "explicacao": "Considerando altura como nº de níveis (raiz=1), uma AVL com 7 nós pode ter até 3 níveis. Se contar arestas, seria 2."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Quantos nós uma árvore binária completa de altura 4 pode ter no máximo?", 
     "answer": "31 nós (2^(h+1) - 1)", 
-    "tags": "cálculo"
+    "wrong1": "15 nós",
+    "wrong2": "63 nós",
+    "wrong3": "30 nós",
+    "tags": "cálculo",
+    "explicacao": "Para altura h (em arestas), o máximo é 2^{h+1}−1. Com h=4: 2^5−1=31."
   },
   { 
     "quiz": "Grafos", 
     "question": "Se um grafo não direcionado tem 5 vértices, qual é o número máximo de arestas em um grafo completo?", 
     "answer": "10 arestas (n(n-1)/2)", 
-    "tags": "cálculo"
+    "wrong1": "20 arestas",
+    "wrong2": "5 arestas",
+    "wrong3": "8 arestas",
+    "tags": "cálculo",
+    "explicacao": "Kₙ tem n(n−1)/2 arestas. Para n=5: 5·4/2=10."
   },
   { 
     "quiz": "Grafos", 
     "question": "Quantas arestas tem uma árvore com 12 vértices?", 
     "answer": "11 arestas (n-1)", 
-    "tags": "cálculo"
+    "wrong1": "12 arestas",
+    "wrong2": "10 arestas",
+    "wrong3": "13 arestas",
+    "tags": "cálculo",
+    "explicacao": "Árvore simples e conexa com n vértices sempre tem n−1 arestas."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual é a complexidade aproximada do algoritmo Floyd-Warshall em um grafo de 100 vértices?", 
     "answer": "O(100³) = 1.000.000 operações", 
-    "tags": "cálculo"
+    "wrong1": "O(100²) = 10.000 operações",
+    "wrong2": "O(100⁴) = 100.000.000 operações",
+    "wrong3": "O(100 log 100) ≈ 460 operações",
+    "tags": "cálculo",
+    "explicacao": "Floyd–Warshall é O(V³). Para V=100: 10⁶ iterações (desconsiderando constantes)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Um BFS em um grafo com 1000 vértices e 5000 arestas tem complexidade de que ordem?", 
     "answer": "O(V + E) = O(6000)", 
-    "tags": "cálculo"
+    "wrong1": "O(V·E) ≈ O(5.000.000)",
+    "wrong2": "O(V²) = O(1.000.000)",
+    "wrong3": "O(E²) = O(25.000.000)",
+    "tags": "cálculo",
+    "explicacao": "BFS é linear no tamanho do grafo: O(V+E). Para V=1000 e E=5000 dá ~6000 passos básicos."
   }
 ]

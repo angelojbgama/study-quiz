@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "Por que analisar a complexidade de algoritmos é importante em sistemas que lidam com grandes volumes de dados?", 
     "answer": "Porque garante que o algoritmo seja escalável e não fique inviável com muitos dados", 
-    "tags": "aplicações"
+    "wrong1": "Porque garante que todo algoritmo rode em O(1)",
+    "wrong2": "Para consumir mais memória e acelerar o processador",
+    "wrong3": "Porque complexidade só importa para entradas pequenas",
+    "tags": "aplicações",
+    "explicacao": "Entender a ordem de crescimento evita soluções que explodem em tempo/memória quando o volume aumenta."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "Em um site de e-commerce com milhões de produtos, por que usar busca binária é melhor que busca sequencial?", 
     "answer": "Porque reduz o tempo de busca de O(n) para O(log n)", 
-    "tags": "aplicações"
+    "wrong1": "Porque funciona mesmo em dados não ordenados",
+    "wrong2": "Porque é sempre O(1)",
+    "wrong3": "Porque elimina a necessidade de índices",
+    "tags": "aplicações",
+    "explicacao": "A busca binária descarta metade do espaço a cada passo, exigindo dados ordenados e caindo para O(log n)."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Por que recursão é usada em algoritmos de navegação de pastas no computador?", 
     "answer": "Porque pastas podem conter outras pastas, formando uma estrutura hierárquica natural para recursão", 
-    "tags": "aplicações"
+    "wrong1": "Porque evita totalmente o uso de laços (loops)",
+    "wrong2": "Porque é sempre mais rápida que iteração",
+    "wrong3": "Porque usa menos memória do que qualquer solução iterativa",
+    "tags": "aplicações",
+    "explicacao": "A estrutura em árvore do sistema de arquivos se modela naturalmente com chamadas recursivas."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Em jogos como xadrez, por que recursão é usada em algoritmos de decisão?", 
     "answer": "Porque cada jogada leva a um novo estado que pode ser explorado recursivamente", 
-    "tags": "aplicações"
+    "wrong1": "Porque as jogadas são independentes entre si",
+    "wrong2": "Porque evita explorar a árvore de estados",
+    "wrong3": "Porque garante solução ótima sem heurísticas",
+    "tags": "aplicações",
+    "explicacao": "A recursão percorre a árvore de jogo (minimax/poda alpha-beta) avaliando estados sucessivos."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Por que algoritmos como Quick Sort ou Timsort são usados em bancos de dados?", 
     "answer": "Porque conseguem ordenar milhões de registros de forma eficiente", 
-    "tags": "aplicações"
+    "wrong1": "Porque têm pior caso O(n)",
+    "wrong2": "Porque não realizam comparações",
+    "wrong3": "Porque são sempre estáveis e in-place ao mesmo tempo",
+    "tags": "aplicações",
+    "explicacao": "Eles têm bom desempenho médio (≈O(n log n)) e bons fatores de constante/prática em grandes volumes."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Por que bibliotecas de programação usam Insertion Sort em listas pequenas?", 
     "answer": "Porque em listas pequenas o custo do algoritmo simples é menor que dividir para conquistar", 
-    "tags": "aplicações"
+    "wrong1": "Porque o pior caso é O(1)",
+    "wrong2": "Porque não precisa fazer trocas",
+    "wrong3": "Porque usa muita memória extra para ficar rápido",
+    "tags": "aplicações",
+    "explicacao": "Insertion Sort tem baixo overhead e boa localidade de cache; para poucos elementos, é muito competitivo."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Por que bancos de dados usam árvores balanceadas como AVL ou B-Trees?", 
     "answer": "Para garantir buscas rápidas e consistentes mesmo com muitos registros", 
-    "tags": "aplicações"
+    "wrong1": "Porque ocupam sempre menos disco do que qualquer outra estrutura",
+    "wrong2": "Porque nunca precisam de rebalanceamento",
+    "wrong3": "Porque garantem O(1) em todas as operações",
+    "tags": "aplicações",
+    "explicacao": "Manter a altura em O(log n) preserva tempos previsíveis de busca/atualização mesmo em grande escala."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Por que uma árvore binária de busca é melhor que uma lista ordenada para inserções?", 
     "answer": "Porque inserções em árvores são O(log n), enquanto em listas ordenadas podem ser O(n)", 
-    "tags": "aplicações"
+    "wrong1": "Porque lista ordenada também insere em O(log n) sem deslocamentos",
+    "wrong2": "Porque BST insere em O(1) sempre",
+    "wrong3": "Porque BST não faz comparações",
+    "tags": "aplicações",
+    "explicacao": "Na lista é preciso deslocar elementos; na BST balanceada, a altura é O(log n)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como o Google Maps usa algoritmos de grafos?", 
     "answer": "Para calcular rotas mais curtas entre cidades usando Dijkstra e variações", 
-    "tags": "aplicações"
+    "wrong1": "Usa Kruskal para encontrar o caminho mais curto",
+    "wrong2": "BFS sempre resolve, mesmo com pesos",
+    "wrong3": "Bellman-Ford é sempre mais rápido que Dijkstra",
+    "tags": "aplicações",
+    "explicacao": "Com pesos positivos, Dijkstra (e heurísticas como A*) é a base para rotas eficientes."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como redes sociais como Facebook e Instagram usam grafos?", 
     "answer": "Representando usuários como vértices e conexões como arestas para sugerir amigos", 
-    "tags": "aplicações"
+    "wrong1": "Representando seguidores em árvores AVL",
+    "wrong2": "Modelando conexões apenas como matrizes fixas sem arestas",
+    "wrong3": "Não usam grafos; apenas tabelas relacionais",
+    "tags": "aplicações",
+    "explicacao": "O grafo de relacionamentos permite percursos/medidas (grau, caminhos, comunidades) para recomendações."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como grafos são usados em análise de redes de energia?", 
     "answer": "Cada nó representa uma estação e as arestas representam conexões de transmissão", 
-    "tags": "aplicações"
+    "wrong1": "Cada nó é uma rua e cada aresta é um semáforo",
+    "wrong2": "Usam apenas pilhas e filas no lugar de grafos",
+    "wrong3": "Arestas representam as cores dos cabos",
+    "tags": "aplicações",
+    "explicacao": "Modelar como grafo facilita avaliar conectividade, redundância e fluxos na rede elétrica."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo de grafos pode ser usado para planejar o menor custo em cabos de internet de uma cidade?", 
     "answer": "Kruskal ou Prim para gerar uma árvore mínima de conexões", 
-    "tags": "aplicações"
+    "wrong1": "Dijkstra para custo total mínimo",
+    "wrong2": "Floyd–Warshall para grafos esparsos",
+    "wrong3": "DFS para achar o menor custo",
+    "tags": "aplicações",
+    "explicacao": "MST (Kruskal/Prim) minimiza o custo total para conectar todos os pontos sem ciclos."
   }
 ]

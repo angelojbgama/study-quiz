@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "Qual notação representa o limite inferior de desempenho de um algoritmo?", 
     "answer": "Ω (Ômega)", 
-    "tags": "teoria"
+    "wrong1": "O (Big-O)",
+    "wrong2": "Θ (Teta)",
+    "wrong3": "o (little-o)",
+    "tags": "teoria",
+    "explicacao": "Big-Ω dá o limite inferior; Big-O dá o superior; Θ (Teta) é limite assintótico apertado; little-o é limite superior estrito."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "Um algoritmo com complexidade O(n log n) sempre será mais rápido que O(n²)?", 
     "answer": "Não necessariamente para n pequeno, mas sim para n grandes", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, sempre",
+    "wrong2": "Não, O(n²) é sempre melhor",
+    "wrong3": "Depende apenas da linguagem/compilador",
+    "tags": "pegadinha",
+    "explicacao": "Constantes e termos menores podem favorecer O(n²) para n muito pequeno; assintoticamente, O(n log n) vence."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Qual é a vantagem da recursão de cauda (tail recursion)?", 
     "answer": "Ela pode ser otimizada pelo compilador para não usar pilha extra", 
-    "tags": "conceitos"
+    "wrong1": "É sempre mais rápida que qualquer iteração",
+    "wrong2": "Permite paralelismo automático",
+    "wrong3": "Elimina a necessidade de caso base",
+    "tags": "conceitos",
+    "explicacao": "Com otimização de chamada em cauda (TCO), a chamada recursiva final pode reutilizar o frame de pilha."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Qual problema clássico de recursão usa a fórmula 2^n - 1?", 
     "answer": "Torre de Hanói", 
-    "tags": "problemas clássicos"
+    "wrong1": "Quick Sort",
+    "wrong2": "Busca binária",
+    "wrong3": "Fatorial",
+    "tags": "problemas clássicos",
+    "explicacao": "O número mínimo de movimentos na Torre de Hanói com n discos é 2^n − 1."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual algoritmo de ordenação é estável e sempre O(n log n)?", 
     "answer": "Merge Sort", 
-    "tags": "comparação"
+    "wrong1": "Quick Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Selection Sort",
+    "tags": "comparação",
+    "explicacao": "Merge Sort é estável e mantém O(n log n) no pior caso; Quick pode cair para O(n²) e Heap não é estável por padrão."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual algoritmo de ordenação é rápido na prática, mas pode cair para O(n²)?", 
     "answer": "Quick Sort", 
-    "tags": "comparação"
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Counting Sort",
+    "tags": "comparação",
+    "explicacao": "Com pivôs ruins (ex.: dados já ordenados sem mitigação), o Quick Sort degrada para O(n²)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual é a principal operação usada para manter uma árvore AVL balanceada?", 
     "answer": "Rotações (simples e duplas)", 
-    "tags": "operações"
+    "wrong1": "Rehashing",
+    "wrong2": "Splaying",
+    "wrong3": "Troca aleatória de chaves",
+    "tags": "operações",
+    "explicacao": "Após inserções/remoções, rotações restauram o fator de balanceamento (diferença de alturas ≤ 1)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual travessia de uma BST resulta em valores ordenados?", 
     "answer": "Travessia em ordem (in-order)", 
-    "tags": "percursos"
+    "wrong1": "Pré-ordem (preorder)",
+    "wrong2": "Pós-ordem (postorder)",
+    "wrong3": "Por nível (BFS)",
+    "tags": "percursos",
+    "explicacao": "Em BSTs, visitar esquerda → nó → direita lista as chaves em ordem crescente."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual estrutura de dados é mais eficiente para grafos esparsos?", 
     "answer": "Lista de adjacência", 
-    "tags": "representação"
+    "wrong1": "Matriz de adjacência",
+    "wrong2": "Matriz de incidência",
+    "wrong3": "Tabela hash de caminhos completos",
+    "tags": "representação",
+    "explicacao": "A lista de adjacência usa O(V+E) memória, ideal quando E ≪ V²; a matriz usa O(V²)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo encontra a árvore geradora mínima escolhendo sempre a menor aresta disponível?", 
     "answer": "Kruskal", 
-    "tags": "árvore geradora"
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "Bellman-Ford",
+    "tags": "árvore geradora",
+    "explicacao": "Kruskal ordena globalmente as arestas por peso e adiciona a menor que não forma ciclo (Union-Find)."
   },
   { 
     "quiz": "Grafos", 
     "question": "DFS garante o caminho mais curto entre dois vértices?", 
     "answer": "Não, apenas BFS garante o menor caminho em arestas não ponderadas", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, se não houver ciclos",
+    "wrong2": "Sim, com pesos positivos",
+    "wrong3": "Depende somente da ordem dos vizinhos",
+    "tags": "pegadinha",
+    "explicacao": "DFS prioriza profundidade, não minimiza arestas; BFS encontra o menor número de arestas em grafos não ponderados."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo calcula o caminho mínimo entre todos os pares de vértices?", 
     "answer": "Floyd-Warshall", 
-    "tags": "caminhos mínimos"
+    "wrong1": "Dijkstra (puro, uma única origem)",
+    "wrong2": "Kruskal",
+    "wrong3": "Ordenação topológica",
+    "tags": "caminhos mínimos",
+    "explicacao": "Floyd-Warshall é O(n³) e resolve all-pairs shortest paths; Dijkstra resolve single-source por vez."
   }
 ]

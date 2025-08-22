@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "Qual é mais eficiente para grandes entradas: O(n log n) ou O(n²)?", 
     "answer": "O(n log n)", 
-    "tags": "comparação"
+    "wrong1": "O(n²)",
+    "wrong2": "Ambos têm eficiência semelhante para n grande",
+    "wrong3": "Depende apenas do hardware, não da ordem de complexidade",
+    "tags": "comparação",
+    "explicacao": "Para n → ∞, n log n cresce muito mais lentamente que n², resultando em tempos menores."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "Qual é a diferença entre notação Big-O e Big-Ω?", 
     "answer": "Big-O representa o limite superior, Big-Ω representa o limite inferior", 
-    "tags": "comparação"
+    "wrong1": "Big-O representa o caso médio e Big-Ω o pior caso",
+    "wrong2": "Big-O é sempre exato e Big-Ω é uma estimativa grosseira",
+    "wrong3": "Big-O e Big-Ω são equivalentes, apenas nomes diferentes",
+    "tags": "comparação",
+    "explicacao": "O(f(n)) dá um teto assintótico; Ω(f(n)) dá um piso. Θ(f(n)) indica limites superior e inferior simultaneamente."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Qual é a principal diferença entre recursão direta e recursão indireta?", 
     "answer": "Na direta a função chama a si mesma, na indireta uma função chama outra que chama a primeira", 
-    "tags": "comparação"
+    "wrong1": "Na direta não há uso de pilha e na indireta há",
+    "wrong2": "Na direta sempre é mais eficiente do que na indireta",
+    "wrong3": "Na indireta não existe caso base",
+    "tags": "comparação",
+    "explicacao": "Recursão direta: f → f. Recursão indireta: f → g → f (ou cadeias maiores)."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Quando é melhor usar recursão em vez de iteração?", 
     "answer": "Quando o problema tem natureza hierárquica ou divisível em subproblemas menores", 
-    "tags": "comparação"
+    "wrong1": "Sempre que quisermos a solução mais rápida possível",
+    "wrong2": "Quando laços (for/while) não estão disponíveis na linguagem",
+    "wrong3": "Quando a recursão sempre consome menos memória que iteração",
+    "tags": "comparação",
+    "explicacao": "Árvores, backtracking e divide-and-conquer ficam mais naturais com recursão; nem sempre é mais rápida."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual a diferença principal entre Merge Sort e Quick Sort?", 
     "answer": "Merge divide ao meio e combina, Quick divide em torno de um pivô", 
-    "tags": "comparação"
+    "wrong1": "Merge é in-place e Quick requer memória O(n)",
+    "wrong2": "Quick é sempre estável e Merge nunca é estável",
+    "wrong3": "Merge tem pior caso O(n) e Quick tem pior caso O(n log n)",
+    "tags": "comparação",
+    "explicacao": "Merge faz interleaving de sublistas ordenadas (usa O(n) extra habitual); Quick particiona por um pivô."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual a vantagem do Quick Sort sobre o Merge Sort?", 
     "answer": "É mais rápido na prática e não precisa de memória extra significativa", 
-    "tags": "comparação"
+    "wrong1": "Tem melhor complexidade no pior caso",
+    "wrong2": "É estável por definição",
+    "wrong3": "Sempre usa menos comparações do que qualquer algoritmo",
+    "tags": "comparação",
+    "explicacao": "Quick Sort costuma ter ótimo desempenho em cache e, em geral, é in-place (O(log n) de pilha)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual a diferença entre BST e AVL?", 
     "answer": "A BST pode ficar desbalanceada, a AVL se mantém balanceada automaticamente", 
-    "tags": "comparação"
+    "wrong1": "BST não impõe ordem entre chaves, AVL impõe",
+    "wrong2": "AVL não é uma BST",
+    "wrong3": "BST sempre garante O(log n) em buscas, AVL não",
+    "tags": "comparação",
+    "explicacao": "AVL é uma BST com restrição de balanceamento (fator de balanceamento |fb| ≤ 1)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Qual a diferença entre AVL e Red-Black Tree?", 
     "answer": "AVL é mais rigidamente balanceada, Red-Black é mais flexível e tem inserções/remoções mais rápidas", 
-    "tags": "comparação"
+    "wrong1": "AVL usa cores nos nós e Red-Black não",
+    "wrong2": "Red-Black proíbe rotações, AVL permite",
+    "wrong3": "AVL é sempre mais rápida para qualquer operação",
+    "tags": "comparação",
+    "explicacao": "AVL mantém alturas muito próximas; Red-Black admite mais folga, facilitando atualizações."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual a diferença entre BFS e DFS?", 
     "answer": "BFS percorre por camadas usando fila, DFS explora em profundidade usando pilha ou recursão", 
-    "tags": "comparação"
+    "wrong1": "BFS usa pilha e DFS usa fila",
+    "wrong2": "Ambas garantem caminho mais curto em grafos ponderados",
+    "wrong3": "DFS sempre visita vértices em ordem crescente de grau",
+    "tags": "comparação",
+    "explicacao": "BFS expande a fronteira por níveis; DFS desce o mais fundo possível antes de retroceder."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual a diferença entre Dijkstra e Bellman-Ford?", 
     "answer": "Dijkstra é mais rápido mas não aceita pesos negativos, Bellman-Ford aceita pesos negativos", 
-    "tags": "comparação"
+    "wrong1": "Dijkstra aceita pesos negativos e é mais lento",
+    "wrong2": "Bellman-Ford é sempre mais rápido que Dijkstra",
+    "wrong3": "Ambos exigem que o grafo seja um DAG",
+    "tags": "comparação",
+    "explicacao": "Dijkstra: O((V+E) log V) típico sem pesos negativos. Bellman-Ford: O(V·E) e lida com negativos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual a diferença entre grafo conexo e grafo completo?", 
     "answer": "Conexo tem caminho entre todos os vértices, completo tem arestas diretas entre todos os vértices", 
-    "tags": "comparação"
+    "wrong1": "São a mesma coisa",
+    "wrong2": "Conexo exige aresta direta entre qualquer par",
+    "wrong3": "Completo significa que não há ciclos",
+    "tags": "comparação",
+    "explicacao": "Conexidade é sobre alcançabilidade; completude é sobre adjacência direta entre todos os pares."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual a diferença entre matriz de adjacência e lista de adjacência?", 
     "answer": "Matriz ocupa mais espaço mas permite acesso rápido, lista é mais eficiente para grafos esparsos", 
-    "tags": "comparação"
+    "wrong1": "Lista sempre ocupa mais espaço que a matriz",
+    "wrong2": "Matriz é melhor para grafos muito esparsos",
+    "wrong3": "Lista não permite descobrir vizinhos de um vértice",
+    "tags": "comparação",
+    "explicacao": "Matriz: O(V²) espaço e consulta O(1) para aresta (u,v). Lista: O(V+E) espaço; melhor para E ≪ V²."
   }
 ]

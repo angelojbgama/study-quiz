@@ -1,0 +1,132 @@
+[
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão em algoritmos?",
+    "answer": "É quando uma função chama a si mesma para resolver subproblemas",
+    "wrong1": "É quando um algoritmo usa apenas laços iterativos",
+    "wrong2": "É quando duas funções nunca se chamam",
+    "wrong3": "É executar várias threads em paralelo",
+    "tags": "conceitos",
+    "explicacao": "Recursão define o problema em termos de instâncias menores dele mesmo, até atingir um caso base."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o elemento essencial que toda função recursiva precisa ter?",
+    "answer": "Um caso base que interrompe a recursão",
+    "wrong1": "Uma variável global para contar chamadas",
+    "wrong2": "Um laço for envolvendo a chamada recursiva",
+    "wrong3": "Uma condição opcional que pode não parar",
+    "tags": "conceitos",
+    "explicacao": "Sem um caso base (condição de parada) a recursão não termina."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que acontece se uma função recursiva não tiver caso base?",
+    "answer": "Ela entra em recursão infinita até causar erro de pilha (StackOverflow)",
+    "wrong1": "Ela sempre retorna null imediatamente",
+    "wrong2": "Ela passa a ter complexidade O(1)",
+    "wrong3": "Ela compila, mas não pode ser chamada",
+    "tags": "erros",
+    "explicacao": "Sem parada, cada chamada cria outra, esgotando a pilha de execução."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é o caso base em uma função recursiva?",
+    "answer": "A condição de parada que encerra a recursão",
+    "wrong1": "A primeira chamada recursiva da função",
+    "wrong2": "O maior subproblema resolvido",
+    "wrong3": "O retorno da função principal (main)",
+    "tags": "conceitos",
+    "explicacao": "O caso base é quando o problema é pequeno o suficiente para ter resposta direta."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em fatorial recursivo, qual é o caso base?",
+    "answer": "Quando n = 0 ou n = 1",
+    "wrong1": "Quando n = 2",
+    "wrong2": "Quando n < 0",
+    "wrong3": "Quando n é primo",
+    "tags": "exemplo",
+    "explicacao": "Define-se 0! = 1 e 1! = 1, evitando chamadas adicionais."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em Fibonacci recursivo, qual é o caso base?",
+    "answer": "Quando n = 0 retorna 0 e quando n = 1 retorna 1",
+    "wrong1": "Quando n = 2 retorna 2",
+    "wrong2": "Quando n = 1 retorna 0",
+    "wrong3": "Não possui caso base, apenas soma anterior",
+    "tags": "exemplo",
+    "explicacao": "As sementes F(0)=0 e F(1)=1 encerram a recursão."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão direta?",
+    "answer": "Quando a função chama a si mesma diretamente",
+    "wrong1": "Quando a função nunca chama a si mesma",
+    "wrong2": "Quando duas funções se chamam mutuamente",
+    "wrong3": "Quando a chamada recursiva vem de uma thread externa",
+    "tags": "tipos",
+    "explicacao": "Ex.: f() { … f() … } é recursão direta."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão indireta?",
+    "answer": "Quando uma função chama outra que, por sua vez, chama a primeira",
+    "wrong1": "Quando a função chama a si mesma diretamente",
+    "wrong2": "Quando a função é apenas iterativa",
+    "wrong3": "Quando não há chamadas entre funções",
+    "tags": "tipos",
+    "explicacao": "Ex.: f() chama g() e g() chama f()."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão de cauda (tail recursion)?",
+    "answer": "É quando a chamada recursiva é a última instrução da função",
+    "wrong1": "É quando a chamada recursiva ocorre no início da função",
+    "wrong2": "É quando a função usa memória extra após a chamada",
+    "wrong3": "É quando a recursão acontece apenas dentro de loops",
+    "tags": "tipos",
+    "explicacao": "Em tail recursion não há trabalho após a chamada; alguns compiladores otimizam (TCO)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a complexidade do cálculo recursivo simples de Fibonacci?",
+    "answer": "O(2^n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(n^2)",
+    "tags": "exemplo",
+    "explicacao": "A árvore de chamadas cresce exponencialmente sem memoização."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual técnica pode otimizar a recursão de Fibonacci?",
+    "answer": "Memoização ou programação dinâmica",
+    "wrong1": "Aumentar a profundidade máxima da pilha",
+    "wrong2": "Remover o caso base",
+    "wrong3": "Usar Bubble Sort antes das chamadas",
+    "tags": "otimização",
+    "explicacao": "Guardar resultados evita recomputações, reduzindo para O(n)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quantos movimentos mínimos são necessários para resolver a Torre de Hanói com n discos?",
+    "answer": "2^n - 1",
+    "wrong1": "n!",
+    "wrong2": "n^2",
+    "wrong3": "2n - 1",
+    "tags": "problemas clássicos",
+    "explicacao": "Prova-se por indução que a solução ótima exige 2^n−1 movimentos."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o caso base típico da função Fatorial?",
+    "answer": "Fatorial(0) = 1",
+    "wrong1": "Fatorial(0) = 0",
+    "wrong2": "Fatorial(1) = 0",
+    "wrong3": "Fatorial(n) = n + 1 para n=0",
+    "tags": "problemas clássicos",
+    "explicacao": "Define-se 0! = 1 por convenção e consistência combinatória."
+  }
+]

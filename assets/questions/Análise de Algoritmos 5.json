@@ -3,72 +3,120 @@
     "quiz": "Análise de Algoritmos", 
     "question": "O(2n) é diferente de O(n)?", 
     "answer": "Não, porque constantes são ignoradas na análise assintótica", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, O(2n) é exatamente o dobro de O(n) e por isso é maior em Big-O",
+    "wrong2": "Sim, O(2n) é exponencial enquanto O(n) é linear",
+    "wrong3": "Depende do compilador e da linguagem utilizada",
+    "tags": "pegadinha",
+    "explicacao": "Em Big-O, fatores constantes positivos são descartados: O(2n) = O(n)."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "O(n + log n) é simplificado para qual notação?", 
     "answer": "O(n)", 
-    "tags": "pegadinha"
+    "wrong1": "O(log n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(1)",
+    "tags": "pegadinha",
+    "explicacao": "O termo dominante é n; log n é de ordem menor e é descartado na análise assintótica."
   },
   { 
     "quiz": "Análise de Algoritmos", 
     "question": "O(log n) cresce mais rápido que O(√n)?", 
     "answer": "Não, O(√n) cresce mais rápido que O(log n)", 
-    "tags": "comparação"
+    "wrong1": "Sim, O(log n) cresce mais rápido",
+    "wrong2": "Crescem na mesma taxa",
+    "wrong3": "Depende da base do logaritmo",
+    "tags": "comparação",
+    "explicacao": "Para n → ∞, √n domina log n (lim_{n→∞} (log n)/(√n) = 0). A base do log só altera constante."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Toda função recursiva pode ser reescrita de forma iterativa?", 
     "answer": "Sim, mas pode ser mais complexa e menos intuitiva", 
-    "tags": "pegadinha"
+    "wrong1": "Não, existem funções intrinsicamente impossíveis de iterar",
+    "wrong2": "Só é possível se a linguagem tiver a instrução goto",
+    "wrong3": "Somente se a pilha de chamadas for infinita",
+    "tags": "pegadinha",
+    "explicacao": "Recursão pode ser simulada com laços e uma estrutura de pilha explícita (modelo Turing-completo)."
   },
   { 
     "quiz": "Recursividade", 
     "question": "Uma função recursiva sempre é mais eficiente que uma iterativa?", 
     "answer": "Não, muitas vezes é menos eficiente devido à pilha de chamadas", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, recursão é sempre mais rápida",
+    "wrong2": "Sim, porque divide para conquistar automaticamente",
+    "wrong3": "Empatam sempre, não há diferença de custo",
+    "tags": "pegadinha",
+    "explicacao": "Chamadas recursivas adicionam overhead de stack; versões iterativas podem usar menos memória/tempo."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Quick Sort é sempre O(n log n)?", 
     "answer": "Não, no pior caso pode ser O(n²)", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, é O(n log n) em qualquer caso",
+    "wrong2": "Não, é sempre O(n)",
+    "wrong3": "Depende apenas do compilador",
+    "tags": "pegadinha",
+    "explicacao": "Se o pivô for mal escolhido (por ex., já ordenado e pivô extremo), as partições ficam desbalanceadas."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Heap Sort precisa de memória auxiliar extra como Merge Sort?", 
     "answer": "Não, Heap Sort é feito in-place", 
-    "tags": "comparação"
+    "wrong1": "Sim, precisa O(n) de memória extra",
+    "wrong2": "Sim, e até mais que o Merge Sort",
+    "wrong3": "Precisa de vários vetores temporários do tamanho n",
+    "tags": "comparação",
+    "explicacao": "Heap Sort consome O(1) memória adicional (além de variáveis auxiliares); Merge Sort típico usa O(n)."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Uma BST sempre garante buscas em O(log n)?", 
     "answer": "Não, se desbalanceada pode cair para O(n)", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, por definição é sempre O(log n)",
+    "wrong2": "Sim, desde que as chaves sejam únicas",
+    "wrong3": "Sim, depende só do compilador",
+    "tags": "pegadinha",
+    "explicacao": "Inserções ordenadas podem degenerar a BST numa lista; árvores balanceadas evitam isso."
   },
   { 
     "quiz": "Árvores Binárias e AVL", 
     "question": "Toda árvore AVL é uma BST?", 
     "answer": "Sim, AVL é uma BST com balanceamento automático", 
-    "tags": "conceitos"
+    "wrong1": "Não, AVL ordena por altura e não por chaves",
+    "wrong2": "Apenas enquanto não ocorrerem rotações",
+    "wrong3": "AVL é uma heap, não uma BST",
+    "tags": "conceitos",
+    "explicacao": "AVL mantém a propriedade de BST (ordem por chaves) e adiciona restrição de balanceamento (|fb| ≤ 1)."
   },
   { 
     "quiz": "Grafos", 
     "question": "DFS sempre encontra o caminho mais curto?", 
     "answer": "Não, apenas BFS garante o caminho mais curto em arestas não ponderadas", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, porque explora o grafo profundamente",
+    "wrong2": "Sim, desde que o grafo seja conexo",
+    "wrong3": "Sim, se marcarmos visitados corretamente",
+    "tags": "pegadinha",
+    "explicacao": "DFS não minimiza o número de arestas; BFS expande por camadas e encontra o menor número de passos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Dijkstra funciona em grafos com pesos negativos?", 
     "answer": "Não, nesse caso deve-se usar Bellman-Ford", 
-    "tags": "pegadinha"
+    "wrong1": "Sim, desde que não haja ciclos",
+    "wrong2": "Sim, se usarmos uma heap binária eficiente",
+    "wrong3": "Sim, basta somar uma constante a todos os pesos",
+    "tags": "pegadinha",
+    "explicacao": "Dijkstra assume pesos não negativos; com pesos negativos, relaxamentos podem falhar. Bellman-Ford lida com isso."
   },
   { 
     "quiz": "Grafos", 
     "question": "Um grafo conexo e um grafo completo são a mesma coisa?", 
     "answer": "Não, conexo significa que há caminho entre todos os vértices, completo significa que todos os vértices estão diretamente ligados", 
-    "tags": "conceitos"
+    "wrong1": "Sim, ambos têm arestas entre todos os pares de vértices",
+    "wrong2": "Sim, se o grafo for direcionado",
+    "wrong3": "Sim, quando existe ao menos um ciclo",
+    "tags": "conceitos",
+    "explicacao": "Conexo: existe caminho entre quaisquer dois vértices. Completo: há aresta direta entre todo par de vértices."
   }
 ]

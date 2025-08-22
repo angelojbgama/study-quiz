@@ -3,144 +3,240 @@
     "quiz": "Grafos", 
     "question": "O que é um grafo?", 
     "answer": "Uma estrutura formada por vértices e arestas que representam conexões", 
-    "tags": "conceitos"
+    "wrong1": "Uma lista linear de elementos sem ligações",
+    "wrong2": "Uma árvore sem ciclos e com raiz obrigatória",
+    "wrong3": "Uma tabela bidimensional de valores sem relações",
+    "tags": "conceitos",
+    "explicacao": "Grafos modelam entidades (vértices) e suas relações (arestas), permitindo representar redes e conexões gerais."
   },
   { 
     "quiz": "Grafos", 
     "question": "O que é um grafo direcionado?", 
     "answer": "Um grafo em que as arestas possuem direção", 
-    "tags": "conceitos"
+    "wrong1": "Um grafo em que as arestas possuem somente pesos",
+    "wrong2": "Um grafo em que vértices têm cores obrigatórias",
+    "wrong3": "Um grafo em que cada aresta liga um vértice a ele mesmo",
+    "tags": "conceitos",
+    "explicacao": "Em grafos direcionados, arestas são pares ordenados (u→v), ou seja, o sentido importa."
   },
   { 
     "quiz": "Grafos", 
     "question": "O que é um grafo ponderado?", 
     "answer": "Um grafo em que as arestas possuem pesos ou custos associados", 
-    "tags": "conceitos"
+    "wrong1": "Um grafo em que apenas os vértices possuem pesos",
+    "wrong2": "Um grafo em que as arestas têm direção obrigatoriamente",
+    "wrong3": "Um grafo que conta quantas arestas cada vértice possui, mas sem pesos",
+    "tags": "conceitos",
+    "explicacao": "No grafo ponderado, cada aresta recebe um valor (custo, distância, tempo) usado em otimizações."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual a diferença entre grafo completo e grafo conexo?", 
     "answer": "No completo todos os vértices estão conectados diretamente, no conexo há pelo menos um caminho entre todos os vértices", 
-    "tags": "conceitos"
+    "wrong1": "Completo é sempre acíclico; conexo tem ciclos por definição",
+    "wrong2": "Completo exige pesos; conexo não pode ter pesos",
+    "wrong3": "Completo significa haver caminho; conexo significa todos adjacentes diretamente",
+    "tags": "conceitos",
+    "explicacao": "Completo: toda dupla de vértices tem aresta direta. Conexo: existe um caminho entre quaisquer dois vértices."
   },
   { 
     "quiz": "Grafos", 
     "question": "O que é uma matriz de adjacência?", 
     "answer": "É uma matriz que indica se existe aresta entre dois vértices", 
-    "tags": "representação"
+    "wrong1": "Uma lista de vizinhos de cada vértice",
+    "wrong2": "Uma estrutura específica para percursos em profundidade",
+    "wrong3": "Uma tabela que guarda apenas o grau de cada vértice",
+    "tags": "representação",
+    "explicacao": "Na matriz A, A[i][j] indica a existência (e opcionalmente o peso) da aresta i↔j ou i→j."
   },
   { 
     "quiz": "Grafos", 
     "question": "O que é uma lista de adjacência?", 
     "answer": "É uma lista onde cada vértice aponta para os vértices vizinhos", 
-    "tags": "representação"
+    "wrong1": "Uma matriz booleana de presença de arestas",
+    "wrong2": "Um vetor com as distâncias mínimas entre todos os pares",
+    "wrong3": "Uma estrutura obrigatoriamente completa sem vértices isolados",
+    "tags": "representação",
+    "explicacao": "Cada vértice armazena uma coleção de vizinhos; é compacta para grafos esparsos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual representação de grafos é mais eficiente em grafos esparsos?", 
     "answer": "Lista de adjacência", 
-    "tags": "representação"
+    "wrong1": "Matriz de adjacência",
+    "wrong2": "Matriz de incidência",
+    "wrong3": "Árvore de prefixos (trie)",
+    "tags": "representação",
+    "explicacao": "Em grafos com poucas arestas, listas evitam armazenar muitas células vazias como na matriz."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual representação de grafos ocupa mais memória mas permite acesso rápido?", 
     "answer": "Matriz de adjacência", 
-    "tags": "representação"
+    "wrong1": "Lista de adjacência",
+    "wrong2": "Fila de prioridade",
+    "wrong3": "Lista de arestas simples",
+    "tags": "representação",
+    "explicacao": "A matriz usa O(n²) espaço, porém o teste de adjacência é O(1)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual estrutura de dados é usada no BFS?", 
     "answer": "Fila", 
-    "tags": "BFS"
+    "wrong1": "Pilha",
+    "wrong2": "Fila de prioridade (heap)",
+    "wrong3": "Tabela hash",
+    "tags": "BFS",
+    "explicacao": "BFS explora por camadas usando uma fila FIFO."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual estrutura de dados é usada no DFS?", 
     "answer": "Pilha ou recursão", 
-    "tags": "DFS"
+    "wrong1": "Fila obrigatoriamente",
+    "wrong2": "Fila de prioridade",
+    "wrong3": "Árvore B",
+    "tags": "DFS",
+    "explicacao": "DFS pode usar uma pilha explícita ou a pilha de chamadas da recursão."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo garante o caminho mais curto em grafos não ponderados?", 
     "answer": "BFS", 
-    "tags": "BFS"
+    "wrong1": "DFS",
+    "wrong2": "Kruskal",
+    "wrong3": "Prim",
+    "tags": "BFS",
+    "explicacao": "Em arestas com custo uniforme, a exploração por camadas do BFS encontra o menor número de arestas."
   },
   { 
     "quiz": "Grafos", 
     "question": "DFS garante o caminho mais curto entre dois vértices?", 
     "answer": "Não, apenas BFS garante em grafos não ponderados", 
-    "tags": "DFS"
+    "wrong1": "Sim, sempre encontra o mais curto",
+    "wrong2": "Sim, se o grafo não tiver ciclos",
+    "wrong3": "Sim, quando todas as arestas têm peso 1",
+    "tags": "DFS",
+    "explicacao": "DFS pode se aprofundar por rotas mais longas antes de explorar caminhos curtos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo encontra o menor caminho em grafos com pesos positivos?", 
     "answer": "Dijkstra", 
-    "tags": "caminhos mínimos"
+    "wrong1": "Bellman-Ford",
+    "wrong2": "Floyd-Warshall",
+    "wrong3": "Busca em profundidade",
+    "tags": "caminhos mínimos",
+    "explicacao": "Com pesos não negativos, o greedy de Dijkstra é correto e eficiente com heap."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo encontra o menor caminho mesmo com pesos negativos?", 
     "answer": "Bellman-Ford", 
-    "tags": "caminhos mínimos"
+    "wrong1": "Dijkstra",
+    "wrong2": "Prim",
+    "wrong3": "Kruskal",
+    "tags": "caminhos mínimos",
+    "explicacao": "Bellman-Ford relaxa arestas repetidamente e lida com pesos negativos (sem ciclos negativos alcançáveis)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo encontra o menor caminho entre todos os pares de vértices?", 
     "answer": "Floyd-Warshall", 
-    "tags": "caminhos mínimos"
+    "wrong1": "Kruskal",
+    "wrong2": "Prim",
+    "wrong3": "DFS",
+    "tags": "caminhos mínimos",
+    "explicacao": "Floyd-Warshall é um algoritmo de programação dinâmica para APSP em O(n³)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Por que Dijkstra não funciona com arestas de peso negativo?", 
     "answer": "Porque assume que distâncias parciais nunca diminuem", 
-    "tags": "caminhos mínimos"
+    "wrong1": "Porque só funciona em grafos direcionados",
+    "wrong2": "Porque não consegue lidar com ciclos",
+    "wrong3": "Porque exige grafos completos",
+    "tags": "caminhos mínimos",
+    "explicacao": "Com peso negativo, um caminho ‘ótimo’ atual pode ser melhorado depois, quebrando o argumento ganancioso."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual é o objetivo de uma árvore geradora mínima?", 
     "answer": "Conectar todos os vértices de um grafo com o menor custo total", 
-    "tags": "MST"
+    "wrong1": "Encontrar o caminho mais curto entre dois vértices",
+    "wrong2": "Eliminar todos os ciclos do grafo original",
+    "wrong3": "Maximizar o número de arestas do grafo",
+    "tags": "MST",
+    "explicacao": "A MST conecta todos os vértices com |V|−1 arestas minimizando a soma dos pesos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo constrói a árvore geradora mínima escolhendo sempre a menor aresta disponível?", 
     "answer": "Kruskal", 
-    "tags": "MST"
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "Floyd-Warshall",
+    "tags": "MST",
+    "explicacao": "Kruskal ordena arestas por peso e usa união-busca para evitar ciclos."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual algoritmo constrói a árvore geradora mínima expandindo a partir de um vértice inicial?", 
     "answer": "Prim", 
-    "tags": "MST"
+    "wrong1": "Kruskal (global, não a partir de um vértice)",
+    "wrong2": "Bellman-Ford",
+    "wrong3": "BFS",
+    "tags": "MST",
+    "explicacao": "Prim cresce uma árvore adicionando a cada passo a aresta mais barata que a expande."
   },
   { 
     "quiz": "Grafos", 
     "question": "Qual estrutura de dados é geralmente usada no algoritmo de Prim?", 
     "answer": "Fila de prioridade (heap)", 
-    "tags": "MST"
+    "wrong1": "Pilha",
+    "wrong2": "Fila FIFO simples",
+    "wrong3": "Árvore rubro-negra obrigatória",
+    "tags": "MST",
+    "explicacao": "A heap permite extrair rapidamente a aresta/vertice de menor chave para expandir a árvore."
   },
-   { 
+  { 
     "quiz": "Grafos", 
     "question": "Como redes sociais usam algoritmos de grafos?", 
     "answer": "Para sugerir conexões, grupos e medir centralidade de usuários", 
-    "tags": "aplicações"
+    "wrong1": "Para ordenar postagens por ordem alfabética apenas",
+    "wrong2": "Para comprimir imagens automaticamente",
+    "wrong3": "Para criptografar mensagens ponto a ponto",
+    "tags": "aplicações",
+    "explicacao": "Modelos de grafos capturam relações e permitem recomendações e métricas (grau, PageRank, comunidades)."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como sistemas de GPS usam algoritmos de grafos?", 
     "answer": "Para calcular rotas mais curtas entre locais", 
-    "tags": "aplicações"
+    "wrong1": "Para detectar comunidades de usuários",
+    "wrong2": "Para ordenar locais por popularidade",
+    "wrong3": "Para renderizar gráficos 3D do mapa",
+    "tags": "aplicações",
+    "explicacao": "Estradas e cruzamentos são arestas e vértices; aplica-se Dijkstra/A* e variantes."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como grafos são usados em análise de epidemias?", 
     "answer": "Modelando pessoas como vértices e contatos como arestas", 
-    "tags": "aplicações"
+    "wrong1": "Representando apenas cidades como vértices e ignorando contatos",
+    "wrong2": "Exigindo que o grafo seja sempre planar",
+    "wrong3": "Evitando qualquer estrutura de rede",
+    "tags": "aplicações",
+    "explicacao": "A rede de contatos permite estudar propagação, superespalhadores e estratégias de contenção."
   },
   { 
     "quiz": "Grafos", 
     "question": "Como grafos são usados em redes elétricas?", 
     "answer": "Para planejar conexões de menor custo e evitar redundâncias", 
-    "tags": "aplicações"
+    "wrong1": "Conectando estações de forma aleatória para diversidade",
+    "wrong2": "Maximizando o número total de cabos independentemente do custo",
+    "wrong3": "Ignorando custos e confiabilidade da rede",
+    "tags": "aplicações",
+    "explicacao": "Modelar subestações e linhas como grafo possibilita otimizar custo e confiabilidade (MST e variações)."
   }
 ]

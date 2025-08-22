@@ -3,90 +3,150 @@
     "quiz": "Ordenação Avançada", 
     "question": "Por que algoritmos de ordenação são importantes?", 
     "answer": "Porque organizar dados é essencial para buscas rápidas e análises eficientes", 
-    "tags": "conceitos"
+    "wrong1": "Porque deixam o código mais bonito visualmente",
+    "wrong2": "Porque evitam a necessidade de estruturas de dados",
+    "wrong3": "Porque sempre reduzem a complexidade para O(1)",
+    "tags": "conceitos",
+    "explicacao": "Ordenar acelera operações como busca binária, junções e agregações, além de melhorar a localidade de referência."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade mínima para ordenar eficientemente n elementos?", 
     "answer": "O(n log n)", 
-    "tags": "conceitos"
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n²)",
+    "tags": "conceitos",
+    "explicacao": "Para algoritmos baseados em comparações existe um limite inferior Ω(n log n)."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual a estratégia usada pelo Merge Sort?", 
     "answer": "Dividir para conquistar, dividindo o vetor e mesclando resultados ordenados", 
-    "tags": "merge sort"
+    "wrong1": "Escolher um pivô e particionar o vetor",
+    "wrong2": "Construir uma heap e extrair máximos/superfícies",
+    "wrong3": "Contar frequências de chaves e reescrever diretamente",
+    "tags": "merge sort",
+    "explicacao": "Merge Sort divide o problema ao meio e intercalha (merge) listas já ordenadas."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade do Merge Sort em todos os casos?", 
     "answer": "O(n log n)", 
-    "tags": "merge sort"
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "merge sort",
+    "explicacao": "A árvore de recursão tem altura log n e cada nível faz trabalho linear no total."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a principal desvantagem do Merge Sort?", 
     "answer": "Necessita de memória auxiliar adicional", 
-    "tags": "merge sort"
+    "wrong1": "Não é estável",
+    "wrong2": "Não consegue ordenar números repetidos",
+    "wrong3": "Só funciona com pivô aleatório",
+    "tags": "merge sort",
+    "explicacao": "O merge clássico usa um vetor auxiliar O(n), aumentando o consumo de memória."
   },
-   { 
+  { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a estratégia usada pelo Quick Sort?", 
     "answer": "Escolher um pivô e particionar o vetor em torno dele", 
-    "tags": "quick sort"
+    "wrong1": "Mesclar duas listas ordenadas",
+    "wrong2": "Construir uma árvore balanceada e fazer travessia",
+    "wrong3": "Contar ocorrências de cada chave e indexar",
+    "tags": "quick sort",
+    "explicacao": "Quick Sort particiona em elementos menores e maiores que o pivô e ordena recursivamente."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade média do Quick Sort?", 
     "answer": "O(n log n)", 
-    "tags": "quick sort"
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "quick sort",
+    "explicacao": "Com pivôs razoáveis, o particionamento produz subproblemas equilibrados em média."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade do Quick Sort no pior caso?", 
     "answer": "O(n²)", 
-    "tags": "quick sort"
+    "wrong1": "O(n log n)",
+    "wrong2": "O(n)",
+    "wrong3": "O(log n)",
+    "tags": "quick sort",
+    "explicacao": "Ocorre quando os particionamentos ficam extremamente desequilibrados (pivô muito ruim)."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Como evitar que o Quick Sort caia no pior caso?", 
     "answer": "Escolhendo bons pivôs, como o pivô aleatório ou mediana de três", 
-    "tags": "quick sort"
+    "wrong1": "Removendo o pivô da implementação",
+    "wrong2": "Sempre escolhendo o primeiro elemento como pivô",
+    "wrong3": "Usando apenas laços while sem recursão",
+    "tags": "quick sort",
+    "explicacao": "Heurísticas de pivô e aleatorização melhoram o balanceamento esperado."
   },
-   { 
+  { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual estrutura de dados é usada no Heap Sort?", 
     "answer": "Uma heap binária", 
-    "tags": "heap sort"
+    "wrong1": "Uma árvore B+",
+    "wrong2": "Uma fila simples (FIFO)",
+    "wrong3": "Uma tabela hash",
+    "tags": "heap sort",
+    "explicacao": "A heap permite selecionar e remover o máximo/mínimo em O(log n)."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual é a complexidade do Heap Sort?", 
     "answer": "O(n log n)", 
-    "tags": "heap sort"
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "heap sort",
+    "explicacao": "Construir a heap é O(n) e cada extração + ajuste custa O(log n) por n elementos."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "O Heap Sort precisa de memória auxiliar como o Merge Sort?", 
     "answer": "Não, ele é feito in-place", 
-    "tags": "heap sort"
+    "wrong1": "Sim, precisa de um vetor auxiliar do mesmo tamanho",
+    "wrong2": "Sim, precisa de memória O(n log n)",
+    "wrong3": "Só funciona em memória externa",
+    "tags": "heap sort",
+    "explicacao": "A heap é mantida no próprio array, com custo extra O(1) além de variáveis temporárias."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual algoritmo de ordenação é estável: Merge Sort ou Quick Sort?", 
     "answer": "Merge Sort", 
-    "tags": "comparação"
+    "wrong1": "Quick Sort é estável por padrão",
+    "wrong2": "Ambos são invariavelmente estáveis",
+    "wrong3": "Nenhum algoritmo de ordenação pode ser estável",
+    "tags": "comparação",
+    "explicacao": "Merge Sort preserva a ordem relativa de elementos iguais; Quick Sort não é estável na forma clássica."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual algoritmo de ordenação é mais eficiente na prática para grandes volumes?", 
     "answer": "Quick Sort", 
-    "tags": "comparação"
+    "wrong1": "Bubble Sort",
+    "wrong2": "Selection Sort",
+    "wrong3": "Counting Sort (sempre, independentemente dos dados)",
+    "tags": "comparação",
+    "explicacao": "Quick Sort costuma ter ótimos coeficientes e cache-friendliness; porém, dados parcialmente ordenados favorecem Timsort."
   },
   { 
     "quiz": "Ordenação Avançada", 
     "question": "Qual algoritmo é usado em muitas bibliotecas modernas como no Python?", 
     "answer": "Timsort (variante de Merge + Insertion Sort)", 
-    "tags": "comparação"
+    "wrong1": "Bubble Sort com otimizações",
+    "wrong2": "Quick Sort puro",
+    "wrong3": "Heap Sort exclusivamente",
+    "tags": "comparação",
+    "explicacao": "Timsort é estável, detecta runs já ordenadas e combina Insertion + Merge para bom desempenho em dados reais."
   }
 ]

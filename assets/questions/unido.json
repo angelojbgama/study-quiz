@@ -1,0 +1,2266 @@
+[
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade da busca sequencial no pior caso?",
+    "answer": "O(n)",
+    "wrong1": "O(1)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "complexidade",
+    "explicacao": "No pior caso percorre-se todo o vetor."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade da busca binária?",
+    "answer": "O(log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(1)",
+    "wrong3": "O(n log n)",
+    "tags": "complexidade",
+    "explicacao": "Divide o espaço de busca pela metade a cada passo."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Big-O?",
+    "answer": "O limite superior do crescimento de um algoritmo",
+    "wrong1": "O limite inferior do crescimento (Ω)",
+    "wrong2": "O tempo médio exato em segundos",
+    "wrong3": "A quantidade exata de memória usada",
+    "tags": "conceitos",
+    "explicacao": "Big-O descreve um teto assintótico."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo com dois loops aninhados até n tem complexidade de que ordem?",
+    "answer": "O(n²)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "estruturas de repetição",
+    "explicacao": "Cada iteração externa percorre n vezes a interna."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a diferença entre melhor caso e pior caso?",
+    "answer": "Melhor caso é a situação mais favorável, pior caso é a mais desfavorável em tempo de execução",
+    "wrong1": "Melhor caso mede espaço e pior caso mede tempo",
+    "wrong2": "Eles são sempre iguais",
+    "wrong3": "Melhor caso é sempre O(1)",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão em algoritmos?",
+    "answer": "Quando uma função chama a si mesma para resolver subproblemas",
+    "wrong1": "Uso de um laço while no lugar de for",
+    "wrong2": "Chamar funções apenas de bibliotecas externas",
+    "wrong3": "Qualquer técnica de dividir e conquistar sem chamadas recursivas",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é caso base em uma função recursiva?",
+    "answer": "É a condição de parada que evita chamadas infinitas",
+    "wrong1": "A primeira chamada recursiva",
+    "wrong2": "O caso que faz duas chamadas recursivas",
+    "wrong3": "A chamada com maior n",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a complexidade do cálculo recursivo de Fibonacci sem otimizações?",
+    "answer": "O(2^n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n^2)",
+    "wrong3": "O(n log n)",
+    "tags": "complexidade",
+    "explicacao": "Duas chamadas por nível geram crescimento exponencial."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual técnica pode otimizar recursões como Fibonacci?",
+    "answer": "Memoização ou programação dinâmica",
+    "wrong1": "Backtracking",
+    "wrong2": "Força bruta",
+    "wrong3": "Ordenação por contagem",
+    "tags": "otimização"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o número mínimo de movimentos na Torre de Hanói com n discos?",
+    "answer": "2^n - 1",
+    "wrong1": "n^2",
+    "wrong2": "2n",
+    "wrong3": "n!",
+    "tags": "problemas clássicos"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade média do Merge Sort?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n^2)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n)",
+    "tags": "complexidade"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação escolhe um pivô e particiona o vetor?",
+    "answer": "Quick Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Counting Sort",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação usa uma árvore binária especial chamada heap?",
+    "answer": "Heap Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Quick Sort",
+    "wrong3": "Insertion Sort",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a principal desvantagem do Merge Sort?",
+    "answer": "Precisa de memória extra para o vetor auxiliar",
+    "wrong1": "É instável por definição",
+    "wrong2": "Tem pior caso O(n^2)",
+    "wrong3": "Depende da escolha de pivô",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo pode cair no pior caso O(n²) se o pivô for mal escolhido?",
+    "answer": "Quick Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Radix Sort",
+    "tags": "complexidade"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a regra de uma árvore binária de busca (BST)?",
+    "answer": "Valores menores ficam à esquerda e maiores à direita",
+    "wrong1": "Menores ficam à direita",
+    "wrong2": "Todos os valores são aleatórios em cada lado",
+    "wrong3": "Nós à esquerda são sempre maiores ou iguais",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual travessia de uma BST retorna os valores em ordem crescente?",
+    "answer": "Travessia em ordem (inorder)",
+    "wrong1": "Pré-ordem (preorder)",
+    "wrong2": "Pós-ordem (postorder)",
+    "wrong3": "Em largura (level-order)",
+    "tags": "percursos"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual problema ocorre em uma BST simples sem balanceamento?",
+    "answer": "Ela pode degenerar em uma lista ligada, piorando a complexidade para O(n)",
+    "wrong1": "A busca permanece O(log n) sempre",
+    "wrong2": "Passa a exigir memória extra proporcional a n",
+    "wrong3": "Não permite chaves duplicadas por definição do balanceamento",
+    "tags": "complexidade"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a diferença de altura permitida em uma árvore AVL entre subárvores?",
+    "answer": "No máximo 1",
+    "wrong1": "No máximo 2",
+    "wrong2": "No máximo 3",
+    "wrong3": "Qualquer valor é permitido",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual operação é usada para rebalancear árvores AVL?",
+    "answer": "Rotações simples ou duplas",
+    "wrong1": "Heapify",
+    "wrong2": "Particionamento de pivô",
+    "wrong3": "Hashing",
+    "tags": "operações"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quais são os dois componentes básicos de um grafo?",
+    "answer": "Vértices e arestas",
+    "wrong1": "Nós e árvores",
+    "wrong2": "Ciclos e pesos",
+    "wrong3": "Filas e pilhas",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre grafo direcionado e não direcionado?",
+    "answer": "No direcionado as arestas têm direção, no não direcionado não",
+    "wrong1": "O direcionado tem ciclos e o não direcionado não",
+    "wrong2": "O direcionado tem pesos e o não direcionado não",
+    "wrong3": "Usam representações de dados diferentes por definição",
+    "tags": "conceitos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra o caminho mais curto em grafos ponderados sem pesos negativos?",
+    "answer": "Dijkstra",
+    "wrong1": "Bellman-Ford",
+    "wrong2": "Floyd-Warshall",
+    "wrong3": "Prim",
+    "tags": "caminhos mínimos"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra a árvore geradora mínima usando união de conjuntos?",
+    "answer": "Kruskal",
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "BFS",
+    "tags": "árvore geradora"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo percorre um grafo por camadas usando fila?",
+    "answer": "Busca em largura (BFS)",
+    "wrong1": "Busca em profundidade (DFS)",
+    "wrong2": "Dijkstra",
+    "wrong3": "Bellman-Ford",
+    "tags": "percursos"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade da busca sequencial no pior caso?",
+    "answer": "O(n)",
+    "wrong1": "O(1)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "complexidade",
+    "explicacao": "No pior caso, percorre-se todo o array até achar (ou não) o elemento, resultando em tempo linear."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade da busca binária?",
+    "answer": "O(log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(1)",
+    "wrong3": "O(n log n)",
+    "tags": "complexidade",
+    "explicacao": "A cada passo a busca binária reduz o espaço de busca pela metade, o que gera crescimento logarítmico."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Big-O?",
+    "answer": "O limite superior do crescimento de um algoritmo",
+    "wrong1": "O limite inferior do crescimento",
+    "wrong2": "O tempo exato de execução",
+    "wrong3": "A contagem precisa de instruções",
+    "tags": "conceitos",
+    "explicacao": "Big-O descreve um limite assintótico superior; indica como o tempo/custo cresce no pior caso."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo com dois loops aninhados até n tem complexidade de que ordem?",
+    "answer": "O(n²)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "estruturas de repetição",
+    "explicacao": "Dois laços completos aninhados multiplicam as iterações, resultando em crescimento quadrático."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a diferença entre melhor caso e pior caso?",
+    "answer": "Melhor caso é a situação mais favorável, pior caso é a mais desfavorável em tempo de execução",
+    "wrong1": "São sempre iguais na prática",
+    "wrong2": "Melhor caso é quando o algoritmo falha",
+    "wrong3": "Pior caso só ocorre para entradas pequenas",
+    "tags": "conceitos",
+    "explicacao": "Melhor/pior caso consideram cenários extremos; Big-O geralmente modela o pior caso."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão em algoritmos?",
+    "answer": "Quando uma função chama a si mesma para resolver subproblemas",
+    "wrong1": "Um loop infinito com for/while",
+    "wrong2": "Quando uma função chama apenas funções diferentes",
+    "wrong3": "Um recurso exclusivo de linguagens funcionais",
+    "tags": "conceitos",
+    "explicacao": "Recursão divide um problema em versões menores de si mesmo até atingir um caso base."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é caso base em uma função recursiva?",
+    "answer": "É a condição de parada que evita chamadas infinitas",
+    "wrong1": "É sempre a primeira chamada da função",
+    "wrong2": "É a parte que duplica o número de chamadas",
+    "wrong3": "É a condição que força mais profundidade",
+    "tags": "conceitos",
+    "explicacao": "O caso base encerra a recursão para valores simples, garantindo término do algoritmo."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a complexidade do cálculo recursivo de Fibonacci sem otimizações?",
+    "answer": "O(2^n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "complexidade",
+    "explicacao": "A versão ingênua recalcula subproblemas repetidos, levando a explosão exponencial de chamadas."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual técnica pode otimizar recursões como Fibonacci?",
+    "answer": "Memoização ou programação dinâmica",
+    "wrong1": "Quick Sort",
+    "wrong2": "Backtracking",
+    "wrong3": "Dividir e conquistar sem cache",
+    "tags": "otimização",
+    "explicacao": "Armazenar resultados de subproblemas evita recomputações, reduzindo o custo."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o número mínimo de movimentos na Torre de Hanói com n discos?",
+    "answer": "2^n - 1",
+    "wrong1": "n!",
+    "wrong2": "n²",
+    "wrong3": "2n - 1",
+    "tags": "problemas clássicos",
+    "explicacao": "A prova por indução mostra que o menor número de movimentos é 2^n − 1."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade média do Merge Sort?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n²)",
+    "wrong2": "O(n)",
+    "wrong3": "O(log n)",
+    "tags": "complexidade",
+    "explicacao": "Merge Sort divide e combina em cada nível, com log n níveis e trabalho total proporcional a n."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação escolhe um pivô e particiona o vetor?",
+    "answer": "Quick Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Selection Sort",
+    "tags": "conceitos",
+    "explicacao": "Quick Sort particiona em torno de um pivô, ordenando recursivamente as partições."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação usa uma árvore binária especial chamada heap?",
+    "answer": "Heap Sort",
+    "wrong1": "Bubble Sort",
+    "wrong2": "Merge Sort",
+    "wrong3": "Insertion Sort",
+    "tags": "conceitos",
+    "explicacao": "Heap Sort constrói um heap (máx/min) para selecionar/remover o próximo elemento extremo."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a principal desvantagem do Merge Sort?",
+    "answer": "Precisa de memória extra para o vetor auxiliar",
+    "wrong1": "Pode cair para O(n²) no pior caso",
+    "wrong2": "Não é estável por definição",
+    "wrong3": "Depende criticamente da escolha de pivô",
+    "tags": "conceitos",
+    "explicacao": "Merge Sort exige espaço adicional O(n) para as operações de mesclagem."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo pode cair no pior caso O(n²) se o pivô for mal escolhido?",
+    "answer": "Quick Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Counting Sort",
+    "tags": "complexidade",
+    "explicacao": "Pivôs consistentemente ruins (ex.: extremos) levam a partições muito desbalanceadas."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a regra de uma árvore binária de busca (BST)?",
+    "answer": "Valores menores ficam à esquerda e maiores à direita",
+    "wrong1": "Valores menores ficam à direita",
+    "wrong2": "Filhos em qualquer ordem",
+    "wrong3": "Valores iguais sempre à esquerda e maiores à esquerda",
+    "tags": "conceitos",
+    "explicacao": "A propriedade da BST permite busca binária na estrutura da árvore."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual travessia de uma BST retorna os valores em ordem crescente?",
+    "answer": "Travessia em ordem (inorder)",
+    "wrong1": "Pré-ordem (preorder)",
+    "wrong2": "Pós-ordem (postorder)",
+    "wrong3": "Por nível (level-order)",
+    "tags": "percursos",
+    "explicacao": "Em BSTs, visitar esquerda → nó → direita lista as chaves ordenadas."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual problema ocorre em uma BST simples sem balanceamento?",
+    "answer": "Ela pode degenerar em uma lista ligada, piorando a complexidade para O(n)",
+    "wrong1": "Sempre consome memória extra O(n)",
+    "wrong2": "Mantém O(log n) garantido",
+    "wrong3": "Exige rotação a cada busca",
+    "tags": "complexidade",
+    "explicacao": "Inserções ordenadas podem gerar altura n, degradando buscas/inserções."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a diferença de altura permitida em uma árvore AVL entre subárvores?",
+    "answer": "No máximo 1",
+    "wrong1": "No máximo 2",
+    "wrong2": "No máximo n/2",
+    "wrong3": "Não há limite específico",
+    "tags": "conceitos",
+    "explicacao": "AVL mantém |altura(esq) − altura(dir)| ≤ 1 para todo nó."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual operação é usada para rebalancear árvores AVL?",
+    "answer": "Rotações simples ou duplas",
+    "wrong1": "Rehashing",
+    "wrong2": "Redimensionar vetor",
+    "wrong3": "Ordenação estável",
+    "tags": "operações",
+    "explicacao": "Rotações (LL, RR, LR, RL) restauram o fator de balanceamento após alterações."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quais são os dois componentes básicos de um grafo?",
+    "answer": "Vértices e arestas",
+    "wrong1": "Nós e árvores",
+    "wrong2": "Chaves e valores",
+    "wrong3": "Tabelas e linhas",
+    "tags": "conceitos",
+    "explicacao": "Um grafo é composto por vértices (nós) e arestas (ligações entre vértices)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre grafo direcionado e não direcionado?",
+    "answer": "No direcionado as arestas têm direção, no não direcionado não",
+    "wrong1": "No direcionado há pesos, no não-direcionado não",
+    "wrong2": "Um é sempre conexo e o outro não",
+    "wrong3": "Um é árvore e o outro é grafo",
+    "tags": "conceitos",
+    "explicacao": "Arestas direcionadas possuem orientação (u→v); em não direcionados, (u,v) é bidirecional."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra o caminho mais curto em grafos ponderados sem pesos negativos?",
+    "answer": "Dijkstra",
+    "wrong1": "BFS",
+    "wrong2": "Prim",
+    "wrong3": "Kruskal",
+    "tags": "caminhos mínimos",
+    "explicacao": "Dijkstra usa relaxamentos com fila de prioridade; BFS serve para grafos não ponderados."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra a árvore geradora mínima usando união de conjuntos?",
+    "answer": "Kruskal",
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "BFS",
+    "tags": "árvore geradora",
+    "explicacao": "Kruskal ordena arestas e usa Union-Find para evitar ciclos ao construir a AGM."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo percorre um grafo por camadas usando fila?",
+    "answer": "Busca em largura (BFS)",
+    "wrong1": "Busca em profundidade (DFS)",
+    "wrong2": "Dijkstra",
+    "wrong3": "Ordenação topológica",
+    "tags": "percursos",
+    "explicacao": "BFS explora por distância (número de arestas) a partir da origem, utilizando fila."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um algoritmo executa em tempo O(n) e outro em O(n log n), qual tende a ser mais rápido para entradas muito grandes?",
+    "answer": "O(n)",
+    "wrong1": "O(n log n)",
+    "wrong2": "O(n^2)",
+    "wrong3": "O(2^n)",
+    "tags": "comparação",
+    "explicacao": "Para n muito grande, n cresce mais lentamente do que n log n."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Por que constantes (como 2n ou n+10) são ignoradas na análise assintótica?",
+    "answer": "Porque não influenciam no crescimento para entradas muito grandes",
+    "wrong1": "Porque tornam o algoritmo constante",
+    "wrong2": "Porque Big-O mede o tempo exato em segundos",
+    "wrong3": "Porque só comparamos entradas pequenas",
+    "tags": "conceitos",
+    "explicacao": "Fatores e somas constantes são absorvidos pelo termo dominante."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que acontece se uma função recursiva não tiver caso base?",
+    "answer": "Ela entra em recursão infinita até estourar a pilha de execução (StackOverflow)",
+    "wrong1": "Ela se torna mais rápida",
+    "wrong2": "Ela sempre termina em O(1)",
+    "wrong3": "O compilador converte automaticamente em um loop finito",
+    "tags": "erros"
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a vantagem da recursão em problemas como percorrer árvores?",
+    "answer": "Simplifica a implementação, refletindo a estrutura hierárquica da árvore",
+    "wrong1": "Sempre usa menos memória do que iteração",
+    "wrong2": "Garante melhor desempenho em todos os casos",
+    "wrong3": "Evita o uso de chamadas de função",
+    "tags": "aplicações"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação é usado em muitas bibliotecas modernas, como no Python (sort)?",
+    "answer": "Timsort (mistura de Merge Sort e Insertion Sort)",
+    "wrong1": "Quick Sort puro",
+    "wrong2": "Heap Sort",
+    "wrong3": "Bubble Sort",
+    "tags": "aplicações",
+    "explicacao": "Timsort combina runs já ordenadas (Insertion) com mesclagem (Merge)."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Entre Quick Sort e Merge Sort, qual precisa de memória auxiliar extra?",
+    "answer": "Merge Sort",
+    "wrong1": "Quick Sort",
+    "wrong2": "Ambos não precisam",
+    "wrong3": "Nenhum precisa",
+    "tags": "comparação",
+    "explicacao": "Merge Sort usa vetor auxiliar; Quick Sort costuma ser in-place."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Por que usamos árvores balanceadas como AVL em vez de BST simples?",
+    "answer": "Para garantir sempre buscas O(log n), evitando que a árvore vire uma lista",
+    "wrong1": "Para reduzir o uso de memória",
+    "wrong2": "Para permitir ciclos na estrutura",
+    "wrong3": "Para garantir inserções em O(1)",
+    "tags": "aplicações"
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a principal diferença entre uma AVL e uma Red-Black Tree?",
+    "answer": "A AVL é mais rigidamente balanceada, a Red-Black é menos balanceada mas tem inserções/remoções mais rápidas",
+    "wrong1": "AVL permite chaves duplicadas e Red-Black não",
+    "wrong2": "Red-Black não usa rotações",
+    "wrong3": "AVL usa cores nos nós para balancear",
+    "tags": "comparação"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo você usaria em uma rede social para sugerir amigos em comum?",
+    "answer": "BFS ou DFS para encontrar conexões de 2 níveis (amigos de amigos)",
+    "wrong1": "Kruskal",
+    "wrong2": "Dijkstra",
+    "wrong3": "A*",
+    "tags": "aplicações",
+    "explicacao": "BFS por camadas encontra vizinhos a distância 2 de forma natural."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo é mais indicado para calcular rotas em GPS (estradas com distâncias positivas)?",
+    "answer": "Dijkstra",
+    "wrong1": "Bellman-Ford",
+    "wrong2": "Floyd-Warshall",
+    "wrong3": "Prim",
+    "tags": "aplicações",
+    "explicacao": "Dijkstra resolve caminho mínimo de uma fonte com pesos não negativos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Se quisermos planejar a rede elétrica de uma cidade com menor custo, qual algoritmo usaríamos?",
+    "answer": "Kruskal ou Prim (árvore geradora mínima)",
+    "wrong1": "Dijkstra",
+    "wrong2": "BFS",
+    "wrong3": "Bellman-Ford",
+    "tags": "aplicações"
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Se precisarmos verificar se um grafo tem ciclos, qual algoritmo é adequado?",
+    "answer": "DFS",
+    "wrong1": "Dijkstra",
+    "wrong2": "Prim",
+    "wrong3": "Kruskal",
+    "tags": "aplicações"
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    j = n\n    while j > 0:\n        j = j // 2\n        print(i, j)",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "código",
+    "explicacao": "O laço externo roda n vezes e o interno executa ~log n por iteração (divisão por 2), totalizando n·log n."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    for j in range(i):\n        print(i, j)",
+    "answer": "O(n²)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(n³)",
+    "tags": "código",
+    "explicacao": "A soma 0+1+2+…+(n−1) é n(n−1)/2, que é Θ(n²)."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a complexidade do seguinte código?\n\nfor i in range(n):\n    for j in range(n):\n        for k in range(n):\n            print(i, j, k)",
+    "answer": "O(n³)",
+    "wrong1": "O(n²)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(2^n)",
+    "tags": "código",
+    "explicacao": "Três laços aninhados de 0..n−1 multiplicam: n·n·n = n³."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a complexidade da função abaixo?\n\ndef func(n):\n    if n <= 1:\n        return 1\n    return func(n-1) + func(n-1)",
+    "answer": "O(2^n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(n²)",
+    "tags": "código",
+    "explicacao": "T(n)=2·T(n−1)+O(1) gera árvore binária de chamadas, com ~2^n folhas."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que acontece com a função abaixo?\n\ndef f(n):\n    if n == 0:\n        return 0\n    else:\n        return f(n+1)",
+    "answer": "Entra em recursão infinita até estourar a pilha (StackOverflow)",
+    "wrong1": "Termina retornando n",
+    "wrong2": "Converge para 0 após algumas chamadas",
+    "wrong3": "É otimizada para loop e finaliza sempre",
+    "tags": "erros",
+    "explicacao": "Para n≠0, o parâmetro cresce sem alcançar o caso base; não há condição de parada."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Se o Quick Sort escolher sempre o pior pivô, qual é sua complexidade?",
+    "answer": "O(n²)",
+    "wrong1": "O(n log n)",
+    "wrong2": "O(n)",
+    "wrong3": "O(2^n)",
+    "tags": "complexidade",
+    "explicacao": "Particionamentos muito desbalanceados levam a somatório ~n+(n−1)+…+1 = Θ(n²)."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a vantagem do Heap Sort em relação ao Merge Sort?",
+    "answer": "Não precisa de memória auxiliar extra",
+    "wrong1": "É sempre mais rápido em média",
+    "wrong2": "É estável por padrão",
+    "wrong3": "Tem melhor caso O(1)",
+    "tags": "comparação",
+    "explicacao": "Heap Sort é in-place (O(1) extra), enquanto Merge Sort requer O(n) de memória auxiliar."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "O que acontece se inserirmos os valores 1,2,3,4,5 em uma BST simples?",
+    "answer": "A árvore degenera em uma lista ligada (desbalanceada)",
+    "wrong1": "Permanece perfeitamente balanceada",
+    "wrong2": "A altura fica O(log n) garantida",
+    "wrong3": "Sempre realiza rotações para balancear",
+    "tags": "aplicações",
+    "explicacao": "Inserções em ordem crescente na BST simples criam uma corrente à direita (altura ~n)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a sequência de saída da travessia pós-ordem da árvore abaixo?\n\n    2\n   / \\\n  1   3",
+    "answer": "1, 3, 2",
+    "wrong1": "2, 1, 3",
+    "wrong2": "1, 2, 3",
+    "wrong3": "2, 3, 1",
+    "tags": "percursos",
+    "explicacao": "Pós-ordem: esquerda, direita, raiz. Para (2 (1,3)) → 1, 3, 2."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo detecta ciclos em um grafo direcionado usando pilha de recursão?",
+    "answer": "DFS",
+    "wrong1": "BFS",
+    "wrong2": "Kruskal",
+    "wrong3": "Prim",
+    "tags": "percursos",
+    "explicacao": "DFS com marcação de nós em ‘pilha’ encontra arestas de retorno em grafos direcionados."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é usada em Dijkstra para escolher sempre o próximo vértice com menor distância?",
+    "answer": "Fila de prioridade (heap)",
+    "wrong1": "Fila (queue) simples",
+    "wrong2": "Pilha (stack)",
+    "wrong3": "Deque",
+    "tags": "caminhos mínimos",
+    "explicacao": "Usa min-heap para extrair o vértice de menor distância em O(log n)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Se quisermos saber se um grafo é conexo (todos os vértices estão ligados), qual algoritmo podemos usar?",
+    "answer": "BFS ou DFS",
+    "wrong1": "Dijkstra",
+    "wrong2": "Kruskal",
+    "wrong3": "Ordenação topológica",
+    "tags": "aplicações",
+    "explicacao": "BFS/DFS a partir de um vértice alcança todos os outros se o grafo for conexo."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Por que analisar a complexidade de algoritmos é importante em sistemas que lidam com grandes volumes de dados?",
+    "answer": "Porque garante que o algoritmo seja escalável e não fique inviável com muitos dados",
+    "wrong1": "Porque garante que todo algoritmo rode em O(1)",
+    "wrong2": "Para consumir mais memória e acelerar o processador",
+    "wrong3": "Porque complexidade só importa para entradas pequenas",
+    "tags": "aplicações",
+    "explicacao": "Entender a ordem de crescimento evita soluções que explodem em tempo/memória quando o volume aumenta."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Em um site de e-commerce com milhões de produtos, por que usar busca binária é melhor que busca sequencial?",
+    "answer": "Porque reduz o tempo de busca de O(n) para O(log n)",
+    "wrong1": "Porque funciona mesmo em dados não ordenados",
+    "wrong2": "Porque é sempre O(1)",
+    "wrong3": "Porque elimina a necessidade de índices",
+    "tags": "aplicações",
+    "explicacao": "A busca binária descarta metade do espaço a cada passo, exigindo dados ordenados e caindo para O(log n)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Por que recursão é usada em algoritmos de navegação de pastas no computador?",
+    "answer": "Porque pastas podem conter outras pastas, formando uma estrutura hierárquica natural para recursão",
+    "wrong1": "Porque evita totalmente o uso de laços (loops)",
+    "wrong2": "Porque é sempre mais rápida que iteração",
+    "wrong3": "Porque usa menos memória do que qualquer solução iterativa",
+    "tags": "aplicações",
+    "explicacao": "A estrutura em árvore do sistema de arquivos se modela naturalmente com chamadas recursivas."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em jogos como xadrez, por que recursão é usada em algoritmos de decisão?",
+    "answer": "Porque cada jogada leva a um novo estado que pode ser explorado recursivamente",
+    "wrong1": "Porque as jogadas são independentes entre si",
+    "wrong2": "Porque evita explorar a árvore de estados",
+    "wrong3": "Porque garante solução ótima sem heurísticas",
+    "tags": "aplicações",
+    "explicacao": "A recursão percorre a árvore de jogo (minimax/poda alpha-beta) avaliando estados sucessivos."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Por que algoritmos como Quick Sort ou Timsort são usados em bancos de dados?",
+    "answer": "Porque conseguem ordenar milhões de registros de forma eficiente",
+    "wrong1": "Porque têm pior caso O(n)",
+    "wrong2": "Porque não realizam comparações",
+    "wrong3": "Porque são sempre estáveis e in-place ao mesmo tempo",
+    "tags": "aplicações",
+    "explicacao": "Eles têm bom desempenho médio (≈O(n log n)) e bons fatores de constante/prática em grandes volumes."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Por que bibliotecas de programação usam Insertion Sort em listas pequenas?",
+    "answer": "Porque em listas pequenas o custo do algoritmo simples é menor que dividir para conquistar",
+    "wrong1": "Porque o pior caso é O(1)",
+    "wrong2": "Porque não precisa fazer trocas",
+    "wrong3": "Porque usa muita memória extra para ficar rápido",
+    "tags": "aplicações",
+    "explicacao": "Insertion Sort tem baixo overhead e boa localidade de cache; para poucos elementos, é muito competitivo."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Por que bancos de dados usam árvores balanceadas como AVL ou B-Trees?",
+    "answer": "Para garantir buscas rápidas e consistentes mesmo com muitos registros",
+    "wrong1": "Porque ocupam sempre menos disco do que qualquer outra estrutura",
+    "wrong2": "Porque nunca precisam de rebalanceamento",
+    "wrong3": "Porque garantem O(1) em todas as operações",
+    "tags": "aplicações",
+    "explicacao": "Manter a altura em O(log n) preserva tempos previsíveis de busca/atualização mesmo em grande escala."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Por que uma árvore binária de busca é melhor que uma lista ordenada para inserções?",
+    "answer": "Porque inserções em árvores são O(log n), enquanto em listas ordenadas podem ser O(n)",
+    "wrong1": "Porque lista ordenada também insere em O(log n) sem deslocamentos",
+    "wrong2": "Porque BST insere em O(1) sempre",
+    "wrong3": "Porque BST não faz comparações",
+    "tags": "aplicações",
+    "explicacao": "Na lista é preciso deslocar elementos; na BST balanceada, a altura é O(log n)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como o Google Maps usa algoritmos de grafos?",
+    "answer": "Para calcular rotas mais curtas entre cidades usando Dijkstra e variações",
+    "wrong1": "Usa Kruskal para encontrar o caminho mais curto",
+    "wrong2": "BFS sempre resolve, mesmo com pesos",
+    "wrong3": "Bellman-Ford é sempre mais rápido que Dijkstra",
+    "tags": "aplicações",
+    "explicacao": "Com pesos positivos, Dijkstra (e heurísticas como A*) é a base para rotas eficientes."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como redes sociais como Facebook e Instagram usam grafos?",
+    "answer": "Representando usuários como vértices e conexões como arestas para sugerir amigos",
+    "wrong1": "Representando seguidores em árvores AVL",
+    "wrong2": "Modelando conexões apenas como matrizes fixas sem arestas",
+    "wrong3": "Não usam grafos; apenas tabelas relacionais",
+    "tags": "aplicações",
+    "explicacao": "O grafo de relacionamentos permite percursos/medidas (grau, caminhos, comunidades) para recomendações."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como grafos são usados em análise de redes de energia?",
+    "answer": "Cada nó representa uma estação e as arestas representam conexões de transmissão",
+    "wrong1": "Cada nó é uma rua e cada aresta é um semáforo",
+    "wrong2": "Usam apenas pilhas e filas no lugar de grafos",
+    "wrong3": "Arestas representam as cores dos cabos",
+    "tags": "aplicações",
+    "explicacao": "Modelar como grafo facilita avaliar conectividade, redundância e fluxos na rede elétrica."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo de grafos pode ser usado para planejar o menor custo em cabos de internet de uma cidade?",
+    "answer": "Kruskal ou Prim para gerar uma árvore mínima de conexões",
+    "wrong1": "Dijkstra para custo total mínimo",
+    "wrong2": "Floyd–Warshall para grafos esparsos",
+    "wrong3": "DFS para achar o menor custo",
+    "tags": "aplicações",
+    "explicacao": "MST (Kruskal/Prim) minimiza o custo total para conectar todos os pontos sem ciclos."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O(2n) é diferente de O(n)?",
+    "answer": "Não, porque constantes são ignoradas na análise assintótica",
+    "wrong1": "Sim, O(2n) é exatamente o dobro de O(n) e por isso é maior em Big-O",
+    "wrong2": "Sim, O(2n) é exponencial enquanto O(n) é linear",
+    "wrong3": "Depende do compilador e da linguagem utilizada",
+    "tags": "pegadinha",
+    "explicacao": "Em Big-O, fatores constantes positivos são descartados: O(2n) = O(n)."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O(n + log n) é simplificado para qual notação?",
+    "answer": "O(n)",
+    "wrong1": "O(log n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(1)",
+    "tags": "pegadinha",
+    "explicacao": "O termo dominante é n; log n é de ordem menor e é descartado na análise assintótica."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O(log n) cresce mais rápido que O(√n)?",
+    "answer": "Não, O(√n) cresce mais rápido que O(log n)",
+    "wrong1": "Sim, O(log n) cresce mais rápido",
+    "wrong2": "Crescem na mesma taxa",
+    "wrong3": "Depende da base do logaritmo",
+    "tags": "comparação",
+    "explicacao": "Para n → ∞, √n domina log n (lim_{n→∞} (log n)/(√n) = 0). A base do log só altera constante."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Toda função recursiva pode ser reescrita de forma iterativa?",
+    "answer": "Sim, mas pode ser mais complexa e menos intuitiva",
+    "wrong1": "Não, existem funções intrinsicamente impossíveis de iterar",
+    "wrong2": "Só é possível se a linguagem tiver a instrução goto",
+    "wrong3": "Somente se a pilha de chamadas for infinita",
+    "tags": "pegadinha",
+    "explicacao": "Recursão pode ser simulada com laços e uma estrutura de pilha explícita (modelo Turing-completo)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Uma função recursiva sempre é mais eficiente que uma iterativa?",
+    "answer": "Não, muitas vezes é menos eficiente devido à pilha de chamadas",
+    "wrong1": "Sim, recursão é sempre mais rápida",
+    "wrong2": "Sim, porque divide para conquistar automaticamente",
+    "wrong3": "Empatam sempre, não há diferença de custo",
+    "tags": "pegadinha",
+    "explicacao": "Chamadas recursivas adicionam overhead de stack; versões iterativas podem usar menos memória/tempo."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Quick Sort é sempre O(n log n)?",
+    "answer": "Não, no pior caso pode ser O(n²)",
+    "wrong1": "Sim, é O(n log n) em qualquer caso",
+    "wrong2": "Não, é sempre O(n)",
+    "wrong3": "Depende apenas do compilador",
+    "tags": "pegadinha",
+    "explicacao": "Se o pivô for mal escolhido (por ex., já ordenado e pivô extremo), as partições ficam desbalanceadas."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Heap Sort precisa de memória auxiliar extra como Merge Sort?",
+    "answer": "Não, Heap Sort é feito in-place",
+    "wrong1": "Sim, precisa O(n) de memória extra",
+    "wrong2": "Sim, e até mais que o Merge Sort",
+    "wrong3": "Precisa de vários vetores temporários do tamanho n",
+    "tags": "comparação",
+    "explicacao": "Heap Sort consome O(1) memória adicional (além de variáveis auxiliares); Merge Sort típico usa O(n)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Uma BST sempre garante buscas em O(log n)?",
+    "answer": "Não, se desbalanceada pode cair para O(n)",
+    "wrong1": "Sim, por definição é sempre O(log n)",
+    "wrong2": "Sim, desde que as chaves sejam únicas",
+    "wrong3": "Sim, depende só do compilador",
+    "tags": "pegadinha",
+    "explicacao": "Inserções ordenadas podem degenerar a BST numa lista; árvores balanceadas evitam isso."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Toda árvore AVL é uma BST?",
+    "answer": "Sim, AVL é uma BST com balanceamento automático",
+    "wrong1": "Não, AVL ordena por altura e não por chaves",
+    "wrong2": "Apenas enquanto não ocorrerem rotações",
+    "wrong3": "AVL é uma heap, não uma BST",
+    "tags": "conceitos",
+    "explicacao": "AVL mantém a propriedade de BST (ordem por chaves) e adiciona restrição de balanceamento (|fb| ≤ 1)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "DFS sempre encontra o caminho mais curto?",
+    "answer": "Não, apenas BFS garante o caminho mais curto em arestas não ponderadas",
+    "wrong1": "Sim, porque explora o grafo profundamente",
+    "wrong2": "Sim, desde que o grafo seja conexo",
+    "wrong3": "Sim, se marcarmos visitados corretamente",
+    "tags": "pegadinha",
+    "explicacao": "DFS não minimiza o número de arestas; BFS expande por camadas e encontra o menor número de passos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Dijkstra funciona em grafos com pesos negativos?",
+    "answer": "Não, nesse caso deve-se usar Bellman-Ford",
+    "wrong1": "Sim, desde que não haja ciclos",
+    "wrong2": "Sim, se usarmos uma heap binária eficiente",
+    "wrong3": "Sim, basta somar uma constante a todos os pesos",
+    "tags": "pegadinha",
+    "explicacao": "Dijkstra assume pesos não negativos; com pesos negativos, relaxamentos podem falhar. Bellman-Ford lida com isso."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Um grafo conexo e um grafo completo são a mesma coisa?",
+    "answer": "Não, conexo significa que há caminho entre todos os vértices, completo significa que todos os vértices estão diretamente ligados",
+    "wrong1": "Sim, ambos têm arestas entre todos os pares de vértices",
+    "wrong2": "Sim, se o grafo for direcionado",
+    "wrong3": "Sim, quando existe ao menos um ciclo",
+    "tags": "conceitos",
+    "explicacao": "Conexo: existe caminho entre quaisquer dois vértices. Completo: há aresta direta entre todo par de vértices."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é mais eficiente para grandes entradas: O(n log n) ou O(n²)?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n²)",
+    "wrong2": "Ambos têm eficiência semelhante para n grande",
+    "wrong3": "Depende apenas do hardware, não da ordem de complexidade",
+    "tags": "comparação",
+    "explicacao": "Para n → ∞, n log n cresce muito mais lentamente que n², resultando em tempos menores."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a diferença entre notação Big-O e Big-Ω?",
+    "answer": "Big-O representa o limite superior, Big-Ω representa o limite inferior",
+    "wrong1": "Big-O representa o caso médio e Big-Ω o pior caso",
+    "wrong2": "Big-O é sempre exato e Big-Ω é uma estimativa grosseira",
+    "wrong3": "Big-O e Big-Ω são equivalentes, apenas nomes diferentes",
+    "tags": "comparação",
+    "explicacao": "O(f(n)) dá um teto assintótico; Ω(f(n)) dá um piso. Θ(f(n)) indica limites superior e inferior simultaneamente."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a principal diferença entre recursão direta e recursão indireta?",
+    "answer": "Na direta a função chama a si mesma, na indireta uma função chama outra que chama a primeira",
+    "wrong1": "Na direta não há uso de pilha e na indireta há",
+    "wrong2": "Na direta sempre é mais eficiente do que na indireta",
+    "wrong3": "Na indireta não existe caso base",
+    "tags": "comparação",
+    "explicacao": "Recursão direta: f → f. Recursão indireta: f → g → f (ou cadeias maiores)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quando é melhor usar recursão em vez de iteração?",
+    "answer": "Quando o problema tem natureza hierárquica ou divisível em subproblemas menores",
+    "wrong1": "Sempre que quisermos a solução mais rápida possível",
+    "wrong2": "Quando laços (for/while) não estão disponíveis na linguagem",
+    "wrong3": "Quando a recursão sempre consome menos memória que iteração",
+    "tags": "comparação",
+    "explicacao": "Árvores, backtracking e divide-and-conquer ficam mais naturais com recursão; nem sempre é mais rápida."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual a diferença principal entre Merge Sort e Quick Sort?",
+    "answer": "Merge divide ao meio e combina, Quick divide em torno de um pivô",
+    "wrong1": "Merge é in-place e Quick requer memória O(n)",
+    "wrong2": "Quick é sempre estável e Merge nunca é estável",
+    "wrong3": "Merge tem pior caso O(n) e Quick tem pior caso O(n log n)",
+    "tags": "comparação",
+    "explicacao": "Merge faz interleaving de sublistas ordenadas (usa O(n) extra habitual); Quick particiona por um pivô."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual a vantagem do Quick Sort sobre o Merge Sort?",
+    "answer": "É mais rápido na prática e não precisa de memória extra significativa",
+    "wrong1": "Tem melhor complexidade no pior caso",
+    "wrong2": "É estável por definição",
+    "wrong3": "Sempre usa menos comparações do que qualquer algoritmo",
+    "tags": "comparação",
+    "explicacao": "Quick Sort costuma ter ótimo desempenho em cache e, em geral, é in-place (O(log n) de pilha)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a diferença entre BST e AVL?",
+    "answer": "A BST pode ficar desbalanceada, a AVL se mantém balanceada automaticamente",
+    "wrong1": "BST não impõe ordem entre chaves, AVL impõe",
+    "wrong2": "AVL não é uma BST",
+    "wrong3": "BST sempre garante O(log n) em buscas, AVL não",
+    "tags": "comparação",
+    "explicacao": "AVL é uma BST com restrição de balanceamento (fator de balanceamento |fb| ≤ 1)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a diferença entre AVL e Red-Black Tree?",
+    "answer": "AVL é mais rigidamente balanceada, Red-Black é mais flexível e tem inserções/remoções mais rápidas",
+    "wrong1": "AVL usa cores nos nós e Red-Black não",
+    "wrong2": "Red-Black proíbe rotações, AVL permite",
+    "wrong3": "AVL é sempre mais rápida para qualquer operação",
+    "tags": "comparação",
+    "explicacao": "AVL mantém alturas muito próximas; Red-Black admite mais folga, facilitando atualizações."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre BFS e DFS?",
+    "answer": "BFS percorre por camadas usando fila, DFS explora em profundidade usando pilha ou recursão",
+    "wrong1": "BFS usa pilha e DFS usa fila",
+    "wrong2": "Ambas garantem caminho mais curto em grafos ponderados",
+    "wrong3": "DFS sempre visita vértices em ordem crescente de grau",
+    "tags": "comparação",
+    "explicacao": "BFS expande a fronteira por níveis; DFS desce o mais fundo possível antes de retroceder."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre Dijkstra e Bellman-Ford?",
+    "answer": "Dijkstra é mais rápido mas não aceita pesos negativos, Bellman-Ford aceita pesos negativos",
+    "wrong1": "Dijkstra aceita pesos negativos e é mais lento",
+    "wrong2": "Bellman-Ford é sempre mais rápido que Dijkstra",
+    "wrong3": "Ambos exigem que o grafo seja um DAG",
+    "tags": "comparação",
+    "explicacao": "Dijkstra: O((V+E) log V) típico sem pesos negativos. Bellman-Ford: O(V·E) e lida com negativos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre grafo conexo e grafo completo?",
+    "answer": "Conexo tem caminho entre todos os vértices, completo tem arestas diretas entre todos os vértices",
+    "wrong1": "São a mesma coisa",
+    "wrong2": "Conexo exige aresta direta entre qualquer par",
+    "wrong3": "Completo significa que não há ciclos",
+    "tags": "comparação",
+    "explicacao": "Conexidade é sobre alcançabilidade; completude é sobre adjacência direta entre todos os pares."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre matriz de adjacência e lista de adjacência?",
+    "answer": "Matriz ocupa mais espaço mas permite acesso rápido, lista é mais eficiente para grafos esparsos",
+    "wrong1": "Lista sempre ocupa mais espaço que a matriz",
+    "wrong2": "Matriz é melhor para grafos muito esparsos",
+    "wrong3": "Lista não permite descobrir vizinhos de um vértice",
+    "tags": "comparação",
+    "explicacao": "Matriz: O(V²) espaço e consulta O(1) para aresta (u,v). Lista: O(V+E) espaço; melhor para E ≪ V²."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um loop roda O(log n) vezes e n = 64, quantas iterações ele fará aproximadamente?",
+    "answer": "6, pois log₂(64) = 6",
+    "wrong1": "5, pois log₂(64) = 5",
+    "wrong2": "64, uma por elemento",
+    "wrong3": "7, pois log₁₀(64) ≈ 7",
+    "tags": "cálculo",
+    "explicacao": "Para loops O(log n) consideramos log base 2 por padrão em contexto de algoritmos: log₂(64)=6."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo O(n²) faz 100 operações quando n=10. Aproximadamente quantas fará quando n=100?",
+    "answer": "10.000 operações",
+    "wrong1": "1.000 operações",
+    "wrong2": "100.000 operações",
+    "wrong3": "20.000 operações",
+    "tags": "cálculo",
+    "explicacao": "Escala quadrática: multiplicar n por 10 multiplica custo por 10²=100 → 100×100=10.000."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quantos movimentos são necessários para resolver a Torre de Hanói com 6 discos?",
+    "answer": "63 movimentos (2^6 - 1)",
+    "wrong1": "64 movimentos",
+    "wrong2": "32 movimentos",
+    "wrong3": "31 movimentos",
+    "tags": "cálculo",
+    "explicacao": "Para n discos, mínimos movimentos = 2^n − 1. Para n=6: 64−1=63."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quantas chamadas recursivas a função Fibonacci(5) fará na versão ingênua?",
+    "answer": "15 chamadas",
+    "wrong1": "11 chamadas",
+    "wrong2": "31 chamadas",
+    "wrong3": "5 chamadas",
+    "tags": "cálculo",
+    "explicacao": "Para a implementação ingênua, #chamadas = 2·F(n+1) − 1. Como F(6)=8, 2·8−1=15."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade de ordenar 1 milhão de números usando Quick Sort no caso médio?",
+    "answer": "O(n log n), ou aproximadamente 20 milhões de comparações",
+    "wrong1": "Aproximadamente 1 milhão de comparações",
+    "wrong2": "Aproximadamente 1 bilhão de comparações",
+    "wrong3": "Aproximadamente 60 milhões de comparações",
+    "tags": "cálculo",
+    "explicacao": "n log₂ n para n=10⁶ dá ~10⁶×~20 ≈ 2×10⁷. (Constantes variam conforme implementação.)"
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Quantas comparações faz o Merge Sort para n=8 elementos?",
+    "answer": "24 comparações aproximadamente",
+    "wrong1": "16 comparações",
+    "wrong2": "21 comparações",
+    "wrong3": "32 comparações",
+    "tags": "cálculo",
+    "explicacao": "Para potências de 2, no pior caso ≈ n·log₂n = 8·3 = 24 comparações."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a altura máxima de uma árvore AVL com 7 nós?",
+    "answer": "3, pois a árvore se mantém balanceada",
+    "wrong1": "2",
+    "wrong2": "4",
+    "wrong3": "5",
+    "tags": "cálculo",
+    "explicacao": "Considerando altura como nº de níveis (raiz=1), uma AVL com 7 nós pode ter até 3 níveis. Se contar arestas, seria 2."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Quantos nós uma árvore binária completa de altura 4 pode ter no máximo?",
+    "answer": "31 nós (2^(h+1) - 1)",
+    "wrong1": "15 nós",
+    "wrong2": "63 nós",
+    "wrong3": "30 nós",
+    "tags": "cálculo",
+    "explicacao": "Para altura h (em arestas), o máximo é 2^{h+1}−1. Com h=4: 2^5−1=31."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Se um grafo não direcionado tem 5 vértices, qual é o número máximo de arestas em um grafo completo?",
+    "answer": "10 arestas (n(n-1)/2)",
+    "wrong1": "20 arestas",
+    "wrong2": "5 arestas",
+    "wrong3": "8 arestas",
+    "tags": "cálculo",
+    "explicacao": "Kₙ tem n(n−1)/2 arestas. Para n=5: 5·4/2=10."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Quantas arestas tem uma árvore com 12 vértices?",
+    "answer": "11 arestas (n-1)",
+    "wrong1": "12 arestas",
+    "wrong2": "10 arestas",
+    "wrong3": "13 arestas",
+    "tags": "cálculo",
+    "explicacao": "Árvore simples e conexa com n vértices sempre tem n−1 arestas."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual é a complexidade aproximada do algoritmo Floyd-Warshall em um grafo de 100 vértices?",
+    "answer": "O(100³) = 1.000.000 operações",
+    "wrong1": "O(100²) = 10.000 operações",
+    "wrong2": "O(100⁴) = 100.000.000 operações",
+    "wrong3": "O(100 log 100) ≈ 460 operações",
+    "tags": "cálculo",
+    "explicacao": "Floyd–Warshall é O(V³). Para V=100: 10⁶ iterações (desconsiderando constantes)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Um BFS em um grafo com 1000 vértices e 5000 arestas tem complexidade de que ordem?",
+    "answer": "O(V + E) = O(6000)",
+    "wrong1": "O(V·E) ≈ O(5.000.000)",
+    "wrong2": "O(V²) = O(1.000.000)",
+    "wrong3": "O(E²) = O(25.000.000)",
+    "tags": "cálculo",
+    "explicacao": "BFS é linear no tamanho do grafo: O(V+E). Para V=1000 e E=5000 dá ~6000 passos básicos."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Você precisa processar 1 bilhão de registros em um banco de dados. É melhor um algoritmo O(n log n) ou O(n²)?",
+    "answer": "O(n log n), pois O(n²) seria inviável em grandes entradas",
+    "wrong1": "O(n²), porque faz uma análise mais completa",
+    "wrong2": "O(log n), pois ignora o fator n",
+    "wrong3": "Depende só do hardware, a complexidade não importa",
+    "tags": "casos reais",
+    "explicacao": "Para n muito grande, o crescimento quadrático explode (10¹⁸ operações). n·log₂n cresce bem mais devagar."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um site de buscas precisa indexar páginas rapidamente. Por que priorizar algoritmos O(log n) ou O(n) em vez de O(n²)?",
+    "answer": "Porque apenas algoritmos mais eficientes permitem escalar para milhões de registros",
+    "wrong1": "Porque usam menos linhas de código",
+    "wrong2": "Porque sempre usam menos memória do que O(n²)",
+    "wrong3": "Porque O(n²) é melhor só quando há paralelização",
+    "tags": "casos reais",
+    "explicacao": "Indexadores lidam com volumes massivos; custos quadráticos não escalam. Custos lineares ou logarítmicos são viáveis."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em um editor de arquivos, por que a busca de arquivos em pastas pode ser implementada de forma recursiva?",
+    "answer": "Porque pastas podem conter outras pastas, formando uma estrutura hierárquica natural",
+    "wrong1": "Porque recursão é sempre mais rápida que iteração",
+    "wrong2": "Porque recursão não usa pilha de chamadas",
+    "wrong3": "Porque recursão sempre consome menos memória",
+    "tags": "casos reais",
+    "explicacao": "O sistema de diretórios é uma árvore; a recursão espelha a estrutura e simplifica o código."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Por que recursão é usada em algoritmos de jogos como exploração de labirintos?",
+    "answer": "Porque permite explorar cada caminho até encontrar uma saída de forma elegante",
+    "wrong1": "Porque garante sempre o caminho mais curto",
+    "wrong2": "Porque não utiliza pilha (stack)",
+    "wrong3": "Porque a complexidade é sempre O(1)",
+    "tags": "casos reais",
+    "explicacao": "Backtracking recursivo modela a exploração de caminhos; não garante menor caminho sem técnicas adicionais."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Em um e-commerce, por que usar algoritmos eficientes de ordenação é fundamental?",
+    "answer": "Porque ordenar milhões de produtos com algoritmos ineficientes tornaria o sistema lento",
+    "wrong1": "Porque evita a necessidade de banco de dados",
+    "wrong2": "Porque garante sempre O(n) independente dos dados",
+    "wrong3": "Porque impede qualquer inconsistência de dados",
+    "tags": "casos reais",
+    "explicacao": "Ordenações frequentes exigem O(n log n) na prática; algoritmos quadráticos causam lentidão perceptível."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Por que o algoritmo Timsort é usado no Python e no Java?",
+    "answer": "Porque combina eficiência de Merge Sort e Insertion Sort, adaptando-se a dados reais",
+    "wrong1": "Porque é sempre O(n) em qualquer caso",
+    "wrong2": "Porque usa pivô aleatório para dividir",
+    "wrong3": "Porque é o mais simples de implementar",
+    "tags": "casos reais",
+    "explicacao": "Timsort detecta runs já ordenadas (dados quase ordenados) e é estável, performando muito bem em cenários reais."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Por que bancos de dados como MySQL usam árvores balanceadas?",
+    "answer": "Para garantir buscas rápidas e previsíveis mesmo com milhões de registros",
+    "wrong1": "Porque eliminam acessos a disco",
+    "wrong2": "Porque inserções ficam O(1) sempre",
+    "wrong3": "Porque ocupam menos espaço que arrays em todos os casos",
+    "tags": "casos reais",
+    "explicacao": "Estruturas balanceadas mantêm altura O(log n), garantindo desempenho consistente em busca/insere/remove."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Por que uma árvore binária é mais adequada que uma lista para buscas frequentes?",
+    "answer": "Porque permite buscas em O(log n) em vez de O(n)",
+    "wrong1": "Porque listas têm busca O(log n)",
+    "wrong2": "Porque árvores sempre usam menos memória",
+    "wrong3": "Porque árvores são sempre mais simples de implementar",
+    "tags": "casos reais",
+    "explicacao": "Em listas, busca é linear; em BSTs balanceadas, a altura logarítmica acelera buscas repetidas."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como algoritmos de grafos são usados em redes sociais?",
+    "answer": "Para sugerir amigos em comum e analisar conexões entre usuários",
+    "wrong1": "Para ordenar a timeline estritamente por hora",
+    "wrong2": "Para criptografar mensagens entre usuários",
+    "wrong3": "Para comprimir imagens de perfil",
+    "tags": "casos reais",
+    "explicacao": "Grafos modelam relacionamentos; métricas e percursos identificam conexões relevantes (amigos de amigos)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como um sistema GPS usa grafos?",
+    "answer": "Para calcular rotas mais curtas entre pontos no mapa usando Dijkstra e variações",
+    "wrong1": "Para desenhar o mapa na tela",
+    "wrong2": "Para reconhecer placas de veículos",
+    "wrong3": "Para medir a temperatura das vias",
+    "tags": "casos reais",
+    "explicacao": "Vias/ruas são arestas com pesos (distância/tempo). Algoritmos de caminhos mínimos escolhem rotas eficientes."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como grafos são usados em análise de epidemias?",
+    "answer": "Modelando pessoas como vértices e contatos como arestas para rastrear propagação",
+    "wrong1": "Para calcular apenas a média de idades",
+    "wrong2": "Para ordenar nomes alfabeticamente",
+    "wrong3": "Para comprimir registros médicos",
+    "tags": "casos reais",
+    "explicacao": "A estrutura de contatos define cadeias de transmissão; grafos ajudam a prever e conter surtos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como empresas de energia usam algoritmos de grafos?",
+    "answer": "Para planejar redes elétricas de menor custo usando árvores geradoras mínimas",
+    "wrong1": "Para encontrar apenas ciclos de tamanho máximo",
+    "wrong2": "Para ordenar cidades alfabeticamente",
+    "wrong3": "Para ajustar modelos por regressão linear",
+    "tags": "casos reais",
+    "explicacao": "MSTs (Kruskal/Prim) minimizam custo total de conexão mantendo a rede conectada."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual notação representa o limite inferior de desempenho de um algoritmo?",
+    "answer": "Ω (Ômega)",
+    "wrong1": "O (Big-O)",
+    "wrong2": "Θ (Teta)",
+    "wrong3": "o (little-o)",
+    "tags": "teoria",
+    "explicacao": "Big-Ω dá o limite inferior; Big-O dá o superior; Θ (Teta) é limite assintótico apertado; little-o é limite superior estrito."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo com complexidade O(n log n) sempre será mais rápido que O(n²)?",
+    "answer": "Não necessariamente para n pequeno, mas sim para n grandes",
+    "wrong1": "Sim, sempre",
+    "wrong2": "Não, O(n²) é sempre melhor",
+    "wrong3": "Depende apenas da linguagem/compilador",
+    "tags": "pegadinha",
+    "explicacao": "Constantes e termos menores podem favorecer O(n²) para n muito pequeno; assintoticamente, O(n log n) vence."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a vantagem da recursão de cauda (tail recursion)?",
+    "answer": "Ela pode ser otimizada pelo compilador para não usar pilha extra",
+    "wrong1": "É sempre mais rápida que qualquer iteração",
+    "wrong2": "Permite paralelismo automático",
+    "wrong3": "Elimina a necessidade de caso base",
+    "tags": "conceitos",
+    "explicacao": "Com otimização de chamada em cauda (TCO), a chamada recursiva final pode reutilizar o frame de pilha."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual problema clássico de recursão usa a fórmula 2^n - 1?",
+    "answer": "Torre de Hanói",
+    "wrong1": "Quick Sort",
+    "wrong2": "Busca binária",
+    "wrong3": "Fatorial",
+    "tags": "problemas clássicos",
+    "explicacao": "O número mínimo de movimentos na Torre de Hanói com n discos é 2^n − 1."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação é estável e sempre O(n log n)?",
+    "answer": "Merge Sort",
+    "wrong1": "Quick Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Selection Sort",
+    "tags": "comparação",
+    "explicacao": "Merge Sort é estável e mantém O(n log n) no pior caso; Quick pode cair para O(n²) e Heap não é estável por padrão."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação é rápido na prática, mas pode cair para O(n²)?",
+    "answer": "Quick Sort",
+    "wrong1": "Merge Sort",
+    "wrong2": "Heap Sort",
+    "wrong3": "Counting Sort",
+    "tags": "comparação",
+    "explicacao": "Com pivôs ruins (ex.: dados já ordenados sem mitigação), o Quick Sort degrada para O(n²)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a principal operação usada para manter uma árvore AVL balanceada?",
+    "answer": "Rotações (simples e duplas)",
+    "wrong1": "Rehashing",
+    "wrong2": "Splaying",
+    "wrong3": "Troca aleatória de chaves",
+    "tags": "operações",
+    "explicacao": "Após inserções/remoções, rotações restauram o fator de balanceamento (diferença de alturas ≤ 1)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual travessia de uma BST resulta em valores ordenados?",
+    "answer": "Travessia em ordem (in-order)",
+    "wrong1": "Pré-ordem (preorder)",
+    "wrong2": "Pós-ordem (postorder)",
+    "wrong3": "Por nível (BFS)",
+    "tags": "percursos",
+    "explicacao": "Em BSTs, visitar esquerda → nó → direita lista as chaves em ordem crescente."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é mais eficiente para grafos esparsos?",
+    "answer": "Lista de adjacência",
+    "wrong1": "Matriz de adjacência",
+    "wrong2": "Matriz de incidência",
+    "wrong3": "Tabela hash de caminhos completos",
+    "tags": "representação",
+    "explicacao": "A lista de adjacência usa O(V+E) memória, ideal quando E ≪ V²; a matriz usa O(V²)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra a árvore geradora mínima escolhendo sempre a menor aresta disponível?",
+    "answer": "Kruskal",
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "Bellman-Ford",
+    "tags": "árvore geradora",
+    "explicacao": "Kruskal ordena globalmente as arestas por peso e adiciona a menor que não forma ciclo (Union-Find)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "DFS garante o caminho mais curto entre dois vértices?",
+    "answer": "Não, apenas BFS garante o menor caminho em arestas não ponderadas",
+    "wrong1": "Sim, se não houver ciclos",
+    "wrong2": "Sim, com pesos positivos",
+    "wrong3": "Depende somente da ordem dos vizinhos",
+    "tags": "pegadinha",
+    "explicacao": "DFS prioriza profundidade, não minimiza arestas; BFS encontra o menor número de arestas em grafos não ponderados."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo calcula o caminho mínimo entre todos os pares de vértices?",
+    "answer": "Floyd-Warshall",
+    "wrong1": "Dijkstra (puro, uma única origem)",
+    "wrong2": "Kruskal",
+    "wrong3": "Ordenação topológica",
+    "tags": "caminhos mínimos",
+    "explicacao": "Floyd-Warshall é O(n³) e resolve all-pairs shortest paths; Dijkstra resolve single-source por vez."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa dizer que um algoritmo é correto?",
+    "answer": "Que ele resolve o problema proposto para todas as entradas válidas",
+    "wrong1": "Que ele sempre executa em tempo constante",
+    "wrong2": "Que ele compila sem erros em qualquer linguagem",
+    "wrong3": "Que funciona apenas para alguns exemplos",
+    "tags": "corretude",
+    "explicacao": "Corretude (no sentido clássico) significa produzir a saída esperada para toda entrada válida; total corretude inclui também terminar."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Um algoritmo incorreto pode parecer funcionar em alguns casos?",
+    "answer": "Sim, mas ele falha em entradas específicas ou casos limites",
+    "wrong1": "Não, se funcionar uma vez ele é correto",
+    "wrong2": "Apenas se for O(1)",
+    "wrong3": "Somente quando os dados estão ordenados",
+    "tags": "corretude",
+    "explicacao": "Falhas geralmente aparecem em corner cases; passar em alguns testes não garante corretude."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que se avalia na análise de algoritmos além da corretude?",
+    "answer": "A eficiência em termos de tempo de execução e uso de memória",
+    "wrong1": "Apenas a legibilidade do código",
+    "wrong2": "Somente o consumo de memória",
+    "wrong3": "Somente o tempo, nunca a memória",
+    "tags": "conceitos",
+    "explicacao": "Desempenho considera tempo e espaço; às vezes também I/O e complexidade de implementação."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação O (Big-O)?",
+    "answer": "O limite superior assintótico do crescimento de um algoritmo",
+    "wrong1": "O limite inferior assintótico",
+    "wrong2": "O tempo exato de execução",
+    "wrong3": "A média exata de execuções",
+    "tags": "notação",
+    "explicacao": "Big-O dá um bound superior para entradas grandes, geralmente associado ao pior caso."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Ω (Ômega)?",
+    "answer": "O limite inferior do crescimento de um algoritmo",
+    "wrong1": "O limite superior do crescimento",
+    "wrong2": "O crescimento exato",
+    "wrong3": "A complexidade média",
+    "tags": "notação",
+    "explicacao": "Ω descreve um bound inferior: desempenho não pode ser melhor do que isso assintoticamente."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que representa a notação Θ (Teta)?",
+    "answer": "O crescimento exato do algoritmo, limitando superior e inferior",
+    "wrong1": "Apenas o limite superior",
+    "wrong2": "Apenas o limite inferior",
+    "wrong3": "Somente o caso médio",
+    "tags": "notação",
+    "explicacao": "Θ(f) significa Big-O e Big-Ω ao mesmo tempo, isto é, crescimento assintótico apertado."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual é a simplificação de O(n + log n)?",
+    "answer": "O(n)",
+    "wrong1": "O(log n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(n + log n) (não simplifica)",
+    "tags": "pegadinha",
+    "explicacao": "Para n grande, o termo dominante é n; termos menores são ignorados na análise assintótica."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa melhor caso na análise de algoritmos?",
+    "answer": "O cenário mais favorável, onde o algoritmo executa mais rápido",
+    "wrong1": "O cenário mais desfavorável",
+    "wrong2": "A média das execuções",
+    "wrong3": "O caso em que o algoritmo falha",
+    "tags": "conceitos",
+    "explicacao": "Melhor caso é típico quando a entrada já está na condição ideal para o algoritmo."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa pior caso na análise de algoritmos?",
+    "answer": "O cenário mais desfavorável, onde o algoritmo executa mais lentamente",
+    "wrong1": "O cenário mais favorável",
+    "wrong2": "Sempre igual ao caso médio",
+    "wrong3": "Quando a entrada é vazia",
+    "tags": "conceitos",
+    "explicacao": "Big-O frequentemente modela esse bound superior de custo/tempo para qualquer entrada."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "O que significa caso médio?",
+    "answer": "O desempenho esperado do algoritmo em entradas típicas",
+    "wrong1": "O mesmo que melhor caso",
+    "wrong2": "O mesmo que pior caso",
+    "wrong3": "O caso em que o tempo é constante",
+    "tags": "conceitos",
+    "explicacao": "Depende de um modelo probabilístico das entradas; pode divergir bastante do pior caso."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Na busca binária, qual é o caso pior em termos de complexidade?",
+    "answer": "O(log n)",
+    "wrong1": "O(1)",
+    "wrong2": "O(n)",
+    "wrong3": "O(n log n)",
+    "tags": "exemplo",
+    "explicacao": "Cada comparação reduz o espaço de busca à metade, resultando em ~log₂ n passos."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Na busca sequencial, qual é o caso pior em termos de complexidade?",
+    "answer": "O(n)",
+    "wrong1": "O(1)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "exemplo",
+    "explicacao": "No pior caso percorre-se todo o vetor até encontrar (ou não) o elemento."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual a complexidade de um duplo loop aninhado até n?",
+    "answer": "O(n²)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n log n)",
+    "tags": "código",
+    "explicacao": "Laços completos aninhados multiplicam o trabalho, levando a crescimento quadrático."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Qual a complexidade de um loop que dobra a variável a cada iteração até n?",
+    "answer": "O(log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(√n)",
+    "wrong3": "O(n²)",
+    "tags": "código",
+    "explicacao": "Dobrar a variável reduz o número de iterações para aproximadamente log₂ n."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um algoritmo tem um loop O(n) externo e um loop O(log n) interno, qual a complexidade?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n²)",
+    "tags": "código",
+    "explicacao": "Multiplicam-se as ordens: n * log n."
+  },
+  {
+    "quiz": "Análise de Algoritmos",
+    "question": "Se um algoritmo realiza sempre 100 operações, qual é sua complexidade?",
+    "answer": "O(1)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n²)",
+    "tags": "código",
+    "explicacao": "Custo constante (independente de n) é modelado como O(1)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão em algoritmos?",
+    "answer": "É quando uma função chama a si mesma para resolver subproblemas",
+    "wrong1": "É quando um algoritmo usa apenas laços iterativos",
+    "wrong2": "É quando duas funções nunca se chamam",
+    "wrong3": "É executar várias threads em paralelo",
+    "tags": "conceitos",
+    "explicacao": "Recursão define o problema em termos de instâncias menores dele mesmo, até atingir um caso base."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o elemento essencial que toda função recursiva precisa ter?",
+    "answer": "Um caso base que interrompe a recursão",
+    "wrong1": "Uma variável global para contar chamadas",
+    "wrong2": "Um laço for envolvendo a chamada recursiva",
+    "wrong3": "Uma condição opcional que pode não parar",
+    "tags": "conceitos",
+    "explicacao": "Sem um caso base (condição de parada) a recursão não termina."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que acontece se uma função recursiva não tiver caso base?",
+    "answer": "Ela entra em recursão infinita até causar erro de pilha (StackOverflow)",
+    "wrong1": "Ela sempre retorna null imediatamente",
+    "wrong2": "Ela passa a ter complexidade O(1)",
+    "wrong3": "Ela compila, mas não pode ser chamada",
+    "tags": "erros",
+    "explicacao": "Sem parada, cada chamada cria outra, esgotando a pilha de execução."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é o caso base em uma função recursiva?",
+    "answer": "A condição de parada que encerra a recursão",
+    "wrong1": "A primeira chamada recursiva da função",
+    "wrong2": "O maior subproblema resolvido",
+    "wrong3": "O retorno da função principal (main)",
+    "tags": "conceitos",
+    "explicacao": "O caso base é quando o problema é pequeno o suficiente para ter resposta direta."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em fatorial recursivo, qual é o caso base?",
+    "answer": "Quando n = 0 ou n = 1",
+    "wrong1": "Quando n = 2",
+    "wrong2": "Quando n < 0",
+    "wrong3": "Quando n é primo",
+    "tags": "exemplo",
+    "explicacao": "Define-se 0! = 1 e 1! = 1, evitando chamadas adicionais."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Em Fibonacci recursivo, qual é o caso base?",
+    "answer": "Quando n = 0 retorna 0 e quando n = 1 retorna 1",
+    "wrong1": "Quando n = 2 retorna 2",
+    "wrong2": "Quando n = 1 retorna 0",
+    "wrong3": "Não possui caso base, apenas soma anterior",
+    "tags": "exemplo",
+    "explicacao": "As sementes F(0)=0 e F(1)=1 encerram a recursão."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão direta?",
+    "answer": "Quando a função chama a si mesma diretamente",
+    "wrong1": "Quando a função nunca chama a si mesma",
+    "wrong2": "Quando duas funções se chamam mutuamente",
+    "wrong3": "Quando a chamada recursiva vem de uma thread externa",
+    "tags": "tipos",
+    "explicacao": "Ex.: f() { … f() … } é recursão direta."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão indireta?",
+    "answer": "Quando uma função chama outra que, por sua vez, chama a primeira",
+    "wrong1": "Quando a função chama a si mesma diretamente",
+    "wrong2": "Quando a função é apenas iterativa",
+    "wrong3": "Quando não há chamadas entre funções",
+    "tags": "tipos",
+    "explicacao": "Ex.: f() chama g() e g() chama f()."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "O que é recursão de cauda (tail recursion)?",
+    "answer": "É quando a chamada recursiva é a última instrução da função",
+    "wrong1": "É quando a chamada recursiva ocorre no início da função",
+    "wrong2": "É quando a função usa memória extra após a chamada",
+    "wrong3": "É quando a recursão acontece apenas dentro de loops",
+    "tags": "tipos",
+    "explicacao": "Em tail recursion não há trabalho após a chamada; alguns compiladores otimizam (TCO)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é a complexidade do cálculo recursivo simples de Fibonacci?",
+    "answer": "O(2^n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n log n)",
+    "wrong3": "O(n^2)",
+    "tags": "exemplo",
+    "explicacao": "A árvore de chamadas cresce exponencialmente sem memoização."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual técnica pode otimizar a recursão de Fibonacci?",
+    "answer": "Memoização ou programação dinâmica",
+    "wrong1": "Aumentar a profundidade máxima da pilha",
+    "wrong2": "Remover o caso base",
+    "wrong3": "Usar Bubble Sort antes das chamadas",
+    "tags": "otimização",
+    "explicacao": "Guardar resultados evita recomputações, reduzindo para O(n)."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Quantos movimentos mínimos são necessários para resolver a Torre de Hanói com n discos?",
+    "answer": "2^n - 1",
+    "wrong1": "n!",
+    "wrong2": "n^2",
+    "wrong3": "2n - 1",
+    "tags": "problemas clássicos",
+    "explicacao": "Prova-se por indução que a solução ótima exige 2^n−1 movimentos."
+  },
+  {
+    "quiz": "Recursividade",
+    "question": "Qual é o caso base típico da função Fatorial?",
+    "answer": "Fatorial(0) = 1",
+    "wrong1": "Fatorial(0) = 0",
+    "wrong2": "Fatorial(1) = 0",
+    "wrong3": "Fatorial(n) = n + 1 para n=0",
+    "tags": "problemas clássicos",
+    "explicacao": "Define-se 0! = 1 por convenção e consistência combinatória."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Por que algoritmos de ordenação são importantes?",
+    "answer": "Porque organizar dados é essencial para buscas rápidas e análises eficientes",
+    "wrong1": "Porque deixam o código mais bonito visualmente",
+    "wrong2": "Porque evitam a necessidade de estruturas de dados",
+    "wrong3": "Porque sempre reduzem a complexidade para O(1)",
+    "tags": "conceitos",
+    "explicacao": "Ordenar acelera operações como busca binária, junções e agregações, além de melhorar a localidade de referência."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade mínima para ordenar eficientemente n elementos?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(log n)",
+    "wrong3": "O(n²)",
+    "tags": "conceitos",
+    "explicacao": "Para algoritmos baseados em comparações existe um limite inferior Ω(n log n)."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual a estratégia usada pelo Merge Sort?",
+    "answer": "Dividir para conquistar, dividindo o vetor e mesclando resultados ordenados",
+    "wrong1": "Escolher um pivô e particionar o vetor",
+    "wrong2": "Construir uma heap e extrair máximos/superfícies",
+    "wrong3": "Contar frequências de chaves e reescrever diretamente",
+    "tags": "merge sort",
+    "explicacao": "Merge Sort divide o problema ao meio e intercalha (merge) listas já ordenadas."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade do Merge Sort em todos os casos?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "merge sort",
+    "explicacao": "A árvore de recursão tem altura log n e cada nível faz trabalho linear no total."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a principal desvantagem do Merge Sort?",
+    "answer": "Necessita de memória auxiliar adicional",
+    "wrong1": "Não é estável",
+    "wrong2": "Não consegue ordenar números repetidos",
+    "wrong3": "Só funciona com pivô aleatório",
+    "tags": "merge sort",
+    "explicacao": "O merge clássico usa um vetor auxiliar O(n), aumentando o consumo de memória."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a estratégia usada pelo Quick Sort?",
+    "answer": "Escolher um pivô e particionar o vetor em torno dele",
+    "wrong1": "Mesclar duas listas ordenadas",
+    "wrong2": "Construir uma árvore balanceada e fazer travessia",
+    "wrong3": "Contar ocorrências de cada chave e indexar",
+    "tags": "quick sort",
+    "explicacao": "Quick Sort particiona em elementos menores e maiores que o pivô e ordena recursivamente."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade média do Quick Sort?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "quick sort",
+    "explicacao": "Com pivôs razoáveis, o particionamento produz subproblemas equilibrados em média."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade do Quick Sort no pior caso?",
+    "answer": "O(n²)",
+    "wrong1": "O(n log n)",
+    "wrong2": "O(n)",
+    "wrong3": "O(log n)",
+    "tags": "quick sort",
+    "explicacao": "Ocorre quando os particionamentos ficam extremamente desequilibrados (pivô muito ruim)."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Como evitar que o Quick Sort caia no pior caso?",
+    "answer": "Escolhendo bons pivôs, como o pivô aleatório ou mediana de três",
+    "wrong1": "Removendo o pivô da implementação",
+    "wrong2": "Sempre escolhendo o primeiro elemento como pivô",
+    "wrong3": "Usando apenas laços while sem recursão",
+    "tags": "quick sort",
+    "explicacao": "Heurísticas de pivô e aleatorização melhoram o balanceamento esperado."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual estrutura de dados é usada no Heap Sort?",
+    "answer": "Uma heap binária",
+    "wrong1": "Uma árvore B+",
+    "wrong2": "Uma fila simples (FIFO)",
+    "wrong3": "Uma tabela hash",
+    "tags": "heap sort",
+    "explicacao": "A heap permite selecionar e remover o máximo/mínimo em O(log n)."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual é a complexidade do Heap Sort?",
+    "answer": "O(n log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(n²)",
+    "wrong3": "O(log n)",
+    "tags": "heap sort",
+    "explicacao": "Construir a heap é O(n) e cada extração + ajuste custa O(log n) por n elementos."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "O Heap Sort precisa de memória auxiliar como o Merge Sort?",
+    "answer": "Não, ele é feito in-place",
+    "wrong1": "Sim, precisa de um vetor auxiliar do mesmo tamanho",
+    "wrong2": "Sim, precisa de memória O(n log n)",
+    "wrong3": "Só funciona em memória externa",
+    "tags": "heap sort",
+    "explicacao": "A heap é mantida no próprio array, com custo extra O(1) além de variáveis temporárias."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação é estável: Merge Sort ou Quick Sort?",
+    "answer": "Merge Sort",
+    "wrong1": "Quick Sort é estável por padrão",
+    "wrong2": "Ambos são invariavelmente estáveis",
+    "wrong3": "Nenhum algoritmo de ordenação pode ser estável",
+    "tags": "comparação",
+    "explicacao": "Merge Sort preserva a ordem relativa de elementos iguais; Quick Sort não é estável na forma clássica."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo de ordenação é mais eficiente na prática para grandes volumes?",
+    "answer": "Quick Sort",
+    "wrong1": "Bubble Sort",
+    "wrong2": "Selection Sort",
+    "wrong3": "Counting Sort (sempre, independentemente dos dados)",
+    "tags": "comparação",
+    "explicacao": "Quick Sort costuma ter ótimos coeficientes e cache-friendliness; porém, dados parcialmente ordenados favorecem Timsort."
+  },
+  {
+    "quiz": "Ordenação Avançada",
+    "question": "Qual algoritmo é usado em muitas bibliotecas modernas como no Python?",
+    "answer": "Timsort (variante de Merge + Insertion Sort)",
+    "wrong1": "Bubble Sort com otimizações",
+    "wrong2": "Quick Sort puro",
+    "wrong3": "Heap Sort exclusivamente",
+    "tags": "comparação",
+    "explicacao": "Timsort é estável, detecta runs já ordenadas e combina Insertion + Merge para bom desempenho em dados reais."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "O que é uma árvore binária de busca (BST)?",
+    "answer": "É uma árvore em que o valor da subárvore esquerda é sempre menor e da direita sempre maior que o nó pai",
+    "wrong1": "É uma árvore em que o pai é sempre maior que ambos os filhos (propriedade de heap)",
+    "wrong2": "É uma árvore em que as alturas das subárvores são sempre iguais",
+    "wrong3": "É uma árvore completa em que todos os níveis estão totalmente preenchidos",
+    "tags": "conceitos",
+    "explicacao": "A propriedade de BST compara chaves: esquerda < nó < direita. Não exige ser completa nem ter alturas iguais."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a principal vantagem de uma BST em relação a listas?",
+    "answer": "Permite buscas, inserções e remoções em O(log n) se estiver balanceada",
+    "wrong1": "Garante buscas em O(1) para qualquer caso",
+    "wrong2": "Sempre usa menos memória que uma lista",
+    "wrong3": "Ordena automaticamente os dados em O(1)",
+    "tags": "conceitos",
+    "explicacao": "BSTs balanceadas mantêm altura proporcional a log n, suportando operações fundamentais em O(log n)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "O que acontece com uma BST se inserirmos elementos já ordenados?",
+    "answer": "Ela pode se desbalancear e degenerar em uma lista",
+    "wrong1": "Ela se balanceia automaticamente sem rotações",
+    "wrong2": "Ela se transforma em uma heap",
+    "wrong3": "As buscas passam a ser O(1)",
+    "tags": "conceitos",
+    "explicacao": "Inserções ordenadas podem produzir uma árvore degenera (altura ~ n), piorando buscas para O(n)."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual travessia em uma BST retorna os elementos em ordem crescente?",
+    "answer": "Travessia em ordem (in-order)",
+    "wrong1": "Pré-ordem (pre-order)",
+    "wrong2": "Pós-ordem (post-order)",
+    "wrong3": "Nível a nível (level-order)",
+    "tags": "percursos",
+    "explicacao": "Em BST, visitar esquerda → nó → direita produz a sequência ordenada das chaves."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a ordem da travessia pré-ordem (pre-order)?",
+    "answer": "Visita a raiz, depois a esquerda e depois a direita",
+    "wrong1": "Visita a esquerda, depois a direita e por último a raiz",
+    "wrong2": "Visita a esquerda, depois a raiz e depois a direita",
+    "wrong3": "Visita a raiz, depois a direita e depois a esquerda",
+    "tags": "percursos",
+    "explicacao": "Pre-order: nó → esquerda → direita. Útil para copiar/serializar a estrutura."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a ordem da travessia pós-ordem (post-order)?",
+    "answer": "Visita a esquerda, depois a direita e por último a raiz",
+    "wrong1": "Visita a raiz, depois a esquerda e depois a direita",
+    "wrong2": "Visita a esquerda, depois a raiz e depois a direita",
+    "wrong3": "Visita a direita, depois a esquerda e por último a raiz",
+    "tags": "percursos",
+    "explicacao": "Post-order: esquerda → direita → nó. Útil para desalocar/avaliar subárvores antes do pai."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "O que é uma árvore AVL?",
+    "answer": "É uma árvore binária de busca que se mantém balanceada automaticamente",
+    "wrong1": "É uma árvore em que as inserções sempre ocorrem na folha mais à esquerda",
+    "wrong2": "É uma heap binária usada para prioridade",
+    "wrong3": "É uma árvore em que cada nó tem exatamente três filhos",
+    "tags": "conceitos",
+    "explicacao": "AVL é uma BST que aplica rotações para manter o fator de balanceamento controlado."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a condição de balanceamento de uma AVL?",
+    "answer": "A diferença de altura entre as subárvores esquerda e direita de qualquer nó é no máximo 1",
+    "wrong1": "A soma das alturas das subárvores deve ser igual a n",
+    "wrong2": "A diferença de altura pode chegar a 2 sem desbalancear",
+    "wrong3": "Ambas as subárvores devem ter exatamente o mesmo número de nós",
+    "tags": "conceitos",
+    "explicacao": "O fator de balanceamento em AVL deve ser -1, 0 ou +1 para todo nó."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a altura máxima de uma árvore AVL com n nós?",
+    "answer": "O(log n)",
+    "wrong1": "O(n)",
+    "wrong2": "O(√n)",
+    "wrong3": "O(1)",
+    "tags": "conceitos",
+    "explicacao": "O balanceamento garante altura assintoticamente logarítmica no número de nós."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual rotação é usada quando há desbalanceamento na esquerda da subárvore esquerda?",
+    "answer": "Rotação simples à direita",
+    "wrong1": "Rotação simples à esquerda",
+    "wrong2": "Rotação dupla à esquerda",
+    "wrong3": "Rotação dupla à direita",
+    "tags": "rotações",
+    "explicacao": "Caso LL: a árvore pende para a esquerda; uma rotação à direita restaura o balanceamento."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual rotação é usada quando há desbalanceamento na direita da subárvore direita?",
+    "answer": "Rotação simples à esquerda",
+    "wrong1": "Rotação simples à direita",
+    "wrong2": "Rotação dupla à direita",
+    "wrong3": "Rotação dupla à esquerda",
+    "tags": "rotações",
+    "explicacao": "Caso RR: a árvore pende para a direita; uma rotação à esquerda corrige o desequilíbrio."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual rotação é usada quando há desbalanceamento na esquerda da subárvore direita?",
+    "answer": "Rotação dupla à direita",
+    "wrong1": "Rotação dupla à esquerda",
+    "wrong2": "Rotação simples à esquerda",
+    "wrong3": "Rotação simples à direita",
+    "tags": "rotações",
+    "explicacao": "Caso RL: faz-se primeiro rotação à esquerda no filho direito e depois rotação à direita no nó raiz do desequilíbrio."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual rotação é usada quando há desbalanceamento na direita da subárvore esquerda?",
+    "answer": "Rotação dupla à esquerda",
+    "wrong1": "Rotação dupla à direita",
+    "wrong2": "Rotação simples à direita",
+    "wrong3": "Rotação simples à esquerda",
+    "tags": "rotações",
+    "explicacao": "Caso LR: faz-se primeiro rotação à direita no filho esquerdo e depois rotação à esquerda no nó raiz do desequilíbrio."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual é a vantagem de uma árvore AVL em relação a uma BST simples?",
+    "answer": "Mantém buscas em O(log n) mesmo após muitas inserções",
+    "wrong1": "Consome menos memória do que qualquer BST",
+    "wrong2": "Elimina a necessidade de rotações",
+    "wrong3": "Garante operações em O(1) para busca",
+    "tags": "comparação",
+    "explicacao": "AVL evita degeneração por meio de rotações, garantindo altura logarítmica e desempenho consistente."
+  },
+  {
+    "quiz": "Árvores Binárias e AVL",
+    "question": "Qual a diferença entre uma AVL e uma Red-Black Tree?",
+    "answer": "AVL é mais rigidamente balanceada, Red-Black é mais flexível mas mais rápida em inserções/remoções",
+    "wrong1": "AVL não é uma árvore de busca",
+    "wrong2": "Red-Black exige fator de balanceamento 0 ou ±1 como a AVL",
+    "wrong3": "Não há diferenças práticas entre elas",
+    "tags": "comparação",
+    "explicacao": "AVL mantém altura mais próxima de log n (melhor busca); Red-Black relaxa o balanceamento e reduz o custo de updates."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo?",
+    "answer": "Uma estrutura formada por vértices e arestas que representam conexões",
+    "wrong1": "Uma lista linear de elementos sem ligações",
+    "wrong2": "Uma árvore sem ciclos e com raiz obrigatória",
+    "wrong3": "Uma tabela bidimensional de valores sem relações",
+    "tags": "conceitos",
+    "explicacao": "Grafos modelam entidades (vértices) e suas relações (arestas), permitindo representar redes e conexões gerais."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo direcionado?",
+    "answer": "Um grafo em que as arestas possuem direção",
+    "wrong1": "Um grafo em que as arestas possuem somente pesos",
+    "wrong2": "Um grafo em que vértices têm cores obrigatórias",
+    "wrong3": "Um grafo em que cada aresta liga um vértice a ele mesmo",
+    "tags": "conceitos",
+    "explicacao": "Em grafos direcionados, arestas são pares ordenados (u→v), ou seja, o sentido importa."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é um grafo ponderado?",
+    "answer": "Um grafo em que as arestas possuem pesos ou custos associados",
+    "wrong1": "Um grafo em que apenas os vértices possuem pesos",
+    "wrong2": "Um grafo em que as arestas têm direção obrigatoriamente",
+    "wrong3": "Um grafo que conta quantas arestas cada vértice possui, mas sem pesos",
+    "tags": "conceitos",
+    "explicacao": "No grafo ponderado, cada aresta recebe um valor (custo, distância, tempo) usado em otimizações."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual a diferença entre grafo completo e grafo conexo?",
+    "answer": "No completo todos os vértices estão conectados diretamente, no conexo há pelo menos um caminho entre todos os vértices",
+    "wrong1": "Completo é sempre acíclico; conexo tem ciclos por definição",
+    "wrong2": "Completo exige pesos; conexo não pode ter pesos",
+    "wrong3": "Completo significa haver caminho; conexo significa todos adjacentes diretamente",
+    "tags": "conceitos",
+    "explicacao": "Completo: toda dupla de vértices tem aresta direta. Conexo: existe um caminho entre quaisquer dois vértices."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é uma matriz de adjacência?",
+    "answer": "É uma matriz que indica se existe aresta entre dois vértices",
+    "wrong1": "Uma lista de vizinhos de cada vértice",
+    "wrong2": "Uma estrutura específica para percursos em profundidade",
+    "wrong3": "Uma tabela que guarda apenas o grau de cada vértice",
+    "tags": "representação",
+    "explicacao": "Na matriz A, A[i][j] indica a existência (e opcionalmente o peso) da aresta i↔j ou i→j."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "O que é uma lista de adjacência?",
+    "answer": "É uma lista onde cada vértice aponta para os vértices vizinhos",
+    "wrong1": "Uma matriz booleana de presença de arestas",
+    "wrong2": "Um vetor com as distâncias mínimas entre todos os pares",
+    "wrong3": "Uma estrutura obrigatoriamente completa sem vértices isolados",
+    "tags": "representação",
+    "explicacao": "Cada vértice armazena uma coleção de vizinhos; é compacta para grafos esparsos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual representação de grafos é mais eficiente em grafos esparsos?",
+    "answer": "Lista de adjacência",
+    "wrong1": "Matriz de adjacência",
+    "wrong2": "Matriz de incidência",
+    "wrong3": "Árvore de prefixos (trie)",
+    "tags": "representação",
+    "explicacao": "Em grafos com poucas arestas, listas evitam armazenar muitas células vazias como na matriz."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual representação de grafos ocupa mais memória mas permite acesso rápido?",
+    "answer": "Matriz de adjacência",
+    "wrong1": "Lista de adjacência",
+    "wrong2": "Fila de prioridade",
+    "wrong3": "Lista de arestas simples",
+    "tags": "representação",
+    "explicacao": "A matriz usa O(n²) espaço, porém o teste de adjacência é O(1)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é usada no BFS?",
+    "answer": "Fila",
+    "wrong1": "Pilha",
+    "wrong2": "Fila de prioridade (heap)",
+    "wrong3": "Tabela hash",
+    "tags": "BFS",
+    "explicacao": "BFS explora por camadas usando uma fila FIFO."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é usada no DFS?",
+    "answer": "Pilha ou recursão",
+    "wrong1": "Fila obrigatoriamente",
+    "wrong2": "Fila de prioridade",
+    "wrong3": "Árvore B",
+    "tags": "DFS",
+    "explicacao": "DFS pode usar uma pilha explícita ou a pilha de chamadas da recursão."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo garante o caminho mais curto em grafos não ponderados?",
+    "answer": "BFS",
+    "wrong1": "DFS",
+    "wrong2": "Kruskal",
+    "wrong3": "Prim",
+    "tags": "BFS",
+    "explicacao": "Em arestas com custo uniforme, a exploração por camadas do BFS encontra o menor número de arestas."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "DFS garante o caminho mais curto entre dois vértices?",
+    "answer": "Não, apenas BFS garante em grafos não ponderados",
+    "wrong1": "Sim, sempre encontra o mais curto",
+    "wrong2": "Sim, se o grafo não tiver ciclos",
+    "wrong3": "Sim, quando todas as arestas têm peso 1",
+    "tags": "DFS",
+    "explicacao": "DFS pode se aprofundar por rotas mais longas antes de explorar caminhos curtos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra o menor caminho em grafos com pesos positivos?",
+    "answer": "Dijkstra",
+    "wrong1": "Bellman-Ford",
+    "wrong2": "Floyd-Warshall",
+    "wrong3": "Busca em profundidade",
+    "tags": "caminhos mínimos",
+    "explicacao": "Com pesos não negativos, o greedy de Dijkstra é correto e eficiente com heap."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra o menor caminho mesmo com pesos negativos?",
+    "answer": "Bellman-Ford",
+    "wrong1": "Dijkstra",
+    "wrong2": "Prim",
+    "wrong3": "Kruskal",
+    "tags": "caminhos mínimos",
+    "explicacao": "Bellman-Ford relaxa arestas repetidamente e lida com pesos negativos (sem ciclos negativos alcançáveis)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo encontra o menor caminho entre todos os pares de vértices?",
+    "answer": "Floyd-Warshall",
+    "wrong1": "Kruskal",
+    "wrong2": "Prim",
+    "wrong3": "DFS",
+    "tags": "caminhos mínimos",
+    "explicacao": "Floyd-Warshall é um algoritmo de programação dinâmica para APSP em O(n³)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Por que Dijkstra não funciona com arestas de peso negativo?",
+    "answer": "Porque assume que distâncias parciais nunca diminuem",
+    "wrong1": "Porque só funciona em grafos direcionados",
+    "wrong2": "Porque não consegue lidar com ciclos",
+    "wrong3": "Porque exige grafos completos",
+    "tags": "caminhos mínimos",
+    "explicacao": "Com peso negativo, um caminho ‘ótimo’ atual pode ser melhorado depois, quebrando o argumento ganancioso."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual é o objetivo de uma árvore geradora mínima?",
+    "answer": "Conectar todos os vértices de um grafo com o menor custo total",
+    "wrong1": "Encontrar o caminho mais curto entre dois vértices",
+    "wrong2": "Eliminar todos os ciclos do grafo original",
+    "wrong3": "Maximizar o número de arestas do grafo",
+    "tags": "MST",
+    "explicacao": "A MST conecta todos os vértices com |V|−1 arestas minimizando a soma dos pesos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo constrói a árvore geradora mínima escolhendo sempre a menor aresta disponível?",
+    "answer": "Kruskal",
+    "wrong1": "Prim",
+    "wrong2": "Dijkstra",
+    "wrong3": "Floyd-Warshall",
+    "tags": "MST",
+    "explicacao": "Kruskal ordena arestas por peso e usa união-busca para evitar ciclos."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual algoritmo constrói a árvore geradora mínima expandindo a partir de um vértice inicial?",
+    "answer": "Prim",
+    "wrong1": "Kruskal (global, não a partir de um vértice)",
+    "wrong2": "Bellman-Ford",
+    "wrong3": "BFS",
+    "tags": "MST",
+    "explicacao": "Prim cresce uma árvore adicionando a cada passo a aresta mais barata que a expande."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Qual estrutura de dados é geralmente usada no algoritmo de Prim?",
+    "answer": "Fila de prioridade (heap)",
+    "wrong1": "Pilha",
+    "wrong2": "Fila FIFO simples",
+    "wrong3": "Árvore rubro-negra obrigatória",
+    "tags": "MST",
+    "explicacao": "A heap permite extrair rapidamente a aresta/vertice de menor chave para expandir a árvore."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como redes sociais usam algoritmos de grafos?",
+    "answer": "Para sugerir conexões, grupos e medir centralidade de usuários",
+    "wrong1": "Para ordenar postagens por ordem alfabética apenas",
+    "wrong2": "Para comprimir imagens automaticamente",
+    "wrong3": "Para criptografar mensagens ponto a ponto",
+    "tags": "aplicações",
+    "explicacao": "Modelos de grafos capturam relações e permitem recomendações e métricas (grau, PageRank, comunidades)."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como sistemas de GPS usam algoritmos de grafos?",
+    "answer": "Para calcular rotas mais curtas entre locais",
+    "wrong1": "Para detectar comunidades de usuários",
+    "wrong2": "Para ordenar locais por popularidade",
+    "wrong3": "Para renderizar gráficos 3D do mapa",
+    "tags": "aplicações",
+    "explicacao": "Estradas e cruzamentos são arestas e vértices; aplica-se Dijkstra/A* e variantes."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como grafos são usados em análise de epidemias?",
+    "answer": "Modelando pessoas como vértices e contatos como arestas",
+    "wrong1": "Representando apenas cidades como vértices e ignorando contatos",
+    "wrong2": "Exigindo que o grafo seja sempre planar",
+    "wrong3": "Evitando qualquer estrutura de rede",
+    "tags": "aplicações",
+    "explicacao": "A rede de contatos permite estudar propagação, superespalhadores e estratégias de contenção."
+  },
+  {
+    "quiz": "Grafos",
+    "question": "Como grafos são usados em redes elétricas?",
+    "answer": "Para planejar conexões de menor custo e evitar redundâncias",
+    "wrong1": "Conectando estações de forma aleatória para diversidade",
+    "wrong2": "Maximizando o número total de cabos independentemente do custo",
+    "wrong3": "Ignorando custos e confiabilidade da rede",
+    "tags": "aplicações",
+    "explicacao": "Modelar subestações e linhas como grafo possibilita otimizar custo e confiabilidade (MST e variações)."
+  }
+]
