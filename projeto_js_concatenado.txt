@@ -1,0 +1,2598 @@
+/* ===== SUMÁRIO ===== */
+/* 001. App.js */
+/* 002. babel.config.js */
+/* 003. index.js */
+/* 004. metro.config.js */
+/* 005. scripts\expo-offline.js */
+/* 006. src\components\FailFeedback.js */
+/* 007. src\components\PrimaryButton.js */
+/* 008. src\components\SuccessCelebration.js */
+/* 009. src\components\TagChips.js */
+/* 010. src\db.js */
+/* 011. src\screens\BackupScreen.js */
+/* 012. src\screens\ConclusionScreen.js */
+/* 013. src\screens\HomeScreen.js */
+/* 014. src\screens\ImportScreen.js */
+/* 015. src\screens\LearnScreen.js */
+/* 016. src\screens\OptionEditorScreen.js */
+/* 017. src\screens\QuestionEditorScreen.js */
+/* 018. src\screens\QuestionListScreen.js */
+/* 019. src\screens\StatsScreen.js */
+/* 020. src\screens\StudyTodayScreen.js */
+/* 021. src\theme\index.js */
+/* 022. src\ui\Stack.js */
+/* 023. src\ui\useAndroidNavHidden.js */
+/* 024. src\ui\useAppStyles.js */
+/* 025. src\util\importer.js */
+/* 026. src\util\logger.js */
+/* 027. src\util\tags.js */
+/* ==================== */
+
+
+/* ===== INÍCIO: App.js ===== */
+/* ===== INÍCIO: App.js ===== */
+// App.js
+import 'react-native-gesture-handler';
+import React, { useEffect, useCallback } from 'react';
+import { Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as NavigationBar from 'expo-navigation-bar';
+
+import { navLightTheme } from './src/theme';
+import { initDb } from './src/db';
+import useAndroidNavHidden from './src/ui/useAndroidNavHidden';
+import { initErrorLogging } from './src/util/logger';
+
+// Telas
+import HomeScreen from './src/screens/HomeScreen';
+import QuestionListScreen from './src/screens/QuestionListScreen';
+import QuestionEditorScreen from './src/screens/QuestionEditorScreen';
+import OptionEditorScreen from './src/screens/OptionEditorScreen';
+import ImportScreen from './src/screens/ImportScreen';
+import LearnScreen from './src/screens/LearnScreen';
+import ConclusionScreen from './src/screens/ConclusionScreen';
+import StatsScreen from './src/screens/StatsScreen';
+import StudyTodayScreen from './src/screens/StudyTodayScreen';
+import BackupScreen from './src/screens/BackupScreen';
+
+const RootStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
+const StudyStack = createNativeStackNavigator();
+const StatsStack = createNativeStackNavigator();
+const BackupStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const baseStackOptions = (colors) => ({
+  headerStyle: { backgroundColor: colors.card },
+  headerTitleStyle: { color: colors.text, fontSize: 16, fontWeight: '700' },
+  headerTintColor: colors.primary,
+  headerShadowVisible: false,
+  contentStyle: { backgroundColor: colors.background },
+});
+
+function HomeStackNavigator() {
+  const colors = navLightTheme.colors;
+  return (
+    <HomeStack.Navigator screenOptions={baseStackOptions(colors)}>
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: 'Início' }} />
+      <HomeStack.Screen name="QuestionList" component={QuestionListScreen} options={{ title: 'Perguntas' }} />
+      <HomeStack.Screen name="QuestionEditor" component={QuestionEditorScreen} options={{ title: 'Pergunta' }} />
+      <HomeStack.Screen name="OptionEditor" component={OptionEditorScreen} options={{ title: 'Alternativas' }} />
+      <HomeStack.Screen name="Import" component={ImportScreen} options={{ title: 'Importar' }} />
+      <HomeStack.Screen
+        name="Learn"
+        component={LearnScreen}
+        options={{ title: 'Quiz', headerBackVisible: false, gestureEnabled: false }}
+      />
+      <HomeStack.Screen
+        name="Conclusion"
+        component={ConclusionScreen}
+        options={{ title: 'Conclusão', headerBackVisible: false, gestureEnabled: false }}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+function StudyStackNavigator() {
+  const colors = navLightTheme.colors;
+  return (
+    <StudyStack.Navigator screenOptions={baseStackOptions(colors)}>
+      <StudyStack.Screen name="StudyToday" component={StudyTodayScreen} options={{ title: 'Estudar' }} />
+    </StudyStack.Navigator>
+  );
+}
+
+function StatsStackNavigator() {
+  const colors = navLightTheme.colors;
+  return (
+    <StatsStack.Navigator screenOptions={baseStackOptions(colors)}>
+      <StatsStack.Screen name="Stats" component={StatsScreen} options={{ title: 'Estatísticas' }} />
+    </StatsStack.Navigator>
+  );
+}
+
+function BackupStackNavigator() {
+  const colors = navLightTheme.colors;
+  return (
+    <BackupStack.Navigator screenOptions={baseStackOptions(colors)}>
+      <BackupStack.Screen name="BackupMain" component={BackupScreen} options={{ title: 'Backup' }} />
+    </BackupStack.Navigator>
+  );
+}
+
+function Tabs() {
+  const colors = navLightTheme.colors;
+  const defaultTabBarStyle = {
+    backgroundColor: colors.card,
+    borderTopColor: colors.border,
+    height: 56,
+    paddingTop: 6,
+    paddingBottom: 6,
+  };
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
+        tabBarStyle: defaultTabBarStyle,
+        tabBarHideOnKeyboard: true,
+        sceneContainerStyle: { backgroundColor: colors.background }, // prop correta
+      }}
+    >
+      <Tab.Screen
+        name="Início"
+        component={HomeStackNavigator}
+        options={({ route }) => {
+          const rn = getFocusedRouteNameFromRoute(route) ?? 'Home';
+          const shouldHide = ['Learn', 'Conclusion'].includes(rn);
+          return {
+            tabBarStyle: [defaultTabBarStyle, shouldHide && { display: 'none' }],
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home-variant" color={color} size={size} />
+            ),
+          };
+        }}
+      />
+      <Tab.Screen
+        name="Estudar"
+        component={StudyStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="book-open-variant" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Estatísticas"
+        component={StatsStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="chart-line-variant" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Backup"
+        component={BackupStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cloud-upload" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function RootNavigator() {
+  return (
+    <RootStack.Navigator
+      screenOptions={{ headerShown: false, contentStyle: { backgroundColor: navLightTheme.colors.background } }}
+    >
+      <RootStack.Screen name="Tabs" component={Tabs} />
+    </RootStack.Navigator>
+  );
+}
+
+export default function App() {
+  useEffect(() => {
+    initDb();
+    initErrorLogging();
+  }, []);
+
+  // Global: manter sempre em imersivo
+  useAndroidNavHidden(true, { reapplyOnFocus: false }); // (compat) segundo argumento é ignorado
+
+  // Reaplicar hide a cada mudança de rota (cobre OEMs teimosos)
+  const rehideOnNavChange = useCallback(async () => {
+    if (Platform.OS === 'android') {
+      try {
+        await NavigationBar.setVisibilityAsync('hidden');
+        // NÃO chamar setBehaviorAsync aqui para evitar WARN com edge-to-edge
+      } catch {}
+    }
+  }, []);
+
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer theme={navLightTheme} onStateChange={rehideOnNavChange}>
+        <StatusBar hidden />
+        <RootNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
+/* =====  FIM  : App.js ===== */
+/* =====  FIM  : App.js ===== */
+
+/* ===== INÍCIO: babel.config.js ===== */
+module.exports = function(api) {
+  api.cache(true);
+  return { presets: ['babel-preset-expo'] };
+};
+/* =====  FIM  : babel.config.js ===== */
+
+/* ===== INÍCIO: index.js ===== */
+import { registerRootComponent } from 'expo';
+import App from './App';
+registerRootComponent(App);
+/* =====  FIM  : index.js ===== */
+
+/* ===== INÍCIO: metro.config.js ===== */
+const { getDefaultConfig } = require('expo/metro-config');
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+module.exports = config;
+/* =====  FIM  : metro.config.js ===== */
+
+/* ===== INÍCIO: scripts\expo-offline.js ===== */
+#!/usr/bin/env node
+const { spawn } = require('child_process');
+const expoCli = require.resolve('expo/bin/cli');
+const args = process.argv.slice(2);
+process.env.EXPO_OFFLINE = '1';
+const child = spawn(process.execPath, [expoCli, ...args], { stdio: 'inherit' });
+child.on('close', (code) => process.exit(code));
+/* =====  FIM  : scripts\expo-offline.js ===== */
+
+/* ===== INÍCIO: src\components\FailFeedback.js ===== */
+// src/components/FailFeedback.js
+import React, { useEffect, useRef } from "react";
+import { View, Animated } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
+
+export default function FailFeedback({ onDone }) {
+  const op = useRef(new Animated.Value(0)).current;
+  const { colors } = useTheme();
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.timing(op, { toValue: 1, duration: 100, useNativeDriver: true }),
+      Animated.timing(op, { toValue: 0, duration: 200, useNativeDriver: true }),
+    ]).start(() => onDone?.());
+  }, [op, onDone]);
+
+  return (
+    <View pointerEvents="none" style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0, alignItems: "center", justifyContent: "center" }}>
+      <Animated.View style={{ opacity: op }}>
+        <MaterialCommunityIcons name="close-circle" size={72} color={colors.danger} />
+      </Animated.View>
+    </View>
+  );
+}
+/* =====  FIM  : src\components\FailFeedback.js ===== */
+
+/* ===== INÍCIO: src\components\PrimaryButton.js ===== */
+// src/components/PrimaryButton.js
+import React from "react";
+import { Pressable, Text, StyleSheet, View, ActivityIndicator } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+export default function PrimaryButton({
+  title,
+  onPress,
+  disabled,
+  style,
+  textStyle,
+  variant = "primary", // 'primary' | 'secondary' | 'danger' | 'dangerOutline'
+  icon, // ex: 'plus'
+  loading = false,
+  size = "md", // 'sm' | 'md' | 'lg'
+  block = false,
+}) {
+  const { colors } = useTheme();
+  const SIZES = { sm: { h: 40, font: 14 }, md: { h: 52, font: 16 }, lg: { h: 60, font: 18 } };
+  const SZ = SIZES[size] || SIZES.md;
+
+  let bg = colors.primary, brd = "transparent", txt = colors.buttonText;
+  if (variant === "secondary") { bg = colors.card; brd = colors.border; txt = colors.text; }
+  if (variant === "danger") { bg = colors.danger; txt = colors.buttonText; }
+  if (variant === "dangerOutline") { bg = colors.card; brd = colors.danger; txt = colors.danger; }
+
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={disabled || loading}
+      style={({ pressed }) => [
+        styles.button,
+        { backgroundColor: bg, borderColor: brd, minHeight: SZ.h },
+        block && { alignSelf: "stretch", width: "100%" },
+        pressed && !disabled && !loading && styles.pressed,
+        disabled && styles.disabled,
+        style,
+      ]}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: disabled || loading }}
+    >
+      {loading ? (
+        <ActivityIndicator size="small" color={txt} />
+      ) : (
+        <View style={styles.row}>
+          {icon ? <MaterialCommunityIcons name={icon} size={18} color={txt} style={{ marginRight: title ? 6 : 0 }} /> : null}
+          {typeof title === "string" && title.length > 0 ? (
+            <Text style={[styles.text, { color: txt, fontSize: SZ.font }, textStyle]} numberOfLines={2}>
+              {title}
+            </Text>
+          ) : null}
+        </View>
+      )}
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    minWidth: 48,
+    maxWidth: "100%",
+    paddingHorizontal: 16,
+  },
+  text: { fontWeight: "700" },
+  pressed: { opacity: 0.94, transform: [{ scale: 0.99 }] },
+  disabled: { opacity: 0.5 },
+  row: { flexDirection: "row", alignItems: "center", maxWidth: "100%" },
+});
+/* =====  FIM  : src\components\PrimaryButton.js ===== */
+
+/* ===== INÍCIO: src\components\SuccessCelebration.js ===== */
+// src/components/SuccessCelebration.js
+import React, { useEffect, useRef } from "react";
+import { View, Animated, Easing } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
+
+export default function SuccessCelebration({ onDone, size = 88 }) {
+  const op = useRef(new Animated.Value(0)).current;
+  const sc = useRef(new Animated.Value(0.8)).current;
+  const { colors } = useTheme();
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(op, { toValue: 1, duration: 120, useNativeDriver: true }),
+        Animated.timing(sc, { toValue: 1.12, duration: 120, easing: Easing.out(Easing.ease), useNativeDriver: true }),
+      ]),
+      Animated.timing(sc, { toValue: 1.0, duration: 100, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+      Animated.timing(op, { toValue: 0, duration: 200, useNativeDriver: true }),
+    ]).start(() => onDone?.());
+  }, [op, sc, onDone]);
+
+  return (
+    <View pointerEvents="none" style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0, alignItems: "center", justifyContent: "center" }}>
+      <Animated.View style={{ opacity: op, transform: [{ scale: sc }] }}>
+        <MaterialCommunityIcons name="check-circle" size={size} color={colors.success} />
+      </Animated.View>
+    </View>
+  );
+}
+/* =====  FIM  : src\components\SuccessCelebration.js ===== */
+
+/* ===== INÍCIO: src\components\TagChips.js ===== */
+// src/components/TagChips.js
+import React, { useMemo } from "react";
+import { ScrollView, Pressable, Text, StyleSheet } from "react-native";
+import { useTheme } from "@react-navigation/native";
+
+export default function TagChips({ tags = [], counts = {}, selected = new Set(), onToggle }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => StyleSheet.create({
+    row: { paddingVertical: 4, alignItems: "center" },
+    chip: {
+      paddingVertical: 8, paddingHorizontal: 14, borderRadius: 16,
+      backgroundColor: colors.card, marginRight: 8, borderWidth: 1, borderColor: colors.border,
+    },
+    active: { backgroundColor: colors.primary, borderColor: colors.primary },
+    text: { color: colors.text, fontSize: 14 },
+    textActive: { color: colors.buttonText, fontWeight: "700" },
+  }), [colors]);
+
+  const Chip = ({ label, active, onPress }) => (
+    <Pressable
+      hitSlop={8}
+      onPress={onPress}
+      style={({ pressed }) => [styles.chip, active && styles.active, pressed && { opacity: 0.9 }]}
+      accessibilityRole="button"
+      accessibilityState={{ selected: active }}
+    >
+      <Text style={[styles.text, active && styles.textActive]}>{label}</Text>
+    </Pressable>
+  );
+
+  return (
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
+      <Chip label="Todos" active={selected.size === 0} onPress={() => onToggle?.(null)} />
+      {tags.map((t) => {
+        const lbl = typeof counts[t] === "number" ? `${t} (${counts[t]})` : t;
+        return (
+          <Chip key={t} label={lbl} active={selected.has(t.toLowerCase())} onPress={() => onToggle?.(t)} />
+        );
+      })}
+    </ScrollView>
+  );
+}
+/* =====  FIM  : src\components\TagChips.js ===== */
+
+/* ===== INÍCIO: src\db.js ===== */
+// src/db.js — Camada única e simples (expo-sqlite)
+import * as SQLite from 'expo-sqlite';
+
+// --- SRS (Leitner) simples
+const BOX_INTERVALS_DAYS = { 1:1, 2:2, 3:4, 4:7, 5:15 };
+function nextBox(currentBox, isCorrect) { return isCorrect ? Math.min(5, (currentBox || 1) + 1) : 1; }
+function nextDueAt(box, now = Date.now()) {
+  const days = BOX_INTERVALS_DAYS[box] ?? 1;
+  return now + days * 24 * 60 * 60 * 1000;
+}
+
+let _db;
+
+export async function initDb() {
+  if (_db) return;
+  _db = await SQLite.openDatabaseAsync('studyquiz.db');
+  await _db.execAsync(`
+    PRAGMA foreign_keys = ON;
+    PRAGMA journal_mode = WAL;
+
+    CREATE TABLE IF NOT EXISTS quiz(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT DEFAULT ''
+    );
+
+    CREATE TABLE IF NOT EXISTS question(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      quizId INTEGER NOT NULL,
+      text TEXT NOT NULL,
+      answer TEXT DEFAULT '',
+      explanation TEXT DEFAULT '',
+      tags TEXT DEFAULT '',
+      difficulty INTEGER DEFAULT 1,
+      box INTEGER DEFAULT 1,
+      due_at INTEGER DEFAULT 0,
+      correct_count INTEGER DEFAULT 0,
+      wrong_count INTEGER DEFAULT 0,
+      FOREIGN KEY(quizId) REFERENCES quiz(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS option_item(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      questionId INTEGER NOT NULL,
+      text TEXT NOT NULL,
+      isCorrect INTEGER DEFAULT 0,
+      FOREIGN KEY(questionId) REFERENCES question(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_question_quiz ON question(quizId);
+    CREATE INDEX IF NOT EXISTS idx_question_due ON question(due_at);
+    CREATE INDEX IF NOT EXISTS idx_option_question ON option_item(questionId);
+  `);
+
+  await _db.runAsync(`
+    UPDATE question
+    SET due_at = CASE
+      WHEN due_at IS NULL OR due_at = 0 THEN CAST(strftime('%s','now') AS INTEGER) * 1000
+      ELSE due_at
+    END
+  `);
+}
+
+// --- helpers
+async function all(sql, params=[]) { await initDb(); return _db.getAllAsync(sql, params); }
+async function one(sql, params=[]) { await initDb(); return _db.getFirstAsync(sql, params); }
+async function run(sql, params=[]) { await initDb(); return _db.runAsync(sql, params); }
+async function tx(fn) {
+  await initDb();
+  await _db.execAsync('BEGIN');
+  try { const res = await fn(); await _db.execAsync('COMMIT'); return res; }
+  catch (e) { await _db.execAsync('ROLLBACK'); throw e; }
+}
+
+// --- QUIZ
+export async function getQuizzes() {
+  const rows = await all('SELECT * FROM quiz ORDER BY id DESC');
+  return rows.map((r) => ({ id: r.id, title: r.title, description: r.description ?? '' }));
+}
+export async function createQuiz(title, description='') {
+  const res = await run('INSERT INTO quiz(title, description) VALUES (?,?)', [String(title||'').trim(), String(description||'')]);
+  return res.lastInsertRowId;
+}
+export async function deleteQuiz(id) { await run('DELETE FROM quiz WHERE id = ?', [id]); }
+
+// --- QUESTION
+export async function getQuestionsByQuiz(quizId) {
+  const rows = await all('SELECT * FROM question WHERE quizId = ? ORDER BY id DESC', [quizId]);
+  return rows.map((q) => ({
+    id: q.id, quizId: q.quizId, text: q.text, answer: q.answer ?? '',
+    explanation: q.explanation ?? '', tags: q.tags ?? '',
+    difficulty: q.difficulty ?? 1, box: q.box ?? 1, due_at: q.due_at ?? 0,
+    correct_count: q.correct_count ?? 0, wrong_count: q.wrong_count ?? 0,
+  }));
+}
+export async function getQuestionById(id) {
+  const q = await one('SELECT * FROM question WHERE id = ?', [id]);
+  if (!q) return null;
+  return {
+    id: q.id, quizId: q.quizId, text: q.text, answer: q.answer ?? '',
+    explanation: q.explanation ?? '', tags: q.tags ?? '',
+    difficulty: q.difficulty ?? 1, box: q.box ?? 1, due_at: q.due_at ?? 0,
+    correct_count: q.correct_count ?? 0, wrong_count: q.wrong_count ?? 0,
+  };
+}
+export async function createQuestion(quizId, text, answer, explanation='', tags='') {
+  const res = await run(
+    `INSERT INTO question(quizId, text, answer, explanation, tags, box, due_at)
+     VALUES (?,?,?,?,?,?,?)`,
+    [quizId, String(text||'').trim(), String(answer||'').trim(), String(explanation||''), String(tags||''), 1, Date.now()]
+  );
+  return res.lastInsertRowId;
+}
+export async function updateQuestion(id, fields={}) {
+  const allowed = ['text','answer','explanation','tags','difficulty'];
+  const sets = [], args = [];
+  for (const k of allowed) if (Object.prototype.hasOwnProperty.call(fields, k)) { sets.push(`${k} = ?`); args.push(fields[k]); }
+  if (!sets.length) return;
+  args.push(id);
+  await run(`UPDATE question SET ${sets.join(', ')} WHERE id = ?`, args);
+}
+export async function deleteQuestion(id) { await run('DELETE FROM question WHERE id = ?', [id]); }
+
+// --- OPTIONS
+export async function getOptionsByQuestion(questionId) {
+  const rows = await all('SELECT id, questionId, text, isCorrect FROM option_item WHERE questionId = ? ORDER BY id ASC', [questionId]);
+  return rows.map((r) => ({ id: r.id, questionId: r.questionId, text: r.text, isCorrect: !!r.isCorrect }));
+}
+export async function replaceOptions(questionId, options=[]) {
+  await tx(async () => {
+    await run('DELETE FROM option_item WHERE questionId = ?', [questionId]);
+    for (const o of options) {
+      await run('INSERT INTO option_item (questionId, text, isCorrect) VALUES (?,?,?)', [questionId, String(o.text||''), o.isCorrect?1:0]);
+    }
+  });
+}
+
+// --- SRS
+export async function applySrsResult(questionId, isCorrect) {
+  const row = await one('SELECT box FROM question WHERE id = ?', [questionId]);
+  const curBox = row?.box || 1;
+  const nb = nextBox(curBox, !!isCorrect);
+  const due = nextDueAt(nb);
+  await run(
+    `UPDATE question
+     SET box = ?, due_at = ?, correct_count = correct_count + (?), wrong_count = wrong_count + (?)
+     WHERE id = ?`,
+    [nb, due, isCorrect?1:0, isCorrect?0:1, questionId]
+  );
+}
+
+// --- BACKUP (local)
+export async function exportAllData() {
+  const quizzes = await all('SELECT * FROM quiz');
+  const result = [];
+  for (const q of quizzes) {
+    const questions = await all('SELECT * FROM question WHERE quizId = ? ORDER BY id ASC', [q.id]);
+    const enriched = [];
+    for (const row of questions) {
+      const opts = await all('SELECT id, text, isCorrect FROM option_item WHERE questionId = ? ORDER BY id ASC', [row.id]);
+      enriched.push({ ...row, options: opts });
+    }
+    result.push({ quiz: { id: q.id, title: q.title, description: q.description ?? '' }, questions: enriched });
+  }
+  return result;
+}
+
+export async function importFullBackup(data) {
+  await tx(async () => {
+    for (const deck of data || []) {
+      const ins = await run('INSERT INTO quiz(title, description) VALUES (?,?)', [deck?.quiz?.title || 'Importado', deck?.quiz?.description || '']);
+      const newQuizId = ins.lastInsertRowId;
+      for (const q of deck.questions || []) {
+        const qIns = await run(
+          `INSERT INTO question(quizId, text, answer, explanation, tags, difficulty, box, due_at, correct_count, wrong_count)
+           VALUES (?,?,?,?,?,?,?,?,?,?)`,
+          [ newQuizId, q.text||'', q.answer||'', q.explanation||'', q.tags||'', q.difficulty||1, q.box||1, q.due_at||Date.now(), q.correct_count||0, q.wrong_count||0 ]
+        );
+        const newQId = qIns.lastInsertRowId;
+        if (Array.isArray(q.options)) {
+          for (const opt of q.options) {
+            await run('INSERT INTO option_item (questionId, text, isCorrect) VALUES (?,?,?)', [newQId, String(opt.text||''), opt.isCorrect?1:0]);
+          }
+        }
+      }
+    }
+  });
+}
+
+// --- Importador “texto solto”
+import { looksLikeJSONArray, looksLikeJSONL, normalizeRecord, parseCsv } from './util/importer';
+
+export async function importText(text) {
+  const trimmed = String(text || '').trim();
+  if (!trimmed) return { importedCount: 0, quizzesCount: 0 };
+
+  if (looksLikeJSONArray(trimmed)) {
+    const data = JSON.parse(trimmed);
+    return await importJsonArray(data);
+  }
+  if (looksLikeJSONL(trimmed)) {
+    const lines = trimmed.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    const objs = lines.map((l, i) => { try { return JSON.parse(l); } catch { throw new Error(`Linha ${i+1} inválida.`); } });
+    return await importJsonArray(objs);
+  }
+  return await importCsv(trimmed);
+}
+
+async function importJsonArray(list) {
+  if (!Array.isArray(list)) throw new Error('JSON deve ser um array de objetos.');
+  const bundles = list.map(normalizeRecord).filter((b) => b.question && b.answer);
+  return persistBundles(bundles);
+}
+
+async function importCsv(text) {
+  const { rows, header } = parseCsv(text);
+  let bundles;
+  if (header && header.length) {
+    bundles = rows.map((cols) => {
+      const obj = {}; header.forEach((h, i) => { obj[h] = cols[i]; });
+      return normalizeRecord(obj);
+    });
+  } else {
+    bundles = rows.map((cols) =>
+      normalizeRecord({
+        quiz: cols[0], question: cols[1], answer: cols[2],
+        explanation: cols[3], tags: cols[4], wrong1: cols[5], wrong2: cols[6], wrong3: cols[7]
+      })
+    );
+  }
+  bundles = bundles.filter((b) => b.question && b.answer);
+  return persistBundles(bundles);
+}
+
+async function persistBundles(bundles) {
+  if (!bundles.length) return { importedCount: 0, quizzesCount: 0 };
+  const byQuiz = bundles.reduce((acc, b) => { (acc[b.quiz || 'Geral'] = acc[b.quiz || 'Geral'] || []).push(b); return acc; }, {});
+  let imported = 0, quizzes = 0;
+
+  await tx(async () => {
+    for (const [title, items] of Object.entries(byQuiz)) {
+      const ins = await run('INSERT INTO quiz(title, description) VALUES (?,?)', [title || 'Geral', '']);
+      const quizId = ins.lastInsertRowId; quizzes++;
+      for (const b of items) {
+        const qIns = await run(
+          `INSERT INTO question(quizId, text, answer, explanation, tags, box, due_at)
+           VALUES (?,?,?,?,?,?,?)`,
+          [quizId, b.question, b.answer, b.explanation, b.tags, 1, Date.now()]
+        );
+        const questionId = qIns.lastInsertRowId;
+        const wrongs = [b.wrong1, b.wrong2, b.wrong3].map((x)=>String(x||'').trim()).filter(Boolean);
+        const options = Array.from(new Set([b.answer, ...wrongs])).filter(Boolean);
+        if (options.length >= 2) {
+          for (const opt of options) {
+            await run('INSERT INTO option_item (questionId, text, isCorrect) VALUES (?,?,?)', [questionId, opt, opt === b.answer ? 1 : 0]);
+          }
+        }
+        imported++;
+      }
+    }
+  });
+  return { importedCount: imported, quizzesCount: quizzes };
+}
+/* =====  FIM  : src\db.js ===== */
+
+/* ===== INÍCIO: src\screens\BackupScreen.js ===== */
+// src/screens/BackupScreen.js
+import React, { useState } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as DocumentPicker from "expo-document-picker";
+import { exportAllData, importFullBackup } from "../db";
+import PrimaryButton from "../components/PrimaryButton";
+import useAppStyles from "../ui/useAppStyles";
+import { VStack } from "../ui/Stack";
+import { logCaughtError, shareLatestLog } from "../util/logger";
+
+export default function BackupScreen({ navigation }) {
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const styles = useAppStyles();
+
+  const onExport = async () => {
+    try {
+      setLoading(true);
+      setStatus("Gerando backup...");
+      const data = await exportAllData();
+      const content = JSON.stringify({ version:1, exportedAt:new Date().toISOString(), data }, null, 2);
+      const uri = FileSystem.documentDirectory + "studyquiz-backup.json";
+      await FileSystem.writeAsStringAsync(uri, content, { encoding: FileSystem.EncodingType.UTF8 });
+      setStatus("Compartilhando arquivo...");
+      await Sharing.shareAsync(uri, { mimeType: "application/json" });
+      setStatus("");
+    } catch (e) {
+      setStatus("Falha ao exportar: " + e.message);
+      await logCaughtError(e, 'backup-export');
+    } finally { setLoading(false); }
+  };
+
+  const onImport = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({ type: ["application/json"], copyToCacheDirectory: true });
+      if (result.canceled) return;
+      setLoading(true);
+      setStatus("Lendo backup...");
+      const asset = result.assets[0];
+      const text = await FileSystem.readAsStringAsync(asset.uri, { encoding: FileSystem.EncodingType.UTF8 });
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed?.data)) throw new Error('Formato inválido');
+      setStatus("Importando...");
+      await importFullBackup(parsed.data);
+      setStatus(`Importação concluída! Conjuntos: ${parsed.data.length}`);
+      setTimeout(()=> navigation.getParent()?.navigate('Início'), 800);
+    } catch (e) {
+      setStatus("Falha ao importar: " + e.message);
+      await logCaughtError(e, 'backup-import');
+    } finally { setLoading(false); }
+  };
+
+  const onShareLastLog = async () => {
+    try {
+      setStatus("Abrindo último log de erro...");
+      const path = await shareLatestLog();
+      if (!path) setStatus("Nenhum log encontrado ainda.");
+      else setStatus(`Log compartilhado: ${path}`);
+    } catch (e) {
+      setStatus("Falha ao compartilhar log: " + e.message);
+      await logCaughtError(e, 'share-latest-log');
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <VStack space={12} style={styles.container}>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Backup (Local)</Text>
+          <View style={{ height: 8 }} />
+          <VStack space={8}>
+            <PrimaryButton title="Exportar (JSON) & Compartilhar" onPress={onExport} disabled={loading} />
+            <PrimaryButton title="Importar de arquivo (Backup JSON)" onPress={onImport} disabled={loading} />
+            <PrimaryButton title="Compartilhar último log de erro (.txt)" onPress={onShareLastLog} disabled={loading} variant="secondary" />
+          </VStack>
+          <View style={{ height: 8 }} />
+          {loading ? <ActivityIndicator /> : <Text style={styles.muted}>{status}</Text>}
+        </View>
+      </VStack>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\BackupScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\ConclusionScreen.js ===== */
+// src/screens/ConclusionScreen.js
+import React, { useMemo, useEffect } from "react";
+import { View, Text, FlatList, Pressable, BackHandler } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme, CommonActions } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+
+import useAppStyles from "../ui/useAppStyles";
+import useAndroidNavHidden from "../ui/useAndroidNavHidden";
+import PrimaryButton from "../components/PrimaryButton";
+
+export default function ConclusionScreen({ route, navigation }) {
+  const p = route?.params || {};
+  const { colors } = useTheme();
+  const styles = useAppStyles();
+
+  // Esconde a barra nativa (home/voltar/recentes) no Android
+  useAndroidNavHidden(true);
+
+  const { total, correct, wrong, accuracy, hardest, wrongIds } = useMemo(() => {
+    const total = Number.isFinite(p.total) ? p.total : (p.correct||0)+(p.wrong||0);
+    const correct = Number(p.correct||0);
+    const wrong = Number.isFinite(p.wrong) ? p.wrong : Math.max(0, total - correct);
+    const accuracy = total ? Math.round((correct/total)*100) : 0;
+    const hardest = Array.isArray(p.hardest) ? p.hardest.slice(0,10) : [];
+    const wrongIds = hardest.length ? hardest.map((h)=>h.id).filter(Boolean) : [];
+    return { total, correct, wrong, accuracy, hardest, wrongIds };
+  }, [p]);
+
+  useEffect(()=> {
+    navigation.setOptions({ headerBackVisible:false, gestureEnabled:false });
+    const sub = BackHandler.addEventListener("hardwareBackPress", () => true);
+    return () => sub.remove();
+  }, [navigation]);
+
+  const goHomeReset = () => {
+    navigation.dispatch(CommonActions.reset({ index:0, routes:[{ name:"Tabs" }] }));
+    navigation.navigate("Início");
+  };
+
+  const handleReviewErrors = () => {
+    if (!wrongIds || !wrongIds.length) { goHomeReset(); return; }
+    navigation.navigate("Learn", { questionIds: Array.from(new Set(wrongIds)), onlyDue: false, selectedTags: [], sessionLimit: wrongIds.length });
+  };
+
+  const renderHardItem = ({ item, index }) => (
+    <Pressable
+      onPress={() => navigation.navigate('Learn', { questionIds: [item.id], onlyDue: false, sessionLimit: 1 })}
+      style={({ pressed }) => [{ paddingVertical: 10, borderTopWidth: index===0?0:1, borderColor: colors.border }, pressed && { opacity: 0.9 }]}
+      android_ripple={{ color: colors.border }}
+    >
+      <Text style={{ color: colors.text, fontWeight: "700" }}>{item.text || "Pergunta"}</Text>
+      {item.answer ? <Text style={{ color: colors.text, marginTop: 4 }}>Resposta: {item.answer}</Text> : null}
+      {item.tags ? <Text style={{ color: colors.muted, marginTop: 4, fontSize: 12 }}>Tags: {item.tags}</Text> : null}
+    </Pressable>
+  );
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <StatusBar hidden />
+      <FlatList
+        data={Array.isArray(hardest)?hardest:[]}
+        keyExtractor={(it, idx)=> String(it?.id ?? idx)}
+        ListHeaderComponent={() => (
+          <View style={{ paddingHorizontal:16, paddingTop:16 }}>
+            <View style={styles.card}>
+              <Text style={styles.h2}>Sessão concluída</Text>
+              <Text style={styles.muted}>Resumo</Text>
+              <View style={{ flexDirection:"row", gap:8, flexWrap:"wrap", marginTop: 12 }}>
+                <Stat label="Acertos" value={`${correct}/${total}`} colors={colors} />
+                <Stat label="Acurácia" value={`${accuracy}%`} colors={colors} />
+                <Stat label="Erros" value={`${wrong}`} colors={colors} />
+              </View>
+            </View>
+            <View style={{ height: 12 }} />
+            <View style={styles.card}><Text style={styles.h2}>Mais desafiadoras</Text></View>
+          </View>
+        )}
+        ListFooterComponent={() => (
+          <View style={{ paddingHorizontal:16, paddingBottom:16 }}>
+            <View style={styles.card}>
+              {wrongIds && wrongIds.length>0 ? (
+                <View style={{ flexDirection:"row", gap:8 }}>
+                  <View style={{ flex:1 }}><Action title="Revisar erros" onPress={handleReviewErrors} /></View>
+                  <View style={{ flex:1 }}><Action title="Concluir" variant="secondary" onPress={goHomeReset} /></View>
+                </View>
+              ) : <Action title="Concluir" onPress={goHomeReset} />}
+            </View>
+          </View>
+        )}
+        renderItem={renderHardItem}
+        ItemSeparatorComponent={()=><View style={{ height:6 }} />}
+        contentContainerStyle={{ paddingHorizontal:16, paddingBottom:16 }}
+        showsVerticalScrollIndicator
+      />
+    </SafeAreaView>
+  );
+}
+
+function Action(props){ return <PrimaryButton block {...props} />; }
+function Stat({ label, value, colors }) {
+  return (
+    <View style={{ flexGrow: 1, minWidth: 120, padding: 12, borderRadius: 12, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, alignItems: "center" }}>
+      <Text style={{ fontSize: 24, fontWeight: "800", color: colors.text }}>{value}</Text>
+      <Text style={{ marginTop: 4, color: colors.muted }}>{label}</Text>
+    </View>
+  );
+}
+/* =====  FIM  : src\screens\ConclusionScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\HomeScreen.js ===== */
+// src/screens/HomeScreen.js
+import React, { useMemo, useCallback, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Pressable, TextInput, ScrollView, RefreshControl, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+
+import PrimaryButton from "../components/PrimaryButton";
+import { VStack, HStack } from "../ui/Stack";
+import useAppStyles from "../ui/useAppStyles";
+
+import { getQuizzes, getQuestionsByQuiz, createQuiz, deleteQuiz } from "../db";
+
+export default function HomeScreen({ navigation }) {
+  const [quizzes, setQuizzes] = useState([]);
+  const [query, setQuery] = useState('');
+  const [newTitle, setNewTitle] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { colors } = useTheme();
+  const styles = useAppStyles();
+  const tabBarHeight = useBottomTabBarHeight();
+
+  async function load() {
+    const list = await getQuizzes();
+    const withMeta = [];
+    const now = Date.now();
+    for (const q of list) {
+      const qs = await getQuestionsByQuiz(q.id);
+      const total = qs.length;
+      const due = qs.filter((x)=> Number(x.due_at||0) <= now).length;
+      withMeta.push({ ...q, total, due });
+    }
+    setQuizzes(withMeta);
+  }
+
+  useEffect(() => { load(); }, []);
+  const onRefresh = useCallback(async () => { setRefreshing(true); await load(); setRefreshing(false); }, []);
+
+  const filtered = useMemo(() => {
+    const q = String(query||'').trim().toLowerCase();
+    if (!q) return quizzes;
+    return quizzes.filter((it)=> String(it.title||'').toLowerCase().includes(q));
+  }, [quizzes, query]);
+
+  const local = useMemo(()=>StyleSheet.create({
+    searchBox:{ borderWidth:1,borderColor:colors.border,borderRadius:10,paddingHorizontal:12,paddingVertical:12,backgroundColor:colors.card,color:colors.text,marginTop:12 },
+    item:{ padding:12, backgroundColor:colors.card, borderRadius:10, borderWidth:1, borderColor:colors.border },
+    itemPressed:{ transform:[{scale:0.985}], opacity:0.96 },
+    itemTitle:{ fontSize:15, fontWeight:"700", color:colors.text },
+    badgesRow:{ flexDirection:"row", alignItems:"center", marginTop:6 },
+    badge:{ paddingHorizontal:6, paddingVertical:3, borderRadius:999, backgroundColor:colors.card, borderWidth:1, borderColor:colors.border, marginRight:6 },
+    badgeText:{ color:colors.text, fontSize:11, fontWeight:"700" },
+    badgePrimary:{ paddingHorizontal:6, paddingVertical:3, borderRadius:999, backgroundColor:colors.primary },
+    badgePrimaryText:{ color:colors.buttonText, fontSize:11, fontWeight:"700" },
+  }),[colors]);
+
+  const createNew = async () => {
+    const t = String(newTitle||'').trim();
+    if (!t) { Alert.alert('Informe um título'); return; }
+    await createQuiz(t, '');
+    setNewTitle('');
+    await load();
+  };
+
+  const handleDelete = async (item) => {
+    Alert.alert('Excluir quiz', `Excluir "${item.title}"?`, [
+      { text:'Cancelar', style:'cancel' },
+      { text:'Excluir', style:'destructive', onPress: async ()=>{ await deleteQuiz(item.id); await load(); } },
+    ]);
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={[]}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: tabBarHeight + 8 }}
+        scrollIndicatorInsets={{ bottom: tabBarHeight }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
+      >
+        <VStack space={14}>
+          <View style={styles.panel}>
+            <Text style={[styles.h2, { marginBottom: 4 }]}>Bem-vindo 👋</Text>
+            <Text style={styles.muted}>Crie quizzes e comece a estudar.</Text>
+
+            <View style={{ height: 10 }} />
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <HStack space={8}>
+                <PrimaryButton title="Estudar Hoje" icon="book-open-variant" size="sm" onPress={()=>navigation.getParent()?.navigate('Estudar')} />
+                <PrimaryButton title="Estatísticas" icon="chart-line-variant" size="sm" onPress={()=>navigation.getParent()?.navigate('Estatísticas')} />
+                <PrimaryButton title="Backup" variant="secondary" icon="cloud-upload" size="sm" onPress={()=>navigation.getParent()?.navigate('Backup')} />
+                <PrimaryButton title="Importar" variant="secondary" icon="tray-arrow-down" size="sm" onPress={()=>navigation.navigate('Import')} />
+              </HStack>
+            </ScrollView>
+
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Buscar quiz pelo título..."
+              placeholderTextColor={colors.muted}
+              style={local.searchBox}
+              returnKeyType="search"
+            />
+
+            <View style={{ height: 12 }} />
+
+            <Text style={styles.h2}>Novo Quiz</Text>
+            <TextInput
+              value={newTitle}
+              onChangeText={setNewTitle}
+              placeholder="Título do quiz..."
+              placeholderTextColor={colors.muted}
+              style={styles.input}
+            />
+            <View style={{ height: 6 }} />
+            <PrimaryButton title="Criar" icon="plus" onPress={createNew} />
+          </View>
+
+          <Text style={styles.h2}>Seus Quizzes</Text>
+          {filtered.length === 0 ? (
+            <Text style={styles.muted}>Nenhum resultado. Crie um quiz ou importe perguntas.</Text>
+          ) : (
+            <VStack space={8}>
+              {filtered.map((item) => (
+                <Pressable
+                  key={item.id}
+                  onPress={() => navigation.navigate('QuestionList', { quizId: item.id, title: item.title })}
+                  onLongPress={() => handleDelete(item)}
+                  android_ripple={{ color: colors.border }}
+                  style={({ pressed }) => [local.item, pressed && local.itemPressed]}
+                >
+                  <Text style={local.itemTitle} numberOfLines={2}>{item.title}</Text>
+                  <View style={local.badgesRow}>
+                    <View style={local.badge}><Text style={local.badgeText}>{item.total} questões</Text></View>
+                    <View style={local.badgePrimary}>
+                      <Text style={local.badgePrimaryText}>
+                        <MaterialCommunityIcons name="clock-outline" size={11} color={colors.buttonText} /> {item.due}
+                      </Text>
+                    </View>
+                  </View>
+                </Pressable>
+              ))}
+            </VStack>
+          )}
+        </VStack>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\HomeScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\ImportScreen.js ===== */
+// src/screens/ImportScreen.js
+import React, { useState } from "react";
+import { View, Text, ActivityIndicator, TextInput, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@react-navigation/native";
+import PrimaryButton from "../components/PrimaryButton";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import { importText } from "../db";
+import useAppStyles from "../ui/useAppStyles";
+import { VStack } from "../ui/Stack";
+
+export default function ImportScreen({ navigation }) {
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [pasted, setPasted] = useState("");
+  const { colors } = useTheme();
+  const styles = useAppStyles();
+
+  const pick = async () => {
+    try {
+      setStatus("");
+      const result = await DocumentPicker.getDocumentAsync({
+        type: ["text/csv", "application/json", "text/plain"],
+        copyToCacheDirectory: true,
+      });
+      if (result.canceled) return;
+      setLoading(true);
+      const asset = result.assets[0];
+      setStatus("Lendo arquivo...");
+      const text = await FileSystem.readAsStringAsync(asset.uri, { encoding: FileSystem.EncodingType.UTF8 });
+      setStatus("Importando...");
+      const { importedCount, quizzesCount } = await importText(text);
+      setStatus(`Importado! Itens: ${importedCount} • Quizzes: ${quizzesCount}`);
+      setTimeout(()=> navigation.goBack(), 800);
+    } catch (e) {
+      setStatus("Erro: " + e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const importFromPaste = async () => {
+    if (!pasted.trim()) { setStatus("Cole o conteúdo primeiro."); return; }
+    try {
+      setLoading(true);
+      setStatus("Importando...");
+      const res = await importText(pasted);
+      setStatus(`Importado! Itens: ${res.importedCount} • Quizzes: ${res.quizzesCount}`);
+      setTimeout(()=> navigation.goBack(), 800);
+    } catch (e) {
+      setStatus("Erro: " + e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
+          <VStack space={12}>
+            <View style={styles.panel}>
+              <Text style={styles.text}>Importe CSV/JSON para criar quizzes com questões.</Text>
+              <View style={{ height: 8 }} />
+              <PrimaryButton title={loading ? "Processando..." : "Escolher arquivo (JSON/CSV)"} onPress={pick} disabled={loading} />
+            </View>
+
+            <View style={styles.panel}>
+              <Text style={styles.text}>Colar (JSON/JSONL/CSV):</Text>
+              <TextInput
+                style={[styles.input, { minHeight: 220, textAlignVertical: "top" }]}
+                multiline value={pasted} onChangeText={setPasted} placeholder="Cole aqui..."
+              />
+              <PrimaryButton title={loading ? "Importando..." : "Importar do texto"} onPress={importFromPaste} disabled={loading} />
+            </View>
+
+            {loading ? <ActivityIndicator /> : <Text style={styles.muted}>{status}</Text>}
+            <Text style={styles.muted}>CSV sem cabeçalho: quiz,pergunta,resposta,explicacao,tags,wrong1,wrong2,wrong3</Text>
+          </VStack>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\ImportScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\LearnScreen.js ===== */
+// src/screens/LearnScreen.js
+import React, { useEffect, useMemo, useState, useRef, useCallback, useLayoutEffect } from "react";
+import { View, Text, StyleSheet, Pressable, Switch, Animated, ScrollView, BackHandler, Alert } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import * as Haptics from "expo-haptics";
+
+import PrimaryButton from "../components/PrimaryButton";
+import TagChips from "../components/TagChips";
+import { distinctTagsFromQuestions, tagCounts, parseTags } from "../util/tags";
+import useAppStyles from "../ui/useAppStyles";
+import SuccessCelebration from "../components/SuccessCelebration";
+import FailFeedback from "../components/FailFeedback";
+import useAndroidNavHidden from "../ui/useAndroidNavHidden";
+
+import { getQuizzes, getQuestionsByQuiz, applySrsResult, getOptionsByQuestion } from "../db";
+
+export default function LearnScreen({ route, navigation }) {
+  const params = route?.params ?? {};
+  const quizId = params.quizId ?? undefined;
+  const selectedTagsParam = Array.isArray(params.selectedTags) ? params.selectedTags : [];
+  const sessionLimit = Number.isFinite(params.sessionLimit) ? params.sessionLimit : 0;
+  const questionIds = Array.isArray(params.questionIds) ? params.questionIds : null;
+
+  const styles = useAppStyles();
+  const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  // Esconde a barra nativa (home/voltar/recentes) no Android
+  useAndroidNavHidden(true);
+
+  // === SAIR DO QUIZ ===
+  const requestExit = useCallback(() => {
+    Alert.alert(
+      "Sair do quiz?",
+      "Seu progresso desta sessão não finalizada não será contabilizado como sessão concluída. Deseja sair agora?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Sair",
+          style: "destructive",
+          onPress: () => {
+            navigation.popToTop();
+            navigation.getParent?.()?.navigate("Início");
+          },
+        },
+      ]
+    );
+  }, [navigation]);
+
+  // Botão físico "voltar" aciona a confirmação de saída (em vez de bloquear)
+  useEffect(() => {
+    const sub = BackHandler.addEventListener("hardwareBackPress", () => {
+      requestExit();
+      return true;
+    });
+    return () => sub.remove();
+  }, [requestExit]);
+
+  // Botão "Sair do Quiz" no cabeçalho
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackVisible: false,
+      gestureEnabled: false,
+      headerRight: () => (
+        <Pressable onPress={requestExit} hitSlop={8} accessibilityRole="button" accessibilityLabel="Sair do Quiz">
+          <Text style={{ color: colors.danger, fontWeight: "700" }}>Sair do Quiz</Text>
+        </Pressable>
+      ),
+    });
+  }, [navigation, requestExit, colors.danger]);
+
+  // === estado principal ===
+  const [all, setAll] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [counts, setCounts] = useState({});
+  const [selected, setSelected] = useState(new Set(selectedTagsParam.map((x)=>String(x).toLowerCase())));
+  const onlyDueInit = typeof params.onlyDue === 'boolean' ? params.onlyDue : true;
+  const [onlyDue, setOnlyDue] = useState(onlyDueInit);
+
+  const [seq, setSeq] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [options, setOptions] = useState([]);
+  const [answered, setAnswered] = useState(null);
+  const [lock, setLock] = useState(false);
+
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+  const wrongMapRef = useRef(new Map());
+  const [celebrate, setCelebrate] = useState(false);
+  const [showFail, setShowFail] = useState(false);
+
+  const shakeX = useRef(new Animated.Value(0)).current;
+  const runShake = () => {
+    shakeX.setValue(0);
+    Animated.sequence([
+      Animated.timing(shakeX, { toValue: -8, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 8, duration: 90, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -6, duration: 70, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 0, duration: 60, useNativeDriver: true }),
+    ]).start();
+  };
+
+  const local = useMemo(()=>StyleSheet.create({
+    panel: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: 12 },
+    switchRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+    option: { padding: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginTop: 8, backgroundColor: colors.card },
+    progressOuter: { height: 8, backgroundColor: colors.border, borderRadius: 8, overflow: "hidden" },
+    progressInner: { height: 8, backgroundColor: colors.primary },
+    hint: { color: colors.muted },
+    card: { padding: 16, borderRadius: 12, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border },
+    question: { fontSize: 18, fontWeight: "700", color: colors.text },
+    footerExitWrap: { position: "absolute", left: 16, right: 16, bottom: insets.bottom + 12 },
+  }),[colors, insets.bottom]);
+
+  // carregar questões
+  useEffect(() => {
+    (async () => {
+      let allQ = [];
+      if (quizId) {
+        allQ = await getQuestionsByQuiz(quizId);
+      } else {
+        const decks = await getQuizzes();
+        for (const d of decks) {
+          const qs = await getQuestionsByQuiz(d.id);
+          allQ = allQ.concat(qs);
+        }
+      }
+      setAll(allQ);
+      setTags(distinctTagsFromQuestions(allQ));
+      setCounts(tagCounts(allQ));
+    })();
+  }, [quizId]);
+
+  // recalcular sessão
+  useEffect(() => {
+    const now = Date.now();
+    let pool = all;
+
+    if (Array.isArray(questionIds) && questionIds.length) {
+      const setIds = new Set(questionIds.map(Number));
+      pool = all.filter((q)=> setIds.has(Number(q.id)));
+    }
+
+    const filtered = (pool||[]).filter((q) => {
+      if (selected.size > 0) {
+        const t = parseTags(q.tags).map((x)=>x.toLowerCase());
+        if (!t.some((x)=> selected.has(x))) return false;
+      }
+      if (onlyDue) {
+        const due = Number(q.due_at||0);
+        if (!Number.isFinite(due) || due > now) return false;
+      }
+      return true;
+    });
+
+    let nextSeq = shuffle(filtered);
+    if (sessionLimit && sessionLimit > 0) nextSeq = nextSeq.slice(0, sessionLimit);
+
+    wrongMapRef.current = new Map();
+    setSeq(nextSeq);
+    setIndex(0);
+    setAnswered(null);
+    setLock(false);
+    setCelebrate(false);
+    setShowFail(false);
+    setCorrectCount(0);
+    setWrongCount(0);
+
+    (async () => {
+      if (nextSeq.length) setOptions(await buildOptions(nextSeq[0], nextSeq, selected));
+      else setOptions([]);
+    })();
+  }, [all, selected, onlyDue, sessionLimit, questionIds]);
+
+  const current = seq[index] || null;
+
+  async function buildOptions(question, seq, selectedSet) {
+    // tenta opções salvas
+    try {
+      const rows = await getOptionsByQuestion(question.id);
+      const texts = Array.from(new Set((rows||[]).map((o)=> String(o.text||"").trim()).filter(Boolean)));
+      const ans = String(question.answer||"").trim();
+      if (ans && !texts.includes(ans)) texts.unshift(ans);
+      if (texts.length >= 2) return shuffle(texts);
+    } catch {}
+    // fallback automático
+    const correct = String(question.answer||"").trim();
+    let poolCandidates;
+    if (selectedSet && selectedSet.size > 0) {
+      poolCandidates = (seq||[]).filter((q)=> {
+        const tq = parseTags(q.tags).map((x)=>x.toLowerCase());
+        for (const t of tq) if (selectedSet.has(t)) return true;
+        return false;
+      });
+    } else {
+      const curTags = new Set(parseTags(question.tags).map((x)=>x.toLowerCase()));
+      poolCandidates = (seq||[]).filter((q)=> {
+        const tq = parseTags(q.tags).map((x)=>x.toLowerCase());
+        for (const t of tq) if (curTags.has(t)) return true;
+        return false;
+      });
+    }
+    const pool = Array.from(new Set(poolCandidates.map((q)=> String(q.answer||"").trim()).filter((a)=> a && a!==correct)));
+    const distractors = sample(pool, 3);
+    const unique = Array.from(new Set([correct, ...distractors])).filter(Boolean);
+    return shuffle(unique.length>=2 ? unique : [correct, ...(distractors.length?distractors:["Nenhuma das anteriores"])]);
+  }
+
+  async function onAnswer(choiceIdx) {
+    if (!current || !options.length || answered || lock) return;
+    setLock(true);
+    const chosen = options[choiceIdx];
+    const isCorrect = String(chosen).trim() === String(current.answer).trim();
+    setAnswered({ isCorrect, chosen });
+
+    applySrsResult(current.id, isCorrect).catch(()=>{});
+
+    try {
+      if (isCorrect) {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        setCelebrate(true);
+      } else {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        runShake();
+        setShowFail(true);
+      }
+    } catch {}
+
+    if (isCorrect) setCorrectCount((c)=>c+1);
+    else {
+      setWrongCount((w)=>w+1);
+      const prev = wrongMapRef.current.get(current.id) || { q: current, wrongs: 0 };
+      prev.wrongs += 1;
+      wrongMapRef.current.set(current.id, prev);
+    }
+  }
+
+  async function next() {
+    const totalNow = seq.length;
+    const nextIndex = index + 1;
+    if (nextIndex >= totalNow) {
+      finish();
+      return;
+    }
+    const nextQ = seq[nextIndex];
+    setIndex(nextIndex);
+    setAnswered(null);
+    setLock(false);
+    setCelebrate(false);
+    setShowFail(false);
+    setOptions(await buildOptions(nextQ, seq, selected));
+  }
+
+  function finish() {
+    const totalNow = seq.length;
+    const accuracy = totalNow ? Math.round((correctCount/totalNow)*100) : 0;
+    const hardest = Array.from(wrongMapRef.current.values())
+      .sort((a,b)=> b.wrongs - a.wrongs)
+      .slice(0, 10)
+      .map(({q,wrongs})=>({ id:q.id, quizId:q.quizId, text:q.text, answer:q.answer, tags:q.tags, wrong_count:wrongs }));
+
+    navigation.replace("Conclusion", {
+      source: "learn",
+      total: totalNow, correct: correctCount, wrong: wrongCount, accuracy,
+      byTag: [], hardest,
+    });
+  }
+
+  if (!current) {
+    return (
+      <SafeAreaView style={styles.sa} edges={["bottom"]}>
+        <StatusBar hidden />
+        <ScrollView contentContainerStyle={[styles.container, { paddingBottom: 120 }]} showsVerticalScrollIndicator>
+          <View style={local.panel}>
+            <TagChips tags={tags} counts={counts} selected={selected} onToggle={(t)=>{
+              if (!t) { setSelected(new Set()); return; }
+              setSelected((prev)=> {
+                const next = new Set(prev); const key = t.toLowerCase();
+                if (next.has(key)) next.delete(key); else next.add(key); return next;
+              });
+            }} />
+            <View style={local.switchRow}>
+              <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
+              <Switch value={onlyDue} onValueChange={setOnlyDue} />
+            </View>
+          </View>
+          <Text style={{ color: colors.muted }}>Sem questões para este filtro.</Text>
+        </ScrollView>
+
+        <View pointerEvents="box-none" style={local.footerExitWrap}>
+          <PrimaryButton title="Sair do Quiz" variant="dangerOutline" onPress={requestExit} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  const total = seq.length;
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <StatusBar hidden />
+      <ScrollView contentContainerStyle={[styles.container, { paddingBottom: 120 }]} showsVerticalScrollIndicator>
+        <View style={local.panel}>
+          <TagChips tags={tags} counts={counts} selected={selected} onToggle={(t)=>{
+            if (!t) { setSelected(new Set()); return; }
+            setSelected((prev)=> {
+              const next = new Set(prev); const key = t.toLowerCase();
+              if (next.has(key)) next.delete(key); else next.add(key); return next;
+            });
+          }} />
+          <View style={local.switchRow}>
+            <Text style={{ color: colors.text }}>Somente vencidas (SRS)</Text>
+            <Switch value={onlyDue} onValueChange={setOnlyDue} />
+          </View>
+        </View>
+
+        <View style={local.panel}>
+          <View style={local.progressOuter}><View style={[local.progressInner,{ width: `${Math.round((index+1)/total*100)}%` }]} /></View>
+          <Text style={[local.hint,{ marginTop: 8 }]}>{index+1} de {total} — Acertos: {correctCount}</Text>
+        </View>
+
+        <Animated.View style={[local.card, { transform: [{ translateX: shakeX }] }]}>
+          <Text style={local.question}>{current.text}</Text>
+          {!answered ? (
+            options.map((opt, i)=>(
+              <Pressable key={i} onPress={()=>onAnswer(i)} disabled={lock} style={({pressed})=> [local.option, pressed&&{ opacity: 0.9 }]}>
+                <Text style={{ color: colors.text }}>{String(opt)}</Text>
+              </Pressable>
+            ))
+          ) : (
+            <View style={{ marginTop: 8 }}>
+              <Text style={{ fontWeight:"700", color: answered.isCorrect ? colors.primary : colors.danger }}>
+                {answered.isCorrect ? "Correto!" : "Incorreto."}
+              </Text>
+              {!answered.isCorrect ? <Text style={{ color: colors.text, marginTop: 6 }}>Sua resposta: {String(answered.chosen)}</Text> : null}
+              <Text style={{ color: colors.text, marginTop: 2 }}>Certa: {String(current.answer)}</Text>
+              {current.explanation ? <Text style={{ color: colors.text, marginTop: 6 }}>{current.explanation}</Text> : null}
+              <View style={{ height: 12 }} />
+              <PrimaryButton title={index+1>=total?"Concluir":"Próxima"} onPress={next} />
+            </View>
+          )}
+        </Animated.View>
+      </ScrollView>
+
+      {celebrate && <SuccessCelebration onDone={()=> setCelebrate(false)} />}
+      {showFail && <FailFeedback onDone={()=> setShowFail(false)} />}
+
+      <View pointerEvents="box-none" style={local.footerExitWrap}>
+        <PrimaryButton title="Sair do Quiz" variant="dangerOutline" onPress={requestExit} />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
+function sample(arr,n){ const cp=[...arr], out=[]; while(out.length<n && cp.length){ out.push(cp.splice(Math.floor(Math.random()*cp.length),1)[0]); } while(out.length<n) out.push("Nenhuma das anteriores "+(out.length+1)); return out; }
+/* =====  FIM  : src\screens\LearnScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\OptionEditorScreen.js ===== */
+// src/screens/OptionEditorScreen.js
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, ScrollView, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import PrimaryButton from "../components/PrimaryButton";
+import useAppStyles from "../ui/useAppStyles";
+import { getQuestionById, getOptionsByQuestion, replaceOptions, updateQuestion } from "../db";
+
+export default function OptionEditorScreen({ route, navigation }) {
+  const { questionId, prefill } = route.params || {};
+  const styles = useAppStyles();
+
+  const [question, setQuestion] = useState(null);
+  const [options, setOptions] = useState([
+    { id:'opt-1', text:'', isCorrect:true },
+    { id:'opt-2', text:'', isCorrect:false },
+    { id:'opt-3', text:'', isCorrect:false },
+    { id:'opt-4', text:'', isCorrect:false },
+  ]);
+
+  useEffect(() => {
+    (async () => {
+      const q = await getQuestionById(questionId);
+      setQuestion(q);
+      const rows = await getOptionsByQuestion(questionId);
+      if (rows && rows.length) {
+        setOptions(rows.map((o)=>({ id: String(o.id), text: o.text||'', isCorrect: !!o.isCorrect })));
+      } else if (prefill?.answer) {
+        const wrongs = prefill?.wrongs || [];
+        const base = [{ id:'new-1', text: prefill.answer, isCorrect:true }];
+        for (let i=0;i<Math.max(1,wrongs.length);i++) base.push({ id:'new-'+(i+2), text: wrongs[i]||'', isCorrect:false });
+        while (base.length < 4) base.push({ id:'new-'+(base.length+1), text:'', isCorrect:false });
+        setOptions(base);
+      }
+    })();
+  }, [questionId, prefill]);
+
+  const setCorrect = (idx) => {
+    setOptions((prev)=> prev.map((o,i)=>({ ...o, isCorrect: i===idx })));
+  };
+  const setText = (idx, t) => { setOptions((prev)=> prev.map((o,i)=> i===idx?{...o, text:t}:o)); };
+  const addWrong = () => { setOptions((prev)=> [...prev, { id:'new-'+(prev.length+1), text:'', isCorrect:false }]); };
+  const remove = (idx) => {
+    setOptions((prev)=> {
+      const cp = [...prev];
+      const [removed] = cp.splice(idx,1);
+      if (removed?.isCorrect && cp.length>0) cp[0] = { ...cp[0], isCorrect:true };
+      return cp;
+    });
+  };
+
+  const save = async () => {
+    const trimmed = options.map((o)=>({ ...o, text: String(o.text||'').trim() }));
+    if (!trimmed.some((o)=>o.isCorrect)) { Alert.alert('Selecione uma correta.'); return; }
+    if (trimmed.some((o)=>!o.text)) { Alert.alert('Preencha ou remova alternativas vazias.'); return; }
+    await replaceOptions(questionId, trimmed);
+    const correct = trimmed.find((o)=>o.isCorrect)?.text || '';
+    if (correct) await updateQuestion(questionId, { answer: correct });
+    navigation.goBack();
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Alternativas</Text>
+          <Text style={styles.muted}>{question?.text || 'Pergunta'}</Text>
+          <View style={{ height: 8 }} />
+          {options.map((o, idx)=>(
+            <View key={o.id} style={[styles.card, { marginBottom: 8 }]}>
+              <TextInput
+                value={o.text}
+                onChangeText={(t)=>setText(idx,t)}
+                placeholder={o.isCorrect ? "Resposta correta" : `Distrator ${idx + 1}`}
+                style={styles.input}
+              />
+              <View style={{ height: 6 }} />
+              <View style={{ flexDirection:'row', gap:8 }}>
+                {!o.isCorrect ? (
+                  <PrimaryButton title="Marcar correta" onPress={()=>setCorrect(idx)} />
+                ) : (
+                  <PrimaryButton title="Correta" variant="secondary" />
+                )}
+                <PrimaryButton title="Remover" variant="dangerOutline" onPress={()=>remove(idx)} />
+              </View>
+            </View>
+          ))}
+          <PrimaryButton title="Adicionar alternativa" variant="secondary" icon="plus" onPress={addWrong} />
+          <View style={{ height: 8 }} />
+          <PrimaryButton title="Salvar" icon="content-save" onPress={save} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\OptionEditorScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\QuestionEditorScreen.js ===== */
+// src/screens/QuestionEditorScreen.js
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, KeyboardAvoidingView, Platform, ScrollView, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import PrimaryButton from "../components/PrimaryButton";
+import useAppStyles from "../ui/useAppStyles";
+import { createQuestion, getQuestionById, updateQuestion } from "../db";
+
+export default function QuestionEditorScreen({ route, navigation }) {
+  const { quizId, questionId } = route.params || {};
+  const isEditing = !!questionId;
+  const styles = useAppStyles();
+
+  const [text, setText] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [explanation, setExplanation] = useState('');
+  const [tags, setTags] = useState('');
+  const [wrong1, setWrong1] = useState('');
+  const [wrong2, setWrong2] = useState('');
+  const [wrong3, setWrong3] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      if (!isEditing) return;
+      const q = await getQuestionById(questionId);
+      if (q) {
+        setText(q.text || '');
+        setAnswer(q.answer || '');
+        setExplanation(q.explanation || '');
+        setTags(q.tags || '');
+      }
+    })();
+  }, [isEditing, questionId]);
+
+  const save = async () => {
+    const t = String(text||'').trim();
+    const a = String(answer||'').trim();
+    if (!t || !a) { Alert.alert('Preencha pergunta e resposta.'); return; }
+
+    if (!isEditing) {
+      const id = await createQuestion(quizId, t, a, explanation, tags);
+      // se tiver alternativas já digitadas, cria na tela de opções
+      if ([wrong1, wrong2, wrong3].some((w)=>String(w||'').trim())) {
+        navigation.replace('OptionEditor', {
+          questionId: id,
+          prefill: { answer: a, wrongs: [wrong1, wrong2, wrong3].map((w)=>String(w||'').trim()).filter(Boolean) }
+        });
+        return;
+      }
+      navigation.goBack();
+      return;
+    }
+
+    await updateQuestion(questionId, { text: t, answer: a, explanation, tags });
+    navigation.goBack();
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':undefined} style={{flex:1}}>
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
+          <View style={styles.panel}>
+            <Text style={styles.h2}>{isEditing ? 'Editar Pergunta' : 'Nova Pergunta'}</Text>
+            <TextInput style={styles.input} value={text} onChangeText={setText} placeholder="Pergunta" />
+            <TextInput style={styles.input} value={answer} onChangeText={setAnswer} placeholder="Resposta correta" />
+            <TextInput style={[styles.input, { minHeight: 120, textAlignVertical:'top' }]} value={explanation} onChangeText={setExplanation} placeholder="Explicação (opcional)" multiline />
+            <TextInput style={styles.input} value={tags} onChangeText={setTags} placeholder="tags separadas por vírgula" />
+
+            {!isEditing ? (
+              <>
+                <Text style={[styles.h2, { marginTop: 12 }]}>Alternativas (opcional)</Text>
+                <TextInput style={styles.input} value={wrong1} onChangeText={setWrong1} placeholder="Distrator 1" />
+                <TextInput style={styles.input} value={wrong2} onChangeText={setWrong2} placeholder="Distrator 2" />
+                <TextInput style={styles.input} value={wrong3} onChangeText={setWrong3} placeholder="Distrator 3" />
+              </>
+            ) : null}
+
+            <View style={{ height: 8 }} />
+            <PrimaryButton title="Salvar" icon="content-save" onPress={save} />
+            {isEditing ? (
+              <>
+                <View style={{ height: 8 }} />
+                <PrimaryButton title="Editar Alternativas" variant="secondary" onPress={()=> navigation.navigate('OptionEditor', { questionId })} />
+              </>
+            ) : null}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\QuestionEditorScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\QuestionListScreen.js ===== */
+// src/screens/QuestionListScreen.js
+import React, { useEffect, useMemo, useState, useCallback } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Alert,
+  ScrollView,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import PrimaryButton from "../components/PrimaryButton";
+import TagChips from "../components/TagChips";
+import useAppStyles from "../ui/useAppStyles";
+import { distinctTagsFromQuestions, tagCounts, parseTags } from "../util/tags";
+import { getQuestionsByQuiz, deleteQuestion } from "../db";
+
+export default function QuestionListScreen({ route, navigation }) {
+  const { quizId, title } = route.params || {};
+  const [questions, setQuestions] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [counts, setCounts] = useState({});
+  const [selected, setSelected] = useState(new Set());
+  const [query, setQuery] = useState("");
+  const [expandedId, setExpandedId] = useState(null);
+
+  const styles = useAppStyles();
+  const { colors } = useTheme();
+
+  useEffect(() => {
+    navigation.setOptions?.({ title: title || "Perguntas" });
+  }, [navigation, title]);
+
+  const load = useCallback(async () => {
+    const list = await getQuestionsByQuiz(quizId);
+    setQuestions(list);
+    setTags(distinctTagsFromQuestions(list));
+    setCounts(tagCounts(list));
+  }, [quizId]);
+
+  useEffect(() => { load(); }, [load]);
+
+  function toggleTag(t) {
+    if (!t) {
+      setSelected(new Set());
+      return;
+    }
+    setSelected((prev) => {
+      const next = new Set(prev);
+      const key = String(t).toLowerCase();
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
+
+  const filtered = useMemo(() => {
+    const hasTag = selected.size > 0;
+    const q = String(query || "").trim().toLowerCase();
+    return (questions || []).filter((it) => {
+      if (q) {
+        const hay = `${it.text} ${it.answer} ${it.explanation || ""} ${it.tags || ""}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      if (hasTag) {
+        const t = parseTags(it.tags).map((x) => x.toLowerCase());
+        if (!t.some((x) => selected.has(x))) return false;
+      }
+      return true;
+    });
+  }, [questions, query, selected]);
+
+  const remove = (id, text) => {
+    Alert.alert("Excluir pergunta", `Tem certeza?\n\n"${text}"`, [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: async () => {
+          await deleteQuestion(id);
+          if (expandedId === id) setExpandedId(null);
+          await load();
+        },
+      },
+    ]);
+  };
+
+  const onToggleItem = (id) => {
+    setExpandedId((cur) => (cur === id ? null : id));
+  };
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator
+      >
+        <View style={styles.panel}>
+          <TagChips
+            tags={tags}
+            counts={counts}
+            selected={selected}
+            onToggle={toggleTag}
+          />
+
+          <View style={styles.divider8} />
+
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Buscar (pergunta / resposta / tags)"
+            placeholderTextColor={colors.muted}
+            style={styles.input}
+            returnKeyType="search"
+            accessibilityLabel="Buscar perguntas"
+          />
+
+          <View style={styles.divider12} />
+
+          <View style={[styles.row, styles.gap8]}>
+            <View style={{ flex: 1 }}>
+              <PrimaryButton
+                title="Adicionar Pergunta"
+                icon="plus"
+                onPress={() =>
+                  navigation.navigate("QuestionEditor", { quizId })
+                }
+                block
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <PrimaryButton
+                title="Estudar este Quiz"
+                icon="play-circle-outline"
+                onPress={() => navigation.navigate("Learn", { quizId })}
+                block
+                variant="secondary"
+              />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.divider12} />
+
+        {filtered.map((q) => {
+          const isOpen = expandedId === q.id;
+          return (
+            <View key={q.id} style={styles.card}>
+              <Pressable
+                onPress={() => onToggleItem(q.id)}
+                android_ripple={{ color: colors.border }}
+                style={({ pressed }) => [
+                  { flexDirection: "row", alignItems: "center" },
+                  pressed && { opacity: 0.95 },
+                ]}
+                accessibilityRole="button"
+                accessibilityLabel="Abrir opções da pergunta"
+              >
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{ fontWeight: "700", color: colors.text, fontSize: 15 }}
+                  >
+                    {q.text}
+                  </Text>
+                  {q.tags ? (
+                    <Text style={{ color: colors.muted, marginTop: 4 }}>
+                      Tags: {q.tags}
+                    </Text>
+                  ) : null}
+                </View>
+                <MaterialCommunityIcons
+                  name={isOpen ? "chevron-up" : "chevron-down"}
+                  size={24}
+                  color={colors.muted}
+                />
+              </Pressable>
+
+              {isOpen ? (
+                <>
+                  <View style={styles.divider12} />
+                  <View style={[styles.row, styles.gap8, { flexWrap: "wrap" }]}>
+                    <View style={{ flexGrow: 1, minWidth: 140 }}>
+                      <PrimaryButton
+                        title="Editar"
+                        variant="secondary"
+                        icon="pencil-outline"
+                        onPress={() =>
+                          navigation.navigate("QuestionEditor", {
+                            quizId,
+                            questionId: q.id,
+                          })
+                        }
+                        block
+                      />
+                    </View>
+                    <View style={{ flexGrow: 1, minWidth: 140 }}>
+                      <PrimaryButton
+                        title="Alternativas"
+                        variant="secondary"
+                        icon="format-list-bulleted"
+                        onPress={() =>
+                          navigation.navigate("OptionEditor", {
+                            questionId: q.id,
+                          })
+                        }
+                        block
+                      />
+                    </View>
+                    <View style={{ flexGrow: 1, minWidth: 140 }}>
+                      <PrimaryButton
+                        title="Praticar"
+                        icon="play-circle-outline"
+                        onPress={() =>
+                          navigation.navigate("Learn", {
+                            quizId,
+                            questionIds: [q.id],
+                            sessionLimit: 1,
+                            onlyDue: false, // garante que 1 questão sempre abre
+                          })
+                        }
+                        block
+                      />
+                    </View>
+                    <View style={{ flexGrow: 1, minWidth: 140 }}>
+                      <PrimaryButton
+                        title="Excluir"
+                        variant="dangerOutline"
+                        icon="trash-can-outline"
+                        onPress={() => remove(q.id, q.text)}
+                        block
+                      />
+                    </View>
+                  </View>
+                </>
+              ) : null}
+            </View>
+          );
+        })}
+
+        {filtered.length === 0 ? (
+          <Text style={styles.muted}>Nenhuma pergunta para este filtro.</Text>
+        ) : null}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\QuestionListScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\StatsScreen.js ===== */
+// src/screens/StatsScreen.js
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import useAppStyles from "../ui/useAppStyles";
+import { getQuizzes, getQuestionsByQuiz } from "../db";
+import { distinctTagsFromQuestions, parseTags } from "../util/tags";
+
+export default function StatsScreen() {
+  const styles = useAppStyles();
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(()=>{ (async ()=>{
+    setLoading(true);
+    try {
+      const decks = await getQuizzes();
+      let all = [];
+      for (const q of decks) {
+        const qs = await getQuestionsByQuiz(q.id);
+        all = all.concat(qs || []);
+      }
+      const tags = distinctTagsFromQuestions(all);
+      const now = Date.now();
+      const items = tags.map((t) => {
+        const qs = all.filter((q)=> parseTags(q.tags).map((x)=>x.toLowerCase()).includes(String(t).toLowerCase()));
+        const total = qs.length;
+        const due = qs.filter((q)=> Number(q.due_at||0) <= now).length;
+        const correct = qs.reduce((acc, q)=> acc + Number(q.correct_count||0), 0);
+        const wrong = qs.reduce((acc, q)=> acc + Number(q.wrong_count||0), 0);
+        const attempts = correct + wrong;
+        const accRate = attempts ? Math.round((correct/attempts)*100) : 0;
+        return { tag: t, total, due, accRate, attempts };
+      }).sort((a,b)=> a.tag.localeCompare(b.tag));
+      setRows(items);
+    } finally { setLoading(false); }
+  })(); },[]);
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Estatísticas por Tag</Text>
+          {!rows.length ? <Text style={styles.muted}>{loading?'Carregando...':'Sem dados.'}</Text> : null}
+        </View>
+
+        {rows.map((r)=>(
+          <View key={r.tag} style={[styles.card, { marginTop: 8 }]}>
+            <Text style={{ fontWeight:'700' }}>{r.tag}</Text>
+            <Text style={styles.muted}>Questões: {r.total} • Vencidos: {r.due}</Text>
+            <Text style={styles.muted}>Acurácia: {r.accRate}% • Tentativas: {r.attempts}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\StatsScreen.js ===== */
+
+/* ===== INÍCIO: src\screens\StudyTodayScreen.js ===== */
+// src/screens/StudyTodayScreen.js
+import React, { useEffect, useMemo, useState, useCallback } from "react";
+import { View, Text, Switch, ScrollView, Alert, TextInput, Pressable, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import TagChips from "../components/TagChips";
+import PrimaryButton from "../components/PrimaryButton";
+import useAppStyles from "../ui/useAppStyles";
+import { distinctTagsFromQuestions, tagCounts, parseTags } from "../util/tags";
+import { getQuizzes, getQuestionsByQuiz } from "../db";
+import * as Haptics from 'expo-haptics';
+import { useTheme } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+const clampGoal = (n) => Math.max(1, Math.min(500, Number.isFinite(n) ? n : 20));
+
+export default function StudyTodayScreen({ navigation }) {
+  const styles = useAppStyles();
+  const { colors } = useTheme();
+
+  const [all, setAll] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [counts, setCounts] = useState({});
+  const [selected, setSelected] = useState(new Set());
+  const [goal, setGoal] = useState(20);
+  const [onlyDue, setOnlyDue] = useState(true);
+
+  useEffect(()=>{(async ()=>{
+    const decks = await getQuizzes();
+    let allQ = [];
+    for (const d of decks) {
+      const qs = await getQuestionsByQuiz(d.id);
+      allQ = allQ.concat(qs||[]);
+    }
+    setAll(allQ);
+    setTags(distinctTagsFromQuestions(allQ));
+    setCounts(tagCounts(allQ));
+  })();},[]);
+
+  const { availTotal, dueTotal } = useMemo(()=>{
+    const now = Date.now();
+    const inFilter = (all||[]).filter((q) => {
+      if (selected.size>0) {
+        const t = parseTags(q.tags).map((x)=>x.toLowerCase());
+        if (!t.some((x)=>selected.has(x))) return false;
+      }
+      return true;
+    });
+    const due = inFilter.filter((q)=> Number(q.due_at||0) <= now).length;
+    return { availTotal: inFilter.length, dueTotal: due };
+  },[all, selected]);
+
+  const adjustGoal = useCallback((delta) => {
+    setGoal((g) => clampGoal((parseInt(g, 10) || 0) + delta));
+  }, []);
+
+  const onChangeGoal = useCallback((t) => {
+    const v = parseInt(String(t).replace(/[^\d]/g, ''), 10);
+    setGoal(clampGoal(Number.isFinite(v) ? v : 0));
+  }, []);
+
+  const start = async () => {
+    if (onlyDue && dueTotal <= 0) {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert('Sem questões vencidas', 'Não há questões vencidas para o filtro atual. Desative "Somente vencidos (SRS)" ou ajuste as tags.');
+      return;
+    }
+    if (availTotal <= 0) {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert('Sem questões', 'Não há questões disponíveis para o filtro atual.');
+      return;
+    }
+    const limit = clampGoal(parseInt(goal, 10));
+    // Navega para a tela Learn dentro da aba "Início"
+    navigation.getParent()?.navigate('Início', {
+      screen: 'Learn',
+      params: {
+        onlyDue,
+        selectedTags: Array.from(selected),
+        sessionLimit: limit,
+      },
+    });
+  };
+
+  const local = useMemo(()=>StyleSheet.create({
+    rowBetween: { flexDirection:'row', alignItems:'center', justifyContent:'space-between' },
+    stepBtn: {
+      width: 42, height: 42, borderRadius: 10, alignItems:'center', justifyContent:'center',
+      borderWidth: 1, borderColor: colors.border, backgroundColor: colors.card
+    },
+    goalInput: {
+      width: 72, textAlign: 'center',
+      borderWidth: 1, borderColor: colors.border, borderRadius: 10,
+      paddingVertical: 8, paddingHorizontal: 10, backgroundColor: colors.card, color: colors.text
+    },
+    spacer: { width: 8 },
+  }), [colors]);
+
+  return (
+    <SafeAreaView style={styles.sa} edges={["bottom"]}>
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Estudar Hoje</Text>
+
+          <TagChips tags={tags} counts={counts} selected={selected} onToggle={(t)=>{
+            if (!t) { setSelected(new Set()); return; }
+            setSelected((prev)=>{ const next=new Set(prev); const key=t.toLowerCase(); if(next.has(key)) next.delete(key); else next.add(key); return next;});
+          }} />
+
+          <View style={{ height: 8 }} />
+          <View style={local.rowBetween}>
+            <Text style={{ color: colors.text }}>Somente vencidos (SRS)</Text>
+            <Switch value={onlyDue} onValueChange={setOnlyDue} />
+          </View>
+
+          <View style={{ height: 8 }} />
+          <Text style={styles.muted}>Disponíveis: {availTotal} • Vencidos: {dueTotal}</Text>
+
+          <View style={{ height: 12 }} />
+          <Text style={styles.h2}>Meta da sessão</Text>
+          <View style={local.rowBetween}>
+            <Pressable onPress={()=>adjustGoal(-5)} style={({pressed})=> [local.stepBtn, pressed && { opacity: 0.9 }]} accessibilityRole="button" accessibilityLabel="Diminuir meta">
+              <MaterialCommunityIcons name="minus" size={20} color={colors.text} />
+            </Pressable>
+            <TextInput
+              value={String(goal)}
+              onChangeText={onChangeGoal}
+              keyboardType="number-pad"
+              selectTextOnFocus
+              style={local.goalInput}
+              accessibilityLabel="Quantidade de questões da sessão"
+            />
+            <Pressable onPress={()=>adjustGoal(5)} style={({pressed})=> [local.stepBtn, pressed && { opacity: 0.9 }]} accessibilityRole="button" accessibilityLabel="Aumentar meta">
+              <MaterialCommunityIcons name="plus" size={20} color={colors.text} />
+            </Pressable>
+          </View>
+
+          <View style={{ height: 12 }} />
+          <PrimaryButton title={`Começar (${goal})`} icon="play" onPress={start} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+/* =====  FIM  : src\screens\StudyTodayScreen.js ===== */
+
+/* ===== INÍCIO: src\theme\index.js ===== */
+// src/theme/index.js
+export const navLightTheme = {
+  dark: false,
+  colors: {
+    primary: "#4F46E5",
+    background: "#F7F7FB",
+    card: "#FFFFFF",
+    text: "#0F172A",
+    border: "#E5E7EB",
+    muted: "#6B7280",
+    buttonText: "#FFFFFF",
+    danger: "#DC2626",
+    success: "#16A34A",
+    // requerido pelo React Navigation (badges, etc.)
+    notification: "#DC2626",
+  },
+};
+
+// (opcional) tokens simples para manter consistência no app todo
+export const tokens = {
+  space: 12,
+  radius: 12,
+  fontScale: 1,
+};
+/* =====  FIM  : src\theme\index.js ===== */
+
+/* ===== INÍCIO: src\ui\Stack.js ===== */
+// src/ui/Stack.js
+import React from 'react';
+import { View } from 'react-native';
+
+export const VStack = ({ children, space = 8, style }) => (
+  <View style={[{ flexDirection: 'column' }, style]}>
+    {React.Children.toArray(children).map((c, i, a) => (
+      <View key={i} style={{ marginBottom: i === a.length - 1 ? 0 : space }}>{c}</View>
+    ))}
+  </View>
+);
+
+export const HStack = ({ children, space = 8, style }) => (
+  <View style={[{ flexDirection: 'row' }, style]}>
+    {React.Children.toArray(children).map((c, i, a) => (
+      <View key={i} style={{ marginRight: i === a.length - 1 ? 0 : space }}>{c}</View>
+    ))}
+  </View>
+);
+/* =====  FIM  : src\ui\Stack.js ===== */
+
+/* ===== INÍCIO: src\ui\useAndroidNavHidden.js ===== */
+// src/ui/useAndroidNavHidden.js
+import { useEffect, useCallback } from 'react';
+import { Platform, AppState, Keyboard } from 'react-native';
+import * as NavigationBar from 'expo-navigation-bar';
+
+/**
+ * Mantém a barra de navegação do Android oculta.
+ * Seguro para uso tanto DENTRO quanto FORA do NavigationContainer.
+ *
+ * @param {boolean} enabled - se true, oculta; se false, mostra.
+ * @param {object} _opts - (compat) ignorado; antes usava { reapplyOnFocus }.
+ */
+export default function useAndroidNavHidden(enabled = true, _opts = {}) {
+  const apply = useCallback(async () => {
+    if (Platform.OS !== 'android') return;
+    try {
+      await NavigationBar.setVisibilityAsync(enabled ? 'hidden' : 'visible');
+      // Não usar setBehaviorAsync em edge-to-edge (gera WARN e é ignorado)
+    } catch {}
+  }, [enabled]);
+
+  // Aplica em montagem e quando enabled muda
+  useEffect(() => {
+    apply();
+  }, [apply]);
+
+  // Reaplica ao voltar para foreground
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+    const sub = AppState.addEventListener('change', (st) => {
+      if (st === 'active') apply();
+    });
+    return () => sub.remove();
+  }, [apply]);
+
+  // Reaplica quando o teclado fecha (alguns OEMs reexibem a barra)
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+    const kh = Keyboard.addListener('keyboardDidHide', apply);
+    return () => kh.remove();
+  }, [apply]);
+}
+/* =====  FIM  : src\ui\useAndroidNavHidden.js ===== */
+
+/* ===== INÍCIO: src\ui\useAppStyles.js ===== */
+// src/ui/useAppStyles.js
+import { StyleSheet, Platform } from "react-native";
+import { useTheme } from "@react-navigation/native";
+
+export default function useAppStyles() {
+  const { colors } = useTheme();
+
+  const R = 12; // radius padrão
+  const S = 12; // spacing padrão
+  const I = 14; // altura da fonte base
+
+  return StyleSheet.create({
+    // containers base
+    sa: { flex: 1, backgroundColor: colors.background },
+    container: {
+      padding: 16,
+      paddingBottom: 16,
+      gap: 12,
+    },
+
+    // blocos principais
+    panel: {
+      padding: 12,
+      borderRadius: R,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    card: {
+      padding: 12,
+      borderRadius: R,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+
+    // tipografia
+    h1: { fontSize: 20, fontWeight: "800", color: colors.text },
+    h2: { fontSize: 17, fontWeight: "700", color: colors.text },
+    text: { fontSize: I, color: colors.text },
+    muted: { fontSize: I - 1, color: colors.muted },
+
+    // inputs
+    input: {
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: R,
+      paddingHorizontal: 12,
+      paddingVertical: Platform.select({ ios: 12, android: 10, default: 10 }),
+      backgroundColor: colors.card,
+      color: colors.text,
+    },
+
+    // linhas utilitárias
+    row: { flexDirection: "row", alignItems: "center" },
+    gap8: { gap: 8 },
+    gap12: { gap: 12 },
+    divider8: { height: 8 },
+    divider12: { height: 12 },
+  });
+}
+/* =====  FIM  : src\ui\useAppStyles.js ===== */
+
+/* ===== INÍCIO: src\util\importer.js ===== */
+// src/util/importer.js
+/**
+ * Aceita:
+ * - JSON array de objetos
+ * - JSONL (uma linha por JSON)
+ * - CSV (com ou sem cabeçalho)
+ *
+ * Campos aceitos (sinônimos):
+ * quiz/deck, question/pergunta/questao, answer/resposta, explanation/explicacao, tags,
+ * wrong1..3 / incorreta1..3 / errada1..3 / alternativaN
+ */
+export function normalizeRecord(obj) {
+  const o = obj || {};
+  const quiz = (o.quiz ?? o.deck ?? 'Geral').toString().trim();
+  const question = (o.question ?? o.pergunta ?? o.questao ?? o['questão'] ?? o.termo ?? '').toString().trim();
+  const answer = (o.answer ?? o.resposta ?? '').toString().trim();
+  const explanation = (o.explanation ?? o.explicacao ?? o['explicação'] ?? '').toString().trim();
+
+  let tags = o.tags ?? '';
+  if (Array.isArray(tags)) tags = tags.join(', ');
+  tags = String(tags || '').trim();
+
+  const wrong1 = pickWrong(o, 1);
+  const wrong2 = pickWrong(o, 2);
+  const wrong3 = pickWrong(o, 3);
+
+  return { quiz, question, answer, explanation, tags, wrong1, wrong2, wrong3 };
+}
+
+function pickWrong(o, n) {
+  const keys = [
+    `wrong${n}`, `incorreta${n}`, `errada${n}`,
+    `alternativa${n}`, `alt${n}`, `distrator${n}`, `distrator_${n}`
+  ];
+  for (const k of keys) {
+    if (o[k] != null && String(o[k]).trim() !== '') return String(o[k]).trim();
+  }
+  return '';
+}
+
+export function looksLikeJSONArray(s) { return s.startsWith('[') && s.trim().endsWith(']'); }
+export function looksLikeJSONL(s) {
+  const lines = s.split(/\r?\n/).filter(Boolean);
+  if (lines.length < 1) return false;
+  return lines.every((t) => t.trim().startsWith('{') && t.trim().endsWith('}'));
+}
+
+export function parseCsv(text) {
+  const lines = text.split(/\r?\n/);
+  const first = lines[0] || '';
+  const sep = (first.match(/;/g) || []).length > (first.match(/,/g) || []).length ? ';' : ',';
+
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        const next = text[i + 1];
+        if (next === '"') { field += '"'; i++; }
+        else { inQuotes = false; }
+      } else field += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === sep) { row.push(field); field = ''; }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else if (c === '\r') { /* skip */ }
+      else field += c;
+    }
+  }
+  row.push(field); rows.push(row);
+  let clean = rows.filter((r) => r.some((v) => String(v || '').trim() !== ''));
+
+  let header = null;
+  if (clean.length) {
+    const maybe = clean[0].map((c) => String(c || '').trim().toLowerCase());
+    const known = new Set([
+      'quiz','deck',
+      'pergunta','questão','questao','question',
+      'resposta','answer',
+      'explicacao','explicação','explanation',
+      'tags',
+      'wrong1','wrong2','wrong3',
+      'incorreta1','incorreta2','incorreta3',
+      'errada1','errada2','errada3'
+    ]);
+    if (maybe.some((c) => known.has(c))) {
+      header = maybe;
+      clean = clean.slice(1);
+    }
+  }
+  return { rows: clean, header, sep };
+}
+/* =====  FIM  : src\util\importer.js ===== */
+
+/* ===== INÍCIO: src\util\logger.js ===== */
+// src/util/logger.js
+// Loga erros em TXT sempre que ocorrer uma exceção JS não tratada
+// e oferece helpers para compartilhar/inspecionar o último log.
+
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+
+const LOG_DIR = FileSystem.documentDirectory + 'logs/';
+
+function nowStamp() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const MM = pad(d.getMonth() + 1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mm = pad(d.getMinutes());
+  const ss = pad(d.getSeconds());
+  const ms = String(d.getMilliseconds()).padStart(3, '0');
+  return `${yyyy}${MM}${dd}-${hh}${mm}${ss}-${ms}`;
+}
+
+async function ensureLogDir() {
+  try {
+    const info = await FileSystem.getInfoAsync(LOG_DIR);
+    if (!info.exists) {
+      await FileSystem.makeDirectoryAsync(LOG_DIR, { intermediates: true });
+    }
+  } catch {}
+}
+
+function serializeError(err) {
+  if (err instanceof Error) {
+    return `${err.name || 'Error'}: ${err.message}\n${err.stack || ''}`.trim();
+  }
+  try {
+    return typeof err === 'string' ? err : JSON.stringify(err, null, 2);
+  } catch {
+    return String(err);
+  }
+}
+
+export async function writeErrorTxt(err, extra = {}) {
+  try {
+    await ensureLogDir();
+    const stamp = nowStamp();
+    const filename = `error-${stamp}.txt`;
+    const path = LOG_DIR + filename;
+
+    const payload = {
+      when: new Date().toISOString(),
+      isFatal: !!extra.isFatal,
+      context: extra.context || null,
+      message: err?.message || String(err),
+      stack: err?.stack || null,
+      raw: serializeError(err),
+      // você pode incluir infos do app/dispositivo aqui se quiser
+    };
+
+    const body =
+`==== APP ERROR LOG ====
+Timestamp: ${payload.when}
+Fatal: ${payload.isFatal}
+Context: ${payload.context ?? '-'}
+Message: ${payload.message}
+----------------------------------------
+Stack:
+${payload.stack ?? '(sem stack)'}
+----------------------------------------
+Raw:
+${payload.raw}
+========================================
+`;
+
+    await FileSystem.writeAsStringAsync(path, body, { encoding: FileSystem.EncodingType.UTF8 });
+    return path;
+  } catch (e) {
+    // último recurso: nada a fazer se não conseguir escrever
+    return null;
+  }
+}
+
+// Para usar em catch(): await logCaughtError(e, 'importacao');
+export async function logCaughtError(err, context) {
+  return writeErrorTxt(err, { isFatal: false, context });
+}
+
+// Compartilha o log mais recente (útil no dev para “chegar” no VSCode via compartilhamento)
+export async function shareLatestLog() {
+  await ensureLogDir();
+  const files = (await FileSystem.readDirectoryAsync(LOG_DIR))
+    .filter((n) => n.endsWith('.txt'))
+    .sort(); // nomes têm timestamp -> ordena por nome resolve
+  if (!files.length) return null;
+
+  const latest = LOG_DIR + files[files.length - 1];
+  try {
+    if (await Sharing.isAvailableAsync()) {
+      await Sharing.shareAsync(latest, { mimeType: 'text/plain' });
+    }
+  } catch {}
+  return latest;
+}
+
+export async function listLogFiles() {
+  await ensureLogDir();
+  const files = await FileSystem.readDirectoryAsync(LOG_DIR);
+  return files.filter((n) => n.endsWith('.txt')).map((n) => LOG_DIR + n).sort();
+}
+
+export async function clearLogs() {
+  try {
+    await FileSystem.deleteAsync(LOG_DIR, { idempotent: true });
+    await ensureLogDir();
+  } catch {}
+}
+
+// Liga os handlers globais: exceções JS e “possible unhandled promise rejection”
+export function initErrorLogging() {
+  // Handler padrão do RN
+  const defaultHandler =
+    global.ErrorUtils?.getGlobalHandler?.() ??
+    ((e) => console.error('Unhandled JS Exception', e));
+
+  // Exceções JS não tratadas
+  try {
+    global.ErrorUtils?.setGlobalHandler?.(async (error, isFatal) => {
+      await writeErrorTxt(error, { isFatal: !!isFatal, context: 'GlobalErrorHandler' });
+      defaultHandler?.(error, isFatal);
+    });
+  } catch {}
+
+  // Promises não tratadas: RN costuma logar no console com essa string
+  const originalConsoleError = console.error;
+  console.error = (...args) => {
+    try {
+      const joined = args
+        .map((a) => (a instanceof Error ? a.stack || a.message : typeof a === 'string' ? a : JSON.stringify(a)))
+        .join(' ');
+
+      // Pega mensagens do RN para rejeições não tratadas
+      if (/Possible Unhandled Promise Rejection/i.test(joined)) {
+        writeErrorTxt(new Error(joined), { isFatal: false, context: 'UnhandledPromiseRejection' });
+      }
+    } catch {}
+    originalConsoleError(...args);
+  };
+}
+
+export const LOGS_DIR = LOG_DIR;
+/* =====  FIM  : src\util\logger.js ===== */
+
+/* ===== INÍCIO: src\util\tags.js ===== */
+// src/util/tags.js
+export function parseTags(tags) {
+  if (!tags) return [];
+  if (Array.isArray(tags)) return tags.map((t) => String(t).trim()).filter(Boolean);
+  return String(tags)
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+export function distinctTagsFromQuestions(list = []) {
+  const set = new Set();
+  list.forEach((q) => parseTags(q.tags).forEach((t) => set.add(t)));
+  return Array.from(set).sort((a, b) => a.localeCompare(b));
+}
+
+export function tagCounts(list = []) {
+  const counts = {};
+  list.forEach((q) => parseTags(q.tags).forEach((t) => { counts[t] = (counts[t] || 0) + 1; }));
+  return counts;
+}
+/* =====  FIM  : src\util\tags.js ===== */

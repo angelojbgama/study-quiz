@@ -1,25 +1,19 @@
 // src/screens/BackupScreen.js
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@react-navigation/native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import * as DocumentPicker from "expo-document-picker";
-import * as AuthSession from "expo-auth-session";
 import { exportAllData, importFullBackup } from "../db";
-import { importText } from "../util/importer"; // 👈 permite importar perguntas (JSON/JSONL/CSV)
-import useAppStyles from "../ui/useAppStyles";
 import PrimaryButton from "../components/PrimaryButton";
+import useAppStyles from "../ui/useAppStyles";
 import { VStack } from "../ui/Stack";
+import { logCaughtError, shareLatestLog } from "../util/logger";
 
-const GOOGLE_CLIENT_ID = "GOOGLE_CLIENT_ID_AQUI.apps.googleusercontent.com";
-const DRIVE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/drive.file";
-
-export default function BackupScreen() {
+export default function BackupScreen({ navigation }) {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
-  const { colors } = useTheme();
   const styles = useAppStyles();
 
   const onExport = async () => {
@@ -27,161 +21,65 @@ export default function BackupScreen() {
       setLoading(true);
       setStatus("Gerando backup...");
       const data = await exportAllData();
-      const content = JSON.stringify(
-        { version: 1, exportedAt: new Date().toISOString(), data },
-        null,
-        2
-      );
+      const content = JSON.stringify({ version:1, exportedAt:new Date().toISOString(), data }, null, 2);
       const uri = FileSystem.documentDirectory + "studyquiz-backup.json";
-      await FileSystem.writeAsStringAsync(uri, content, {
-        encoding: FileSystem.EncodingType.UTF8,
-      });
-      setStatus("Backup salvo. Compartilhando...");
+      await FileSystem.writeAsStringAsync(uri, content, { encoding: FileSystem.EncodingType.UTF8 });
+      setStatus("Compartilhando arquivo...");
       await Sharing.shareAsync(uri, { mimeType: "application/json" });
       setStatus("");
     } catch (e) {
-      console.error(e);
       setStatus("Falha ao exportar: " + e.message);
-    } finally {
-      setLoading(false);
-    }
+      await logCaughtError(e, 'backup-export');
+    } finally { setLoading(false); }
   };
 
-  // Agora aceita:
-  // - Arquivo de BACKUP (formato {version, exportedAt, data:[...]})
-  // - Lista de PERGUNTAS (JSON array / JSONL / CSV) usando importText
   const onImport = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: ["application/json", "text/csv", "text/plain"],
-        copyToCacheDirectory: true,
-      });
+      const result = await DocumentPicker.getDocumentAsync({ type: ["application/json"], copyToCacheDirectory: true });
       if (result.canceled) return;
-
       setLoading(true);
-      setStatus("Lendo arquivo...");
+      setStatus("Lendo backup...");
       const asset = result.assets[0];
-      const text = await FileSystem.readAsStringAsync(asset.uri, {
-        encoding: FileSystem.EncodingType.UTF8,
-      });
-
-      // Tenta detectar “backup oficial”
-      let parsed;
-      try {
-        parsed = JSON.parse(text);
-      } catch {
-        parsed = null;
-      }
-
-      if (parsed && Array.isArray(parsed?.data)) {
-        // Formato de backup
-        setStatus("Importando backup...");
-        await importFullBackup(parsed.data);
-        setStatus(`Importação de backup concluída! Conjuntos: ${parsed.data.length}`);
-      } else {
-        // Qualquer outro (JSON array de perguntas, JSONL ou CSV)
-        setStatus("Importando perguntas...");
-        const { importedCount, quizzesCount } = await importText(text);
-        setStatus(
-          `Importado com sucesso! Itens: ${importedCount} • Quizzes: ${quizzesCount}`
-        );
-      }
+      const text = await FileSystem.readAsStringAsync(asset.uri, { encoding: FileSystem.EncodingType.UTF8 });
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed?.data)) throw new Error('Formato inválido');
+      setStatus("Importando...");
+      await importFullBackup(parsed.data);
+      setStatus(`Importação concluída! Conjuntos: ${parsed.data.length}`);
+      setTimeout(()=> navigation.getParent()?.navigate('Início'), 800);
     } catch (e) {
-      console.error(e);
       setStatus("Falha ao importar: " + e.message);
-    } finally {
-      setLoading(false);
-    }
+      await logCaughtError(e, 'backup-import');
+    } finally { setLoading(false); }
   };
 
-  const onDriveLoginAndUpload = async () => {
+  const onShareLastLog = async () => {
     try {
-      setLoading(true);
-      const redirectUri = AuthSession.makeRedirectUri({ useProxy: true });
-      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(
-        GOOGLE_CLIENT_ID
-      )}&redirect_uri=${encodeURIComponent(
-        redirectUri
-      )}&response_type=token&scope=${encodeURIComponent(DRIVE_UPLOAD_SCOPE)}`;
-      const res = await AuthSession.startAsync({ authUrl });
-      if (res.type !== "success") return;
-      const accessToken = res.params.access_token;
-
-      const data = await exportAllData();
-      const content = JSON.stringify({
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        data,
-      });
-
-      setStatus("Enviando para o Google Drive...");
-      const boundary = "foo_bar_baz";
-      const metadata = { name: "studyquiz-backup.json" };
-      const body = `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(
-        metadata
-      )}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${content}\r\n--${boundary}--`;
-      const uploadRes = await fetch(
-        "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + accessToken,
-            "Content-Type": "multipart/related; boundary=" + boundary,
-          },
-          body,
-        }
-      );
-      if (!uploadRes.ok) throw new Error(await uploadRes.text());
-      setStatus("Backup enviado para o Drive!");
+      setStatus("Abrindo último log de erro...");
+      const path = await shareLatestLog();
+      if (!path) setStatus("Nenhum log encontrado ainda.");
+      else setStatus(`Log compartilhado: ${path}`);
     } catch (e) {
-      console.error(e);
-      setStatus("Falha ao sincronizar com Drive: " + e.message);
-    } finally {
-      setLoading(false);
+      setStatus("Falha ao compartilhar log: " + e.message);
+      await logCaughtError(e, 'share-latest-log');
     }
   };
 
   return (
     <SafeAreaView style={styles.sa} edges={["bottom"]}>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator
-      >
-        <VStack space={12}>
-          <View style={styles.panel}>
-            <Text style={styles.h2}>Backup & Sincronização</Text>
-            <View style={{ height: 8 }} />
-            <VStack space={8}>
-              <PrimaryButton
-                title="Exportar (JSON) & Compartilhar"
-                onPress={onExport}
-                disabled={loading}
-              />
-              <PrimaryButton
-                title="Importar de arquivo (Backup ou Perguntas JSON/CSV)"
-                onPress={onImport}
-                disabled={loading}
-              />
-              <PrimaryButton
-                variant="secondary"
-                title="Enviar para Google Drive"
-                onPress={onDriveLoginAndUpload}
-                disabled={loading}
-              />
-            </VStack>
-            <View style={{ height: 8 }} />
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <Text style={styles.muted}>{status}</Text>
-            )}
-            <Text style={styles.muted}>
-              Obs.: defina o CLIENT_ID em BackupScreen.js.
-            </Text>
-          </View>
-        </VStack>
-      </ScrollView>
+      <VStack space={12} style={styles.container}>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Backup (Local)</Text>
+          <View style={{ height: 8 }} />
+          <VStack space={8}>
+            <PrimaryButton title="Exportar (JSON) & Compartilhar" onPress={onExport} disabled={loading} />
+            <PrimaryButton title="Importar de arquivo (Backup JSON)" onPress={onImport} disabled={loading} />
+            <PrimaryButton title="Compartilhar último log de erro (.txt)" onPress={onShareLastLog} disabled={loading} variant="secondary" />
+          </VStack>
+          <View style={{ height: 8 }} />
+          {loading ? <ActivityIndicator /> : <Text style={styles.muted}>{status}</Text>}
+        </View>
+      </VStack>
     </SafeAreaView>
   );
 }

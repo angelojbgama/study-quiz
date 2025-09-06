@@ -1,23 +1,21 @@
-export function parseTags(tagsStr) {
-  if (!tagsStr) return [];
-  return String(tagsStr)
+// src/util/tags.js
+export function parseTags(tags) {
+  if (!tags) return [];
+  if (Array.isArray(tags)) return tags.map((t) => String(t).trim()).filter(Boolean);
+  return String(tags)
     .split(',')
-    .map(s => s.trim())
+    .map((t) => t.trim())
     .filter(Boolean);
 }
 
-export function distinctTagsFromQuestions(qs) {
+export function distinctTagsFromQuestions(list = []) {
   const set = new Set();
-  (qs || []).forEach(q => parseTags(q.tags).forEach(t => set.add(t)));
-  return Array.from(set).sort((a,b) => a.localeCompare(b));
+  list.forEach((q) => parseTags(q.tags).forEach((t) => set.add(t)));
+  return Array.from(set).sort((a, b) => a.localeCompare(b));
 }
 
-export function tagCounts(qs) {
-  const map = {};
-  (qs || []).forEach(q => {
-    parseTags(q.tags).forEach(t => {
-      map[t] = (map[t] || 0) + 1;
-    });
-  });
-  return map;
+export function tagCounts(list = []) {
+  const counts = {};
+  list.forEach((q) => parseTags(q.tags).forEach((t) => { counts[t] = (counts[t] || 0) + 1; }));
+  return counts;
 }

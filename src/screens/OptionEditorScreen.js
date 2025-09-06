@@ -1,220 +1,95 @@
 // src/screens/OptionEditorScreen.js
-import React, { useEffect, useState, useMemo } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Alert,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@react-navigation/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import PrimaryButton from "../components/PrimaryButton";
 import useAppStyles from "../ui/useAppStyles";
-import { getQuestionById, getOptionsByQuestion, replaceOptions, updateQuestion } from "../db"; // 👈 import updateQuestion
+import { getQuestionById, getOptionsByQuestion, replaceOptions, updateQuestion } from "../db";
 
 export default function OptionEditorScreen({ route, navigation }) {
-  const { questionId } = route.params || {};
-  const [question, setQuestion] = useState(null);
-  const [options, setOptions] = useState([]);
-  const { colors } = useTheme();
+  const { questionId, prefill } = route.params || {};
   const styles = useAppStyles();
+
+  const [question, setQuestion] = useState(null);
+  const [options, setOptions] = useState([
+    { id:'opt-1', text:'', isCorrect:true },
+    { id:'opt-2', text:'', isCorrect:false },
+    { id:'opt-3', text:'', isCorrect:false },
+    { id:'opt-4', text:'', isCorrect:false },
+  ]);
 
   useEffect(() => {
     (async () => {
       const q = await getQuestionById(questionId);
-      const opts = await getOptionsByQuestion(questionId);
-      const normalized =
-        opts && opts.length
-          ? opts.map((o) => ({
-              id: o.id,
-              text: o.text || "",
-              isCorrect: !!o.isCorrect,
-            }))
-          : [
-              { id: "new-1", text: q?.answer || "", isCorrect: true },
-              { id: "new-2", text: "", isCorrect: false },
-              { id: "new-3", text: "", isCorrect: false },
-              { id: "new-4", text: "", isCorrect: false },
-            ];
       setQuestion(q);
-      setOptions(normalized);
-      navigation.setOptions({ title: "Alternativas" });
-    })();
-  }, [questionId, navigation]);
-
-  const local = useMemo(
-    () =>
-      StyleSheet.create({
-        label: { fontWeight: "600", marginBottom: 8, color: colors.text },
-        itemRow: {
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: colors.card,
-          borderWidth: 1,
-          borderColor: colors.border,
-          borderRadius: 10,
-          paddingHorizontal: 10,
-          paddingVertical: 8,
-        },
-        radio: {
-          width: 22,
-          height: 22,
-          borderRadius: 999,
-          borderWidth: 2,
-          borderColor: colors.primary,
-          alignItems: "center",
-          justifyContent: "center",
-          marginRight: 10,
-        },
-        radioDot: {
-          width: 12,
-          height: 12,
-          borderRadius: 999,
-          backgroundColor: colors.primary,
-        },
-        input: {
-          flex: 1,
-          color: colors.text,
-          paddingVertical: 6,
-          paddingHorizontal: 8,
-        },
-        trash: { marginLeft: 10, padding: 6, borderRadius: 999 },
-        addRow: {
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginTop: 8,
-        },
-      }),
-    [colors]
-  );
-
-  const setCorrect = (index) => {
-    setOptions((prev) =>
-      prev.map((o, i) => ({ ...o, isCorrect: i === index }))
-    );
-  };
-
-  const updateTextLocal = (index, text) => {
-    setOptions((prev) =>
-      prev.map((o, i) => (i === index ? { ...o, text } : o))
-    );
-  };
-
-  const removeOption = (index) => {
-    setOptions((prev) => {
-      const next = [...prev];
-      const removed = next.splice(index, 1)[0];
-      if (removed?.isCorrect && next.length > 0) {
-        next[0] = { ...next[0], isCorrect: true };
+      const rows = await getOptionsByQuestion(questionId);
+      if (rows && rows.length) {
+        setOptions(rows.map((o)=>({ id: String(o.id), text: o.text||'', isCorrect: !!o.isCorrect })));
+      } else if (prefill?.answer) {
+        const wrongs = prefill?.wrongs || [];
+        const base = [{ id:'new-1', text: prefill.answer, isCorrect:true }];
+        for (let i=0;i<Math.max(1,wrongs.length);i++) base.push({ id:'new-'+(i+2), text: wrongs[i]||'', isCorrect:false });
+        while (base.length < 4) base.push({ id:'new-'+(base.length+1), text:'', isCorrect:false });
+        setOptions(base);
       }
-      return next;
+    })();
+  }, [questionId, prefill]);
+
+  const setCorrect = (idx) => {
+    setOptions((prev)=> prev.map((o,i)=>({ ...o, isCorrect: i===idx })));
+  };
+  const setText = (idx, t) => { setOptions((prev)=> prev.map((o,i)=> i===idx?{...o, text:t}:o)); };
+  const addWrong = () => { setOptions((prev)=> [...prev, { id:'new-'+(prev.length+1), text:'', isCorrect:false }]); };
+  const remove = (idx) => {
+    setOptions((prev)=> {
+      const cp = [...prev];
+      const [removed] = cp.splice(idx,1);
+      if (removed?.isCorrect && cp.length>0) cp[0] = { ...cp[0], isCorrect:true };
+      return cp;
     });
   };
 
-  const addWrong = () => {
-    setOptions((prev) => [
-      ...prev,
-      { id: "new-" + (prev.length + 1), text: "", isCorrect: false },
-    ]);
-  };
-
-  const onSave = async () => {
-    const trimmed = options.map((o) => ({ ...o, text: (o.text || "").trim() }));
-    if (!trimmed.some((o) => o.isCorrect)) {
-      Alert.alert("Atenção", "Selecione uma alternativa como correta.");
-      return;
-    }
-    if (trimmed.some((o) => !o.text)) {
-      Alert.alert(
-        "Atenção",
-        "Preencha o texto de todas as alternativas ou remova as vazias."
-      );
-      return;
-    }
-
+  const save = async () => {
+    const trimmed = options.map((o)=>({ ...o, text: String(o.text||'').trim() }));
+    if (!trimmed.some((o)=>o.isCorrect)) { Alert.alert('Selecione uma correta.'); return; }
+    if (trimmed.some((o)=>!o.text)) { Alert.alert('Preencha ou remova alternativas vazias.'); return; }
     await replaceOptions(questionId, trimmed);
-
-    // 🔐 Mantém question.answer consistente com a alternativa correta
-    const correctText = trimmed.find((o) => o.isCorrect)?.text || "";
-    if (correctText) {
-      await updateQuestion(questionId, { answer: correctText });
-    }
-
+    const correct = trimmed.find((o)=>o.isCorrect)?.text || '';
+    if (correct) await updateQuestion(questionId, { answer: correct });
     navigation.goBack();
   };
 
-  if (!question) {
-    return (
-      <SafeAreaView style={styles.sa} edges={["bottom"]}>
-        <View style={styles.container}>
-          <Text style={styles.muted}>Carregando...</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.sa} edges={["bottom"]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1 }}
-      >
-        <ScrollView
-          contentContainerStyle={[styles.container, { paddingBottom: 16 }]}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator
-        >
-          <View style={styles.panel}>
-            <Text style={styles.h3}>Pergunta</Text>
-            <Text style={[styles.text, { marginTop: 6 }]}>{question.text}</Text>
-            {question.explanation ? (
-              <Text style={[styles.muted, { marginTop: 4 }]}>
-                Explicação: {question.explanation}
-              </Text>
-            ) : null}
-          </View>
-
-          <View style={styles.panel}>
-            <Text style={styles.h3}>Alternativas</Text>
-            <View style={{ height: 8 }} />
-            {options.map((opt, idx) => (
-              <View key={opt.id ?? idx} style={[local.itemRow, { marginBottom: 8 }]}>
-                <Pressable onPress={() => setCorrect(idx)} hitSlop={8} accessibilityLabel="Marcar como correta">
-                  <View style={local.radio}>
-                    {opt.isCorrect ? <View style={local.radioDot} /> : null}
-                  </View>
-                </Pressable>
-                <TextInput
-                  value={opt.text}
-                  onChangeText={(t) => updateTextLocal(idx, t)}
-                  placeholder={opt.isCorrect ? "Resposta correta" : "Resposta incorreta"}
-                  placeholderTextColor={colors.muted}
-                  style={local.input}
-                />
-                <Pressable onPress={() => removeOption(idx)} hitSlop={8} style={({ pressed }) => [local.trash, pressed && { opacity: 0.7 }]}>
-                  <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.danger || "#dc3545"} />
-                </Pressable>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
+        <View style={styles.panel}>
+          <Text style={styles.h2}>Alternativas</Text>
+          <Text style={styles.muted}>{question?.text || 'Pergunta'}</Text>
+          <View style={{ height: 8 }} />
+          {options.map((o, idx)=>(
+            <View key={o.id} style={[styles.card, { marginBottom: 8 }]}>
+              <TextInput
+                value={o.text}
+                onChangeText={(t)=>setText(idx,t)}
+                placeholder={o.isCorrect ? "Resposta correta" : `Distrator ${idx + 1}`}
+                style={styles.input}
+              />
+              <View style={{ height: 6 }} />
+              <View style={{ flexDirection:'row', gap:8 }}>
+                {!o.isCorrect ? (
+                  <PrimaryButton title="Marcar correta" onPress={()=>setCorrect(idx)} />
+                ) : (
+                  <PrimaryButton title="Correta" variant="secondary" />
+                )}
+                <PrimaryButton title="Remover" variant="dangerOutline" onPress={()=>remove(idx)} />
               </View>
-            ))}
-
-            <View style={local.addRow}>
-              <PrimaryButton title="Adicionar incorreta" variant="secondary" onPress={addWrong} />
             </View>
-          </View>
-
-          <View style={{ marginTop: 8 }}>
-            <PrimaryButton title="Salvar" onPress={onSave} />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          ))}
+          <PrimaryButton title="Adicionar alternativa" variant="secondary" icon="plus" onPress={addWrong} />
+          <View style={{ height: 8 }} />
+          <PrimaryButton title="Salvar" icon="content-save" onPress={save} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
